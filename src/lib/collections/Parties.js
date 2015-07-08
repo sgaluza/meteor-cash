@@ -1,4 +1,4 @@
-Party = utils.schemaCollection('Parties', {
+Parties = utils.schemaCollection('Parties', {
     title: {
         type: String,
         label: "Party",

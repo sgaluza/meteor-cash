@@ -1,4 +1,4 @@
-Tag = utils.schemaCollection('Tags', {
+Tags = utils.schemaCollection('Tags', {
     title: {
         type: String,
         label: "Tag",

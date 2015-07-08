@@ -7,6 +7,10 @@
 meteor-platform
 aldeed:simple-schema
 aldeed:collection2
+aldeed:autoform
 iron:router
 twbs:bootstrap
 jamgold:bootstrap3boilerplate
+jquery
+insecure
+autopublish

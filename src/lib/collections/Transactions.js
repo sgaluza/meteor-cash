@@ -1,4 +1,4 @@
-Transaction = utils.schemaCollection('Transactions', {
+Transactions = utils.schemaCollection('Transactions', {
     date: {
         type: Date,
         label: "Date"

@@ -1,4 +1,4 @@
-Currency = utils.schemaCollection('Currencies', {
+Currencies = utils.schemaCollection('Currencies', {
     title: {
         type: String,
         label: "Currency",
