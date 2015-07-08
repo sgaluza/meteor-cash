@@ -1,6 +1,13 @@
+_ = lodash;
 Meteor.isDevelopment = false;
 
 if(Meteor.isClient){
+    AutoForm.setDefaultTemplate('bootstrap3');
+
+    Bootstrap3boilerplate.init();
+    Bootstrap3boilerplate.Modal.body.set('');
+    Bootstrap3boilerplate.Modal.title.set('');
+    Bootstrap3boilerplate.Modal.effect.set('');
     Bootstrap3boilerplate.ProjectName.set('Meteor Cash');
     Bootstrap3boilerplate.fluid.set(true);
     Bootstrap3boilerplate.Navbar.type.set('navbar-fixed-top');

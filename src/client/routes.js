@@ -1,5 +1,3 @@
-Bootstrap3boilerplate.init();
-
 Router.configure({
     layoutTemplate: 'Bootstrap3boilerplate'
 });
