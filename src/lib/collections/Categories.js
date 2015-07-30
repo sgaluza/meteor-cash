@@ -1,4 +1,4 @@
-Categories = utils.schemaCollection('Cateogories', {
+Categories = utils.schemaCollection('Categories', {
     title: {
         type: String,
         label: 'Category',

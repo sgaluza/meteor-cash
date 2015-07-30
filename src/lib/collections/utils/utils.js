@@ -4,8 +4,11 @@ utils = {
         collection.attachSchema(new SimpleSchema(schema));
 
         if(Meteor.isServer) {
-         //   Meteor.publish(collectionName);
+            Meteor.publish(collectionName, function(){
+                return collection.find();
+            });
         }
+
         return collection;
     }
 };
