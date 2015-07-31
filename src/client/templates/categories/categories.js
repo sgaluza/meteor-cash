@@ -58,7 +58,6 @@ Template.categories.initTree = function () {
         data: _.filter(categories, function (doc) {
             return !doc.parentId;
         }),
-        levels: 5,
         onNodeSelected: function (event, data) {
             Session.set('docForUpdate', data._id);
 
