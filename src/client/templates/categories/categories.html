@@ -1,10 +1,17 @@
 <template name="categories">
     <h1>Categories</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="tree"></div>
+        </div>
+    </div>
     <a href="#" class="btn btn-primary" id="add-category">Add Category</a>
-
-    <div id="tree"></div>
 </template>
 
 <template name="categoryEditModal">
     {{> quickForm collection="Categories" id="categoryEdit" validation="submit" type="insert" buttonContent=false}}
+</template>
+
+<template name="categoryUpdateModal">
+    {{> quickForm collection="Categories" id="categoryUpdate" validation="submit" type="update" buttonContent=false doc=docForUpdate}}
 </template>

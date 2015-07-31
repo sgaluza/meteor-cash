@@ -12,7 +12,6 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.versionsFrom('1.1.0.2');
-  api.addFiles('bootstrap-treeview.js');
-  api.addFiles('bootstrap-treeview.css');
+  api.addFiles('bootstrap-treeview.js', 'client');
+  api.addFiles('bootstrap-treeview.css', 'client');
 });
-

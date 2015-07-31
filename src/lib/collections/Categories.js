@@ -1,4 +1,4 @@
-Categories = utils.schemaCollection('Cateogories', {
+Categories = utils.schemaCollection('Categories', {
     title: {
         type: String,
         label: 'Category',
@@ -28,9 +28,8 @@ Categories = utils.schemaCollection('Cateogories', {
 
                 var items = [];
                 var addItem = function(category, level){
-
                     items.push({
-                        label: _.repeat('--', level) + ' ' + category.title,
+                        label: _.repeat('• ', level) + ' ' + category.title,
                         value: category._id
                     })
                     if(category.children) {
