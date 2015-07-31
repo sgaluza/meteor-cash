@@ -11,9 +11,6 @@ Router.route('/', function () {
 });
 
 Router.route('/categories', {
-    waitOn: function () {
-        return Meteor.subscribe('Categories');
-    },
     action: function () {
         this.render('categories');
     }

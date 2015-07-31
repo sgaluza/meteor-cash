@@ -13,10 +13,5 @@
 </template>
 
 <template name="categoryUpdateModal">
-    {{#autoForm id="categoryUpdate" type="update" collection="Categories" doc=selectedCategoryDoc}}
-        {{> afQuickField name="categoryName"}}
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary" disabled={{disableButtons}}>Update</button>
-        </div>
-    {{/autoForm}}
+    {{> quickForm collection="Categories" id="categoryUpdate" validation="submit" type="update" buttonContent=false doc=docForUpdate}}
 </template>

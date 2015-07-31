@@ -4,5 +4,11 @@ AutoForm.hooks({
             Template.categories.initTree();
             Bootstrap3boilerplate.Modal.hide();
         }
-    }
-})
+    },
+    categoryUpdate: {
+        onSuccess: function(){
+            Template.categories.initTree();
+            Bootstrap3boilerplate.Modal.hide();
+        }
+    },
+});
