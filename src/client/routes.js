@@ -23,3 +23,7 @@ Router.route('/categories', {
         this.render('categories');
     }
 });
+
+Router.route('/transactions', function () {
+    this.render(t)
+});

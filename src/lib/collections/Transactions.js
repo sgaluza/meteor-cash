@@ -4,10 +4,24 @@ Transactions = utils.schemaCollection('Transactions', {
         label: "Date"
     },
     accountId: {
-        type: Meteor.ObjectID
+        type: Meteor.ObjectId,
+        optional:true,
+        autoform: {
+            firstOption: 'Select an account',
+            selectOnBlur: true,
+            type: 'select',
+            options: function () {
+                return _.map(Accounts.find().fetch(), function (item) {
+                    return {
+                        label: item.title,
+                        value: item._id
+                    }
+                });
+            }
+        }
     },
     accountTo: {
-        type: Meteor.ObjectID,
+        type: Meteor.ObjectId,
         optional: true
     },
     amount: {
@@ -20,15 +34,28 @@ Transactions = utils.schemaCollection('Transactions', {
         optional: true
     },
     categoryId: {
-        type: Meteor.ObjectID,
-        optional: true
+        type: Meteor.ObjectId,
+        optional: true,
+        autoform: {
+            firstOption: 'Select a category',
+            selectOnBlur: true,
+            type: 'select',
+            options: function () {
+                return _.map(Categories.find().fetch(), function (item) {
+                    return {
+                        label: item.title,
+                        value: item._id
+                    }
+                });
+            }
+        }
     },
     partyId: {
-        type: Meteor.ObjectID,
+        type: Meteor.ObjectId,
         optional: true
     },
     tagIds: {
-        type: [Meteor.ObjectID],
+        type: [Meteor.ObjectId],
         optional: true
     },
     notes: {
