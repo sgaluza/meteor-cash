@@ -1,0 +1,23 @@
+<template name="transactionsPanelYield">
+    {{#autoForm collection="Transactions" id="insertTransaction" type="insert"}}
+        <div class="form-group">
+            {{> afQuickField name="date"}}
+            {{> afQuickField name="amount"}}
+            {{> afQuickField name="categoryId"}}
+            {{> afQuickField name="accountId"}}
+        </div>
+        {{> transactionsPanelFooter}}
+    {{/autoForm}}
+</template>
+
+<template name="transactionsPanelYieldUpdate">
+    {{#autoForm collection="Transactions" id="updateTransaction" type="update" doc=getSelectedRow}}
+        <div class="form-group">
+            {{> afQuickField name="date"}}
+            {{> afQuickField name="amount"}}
+            {{> afQuickField name="categoryId"}}
+            {{> afQuickField name="accountId"}}
+        </div>
+        {{> transactionsPanelFooter}}
+    {{/autoForm}}
+</template>

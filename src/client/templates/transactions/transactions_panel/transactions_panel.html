@@ -1,0 +1,6 @@
+<template name="transactionsPanel">
+    {{#if transactionsPanelHeaderOn}}
+        {{>transactionsPanelHeader}}
+    {{/if}}
+    {{>Template.dynamic template=getTransactionsPanelTemplate}}
+</template>

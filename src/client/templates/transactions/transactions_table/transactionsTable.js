@@ -67,6 +67,6 @@ Template.transactionsTable.helpers({
 Template.transactionsTable.events({
     'click .reactive-table tbody tr': function (event) {
         Session.set('transactionTableSelectedId', $(event.currentTarget).find('.hidden').text());
-        Session.set('transactionsPanelTemplate', 'transactionsPanelUpdate');
+        Session.set('transactionsPanelTemplate', 'transactionsPanelYieldUpdate');
     }
 });

@@ -1,0 +1,20 @@
+<template name="transactionsPanelFooter">
+    <div class="form-group">
+        <div class="pull-right">
+            <button type="submit" id="saveTransactionButton" class="btn btn-success">
+                Save transaction
+            </button>
+            <button type="reset" id="cancelTransactionButton" class="btn btn-default">
+                Cancel
+            </button>
+        </div>
+
+        {{#if showRemoveButton}}
+            <div class="pull-left">
+                <button type="button" id="removeTransactionButton" class="btn btn-danger">
+                    Remove
+                </button>
+            </div>
+        {{/if}}
+    </div>
+</template>
