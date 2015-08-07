@@ -1,0 +1,22 @@
+<template name="accounts">
+    <h1>Accounts</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="accountsTree"></div>
+        </div>
+    </div>
+    <a href="#" class="btn btn-primary" id="addAccount">Add Account</a>
+</template>
+
+<template name="accountCreateModal">
+    {{#autoForm collection="Accounts" id="accountCreate" type="insert"}}
+        {{> afQuickField name="title"}}
+        {{> afQuickField name="balance"}}
+        {{> afQuickField name="currencyId"}}
+        {{> afQuickField name="parentId"}}
+    {{/autoForm}}
+</template>
+
+<template name="accountUpdateModal">
+    {{> quickForm collection="Accounts" id="accountUpdate" validation="submit" type="update" buttonContent=false doc=docForUpdate}}
+</template>
