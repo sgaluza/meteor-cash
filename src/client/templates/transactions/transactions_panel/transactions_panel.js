@@ -1,13 +1,12 @@
-var defaultTemplate = 'transactionsPanelInactive';
+var defaultPanelTemplate = 'transactionsPanelInactive';
 
 Template.transactionsPanel.helpers({
-    getTransactionsPanelTemplate: function () {
-        console.log(Session.get('transactionsPanelTemplate'));
-        return Session.get('transactionsPanelTemplate') || defaultTemplate;
+    transactionsPanelTemplate: function () {
+        return Session.get('transactions_panelTemplate') || defaultPanelTemplate;
     },
     transactionsPanelHeaderOn: function () {
-        var currentTemplate = Session.get('transactionsPanelTemplate');
+        var currentTemplate = Session.get('transactions_panelTemplate');
 
-        return !!currentTemplate && currentTemplate !== defaultTemplate;
+        return !!currentTemplate && currentTemplate !== defaultPanelTemplate;
     }
 });

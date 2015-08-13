@@ -1,5 +1,11 @@
 <template name="transactionsPanelFooter">
+    <div>
+        {{#each categoriesTagsList}}
+            {{>transactionsPanelFooterTags}}
+        {{/each}}
+    </div>
     <div class="form-group">
+        <hr>
         <div class="pull-right">
             <button type="submit" id="saveTransactionButton" class="btn btn-success">
                 Save transaction
@@ -9,7 +15,7 @@
             </button>
         </div>
 
-        {{#if showRemoveButton}}
+        {{#if removeButtonOn}}
             <div class="pull-left">
                 <button type="button" id="removeTransactionButton" class="btn btn-danger">
                     Remove
@@ -17,4 +23,8 @@
             </div>
         {{/if}}
     </div>
+</template>
+
+<template name="transactionsPanelFooterTags">
+    <span class="label label-default">{{tagName}}&nbsp;<a href="#" id="{{tagId}}"><span class="glyphicon glyphicon-remove"></span></a></span>
 </template>

@@ -1,0 +1,13 @@
+<template name="transactionsInfo">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="jumbotron">
+                <h1>{{allMoney}}&nbsp;{{currency}}</h1>
+
+                {{#each accountsList}}
+                    <div><h2>{{title}}</h2>{{balance}}&nbsp;({{currencyId}})</div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</template>

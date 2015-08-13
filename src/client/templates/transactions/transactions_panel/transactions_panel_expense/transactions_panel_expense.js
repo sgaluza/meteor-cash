@@ -7,17 +7,8 @@ var addCategoriesTag = function (id, name) {
     }
 };
 
-Template.transactionsPanelYield.events({
-   'change select[name="categories"]': function (event) {
-       var tagId = $(event.target).val();
-       var tagName = $(event.target).find("[value=" + tagId + "]").text();
-
-       addCategoriesTag(tagId, tagName);
-   }
-});
-
-Template.transactionsPanelYieldUpdate.events({
-    'change select[name="categories"]': function (event) {
+Template.transactionsPanelExpense.events({
+    'change select[name="categoryId"]': function (event) {
         var tagId = $(event.target).val();
         var tagName = $(event.target).find("[value=" + tagId + "]").text();
 
@@ -25,8 +16,17 @@ Template.transactionsPanelYieldUpdate.events({
     }
 });
 
-Template.transactionsPanelYieldUpdate.helpers({
+Template.transactionsPanelExpenseUpdate.events({
+    'change select[name="categoryId"]': function (event) {
+        var tagId = $(event.target).val();
+        var tagName = $(event.target).find("[value=" + tagId + "]").text();
+
+        addCategoriesTag(tagId, tagName);
+    }
+});
+
+Template.transactionsPanelExpenseUpdate.helpers({
     getSelectedRow: function () {
-        return Transactions.findOne({_id: Session.get('transactions_selectedRow')});
+        return Transactions.findOne({_id: Session.get('transactionTableSelectedId')});
     }
 });
