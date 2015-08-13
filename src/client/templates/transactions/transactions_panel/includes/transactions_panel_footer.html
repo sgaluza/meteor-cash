@@ -1,0 +1,30 @@
+<template name="transactionsPanelFooter">
+    <div>
+        {{#each categoriesTagsList}}
+            {{>transactionsPanelFooterTags}}
+        {{/each}}
+    </div>
+    <div class="form-group">
+        <hr>
+        <div class="pull-right">
+            <button type="submit" id="saveTransactionButton" class="btn btn-success">
+                Save transaction
+            </button>
+            <button type="reset" id="cancelTransactionButton" class="btn btn-default">
+                Cancel
+            </button>
+        </div>
+
+        {{#if removeButtonOn}}
+            <div class="pull-left">
+                <button type="button" id="removeTransactionButton" class="btn btn-danger">
+                    Remove
+                </button>
+            </div>
+        {{/if}}
+    </div>
+</template>
+
+<template name="transactionsPanelFooterTags">
+    <span class="label label-default">{{tagName}}&nbsp;<a href="#" id="{{tagId}}"><span class="glyphicon glyphicon-remove"></span></a></span>
+</template>
