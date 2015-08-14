@@ -46,6 +46,19 @@ Template.transactionsTable.helpers({
 
                 },
                 {
+                    key: 'currency',
+                    label: '',
+                    fn: function (value, object) {
+                        var account = Accounts.findOne(object.account, {
+                            fields: {
+                                currencyId: 1
+                            }
+                        });
+
+                        return _.result(_.find(currencies, {cc: account.currencyId}), 'symbol');
+                    }
+                },
+                {
                     key: 'amountTo',
                     label: '',
                     fn: function (value) {

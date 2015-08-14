@@ -13,7 +13,6 @@ twbs:bootstrap
 jamgold:bootstrap3boilerplate
 jquery
 insecure
-autopublish
 stevezhu:lodash
 bootstrap-treeview
 mizzao:jquery-ui

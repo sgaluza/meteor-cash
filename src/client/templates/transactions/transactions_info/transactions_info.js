@@ -12,8 +12,6 @@ Template.transactionsInfo.helpers({
     accountsList: function () {
         var accounts = Accounts.find().fetch();
 
-        console.log(Transactions.find('mXqKCDKF4WyaeXijL').fetch());
-
         return _.map(accounts, function(doc) {
             return _.assign(doc, {
                 balance: _.reduce(_.map(Transactions.find({account: doc._id}).fetch(), function (subdoc) {

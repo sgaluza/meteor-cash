@@ -24,6 +24,8 @@ Router.route('/categories', {
     }
 });
 
-Router.route('/transactions', function () {
-    this.render(t)
+Router.route('/transactions', {
+    action: function () {
+        this.render('transactions');
+    }
 });
