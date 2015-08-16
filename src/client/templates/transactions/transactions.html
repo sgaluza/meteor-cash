@@ -3,6 +3,9 @@
     <div class="row">
         <div class="col-sm-6">
             {{>transactionsPanel}}
+            <panel>
+                {{> yield "panel"}}
+            </panel>
             {{>transactionsTable}}
         </div>
         <div class="col-sm-6">

@@ -70,7 +70,7 @@ Transactions = utils.schemaCollection('Transactions', {
     },
     transaction: {
         type: Number,
-        optional: true,
+        optional: true
     },
     categories: {
         type: [Meteor.ObjectId],
