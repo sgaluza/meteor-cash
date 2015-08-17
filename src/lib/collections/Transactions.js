@@ -129,6 +129,10 @@ Transactions = utils.schemaCollection('Transactions', {
             }
         }
     },
+    payer: {
+        type: String,
+        optional: true
+    },
     recipient: {
         type: String,
         optional: true

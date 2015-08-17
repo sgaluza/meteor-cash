@@ -1,12 +1,7 @@
-var defaultPanelTemplate = 'transactionsPanelInactive';
-
 Template.transactionsPanel.helpers({
-    transactionsPanelTemplate: function () {
-        return Session.get('transactions_panelTemplate') || defaultPanelTemplate;
-    },
-    transactionsPanelHeaderOn: function () {
-        var currentTemplate = Session.get('transactions_panelTemplate');
+    transactionsPanelOn: function () {
+        var currentRoute = Router.current().route.getName();
 
-        return !!currentTemplate && currentTemplate !== defaultPanelTemplate;
+        return currentRoute.slice(0, 13) === 'transactions.';
     }
 });

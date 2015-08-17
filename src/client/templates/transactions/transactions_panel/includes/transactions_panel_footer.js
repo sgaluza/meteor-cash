@@ -9,12 +9,11 @@ Template.transactionsPanelFooter.helpers({
 
 Template.transactionsPanelFooter.events({
     'click #saveTransactionButton': function () {
-        Session.set('transactions_panelTemplate', null);
+        Router.go('transactions')
     },
     'click #cancelTransactionButton': function (event) {
         event.preventDefault();
 
-        Session.set('transactions_panelTemplate', null);
         Session.set('transactions_categoriesTags', []);
     },
     'click #removeTransactionButton': function () {

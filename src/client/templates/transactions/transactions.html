@@ -1,15 +1,12 @@
 <template name="transactions">
     <h1>Transactions</h1>
     <div class="row">
-        <div class="col-sm-6">
-            {{>transactionsPanel}}
-            <panel>
-                {{> yield "panel"}}
-            </panel>
-            {{>transactionsTable}}
+        <div class="col-sm-8">
+            {{> transactionsPanel}}
+            {{> transactionsTable}}
         </div>
-        <div class="col-sm-6">
-            {{>transactionsInfo}}
+        <div class="col-sm-4">
+            {{> transactionsInfo}}
         </div>
     </div>
 </template>

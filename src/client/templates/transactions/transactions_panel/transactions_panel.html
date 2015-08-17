@@ -1,13 +1,10 @@
 <template name="transactionsPanel">
     <div class="panel panel-default">
-        {{#if transactionsPanelHeaderOn}}
-            <div class="panel-heading">
-                {{> transactionsPanelHeader}}
-            </div>
-        {{/if}}
-
         <div class="panel-body">
-            {{> Template.dynamic template=transactionsPanelTemplate}}
+            {{#if transactionsPanelOn}}
+                {{> transactionsPanelHeader}}
+            {{/if}}
+            {{> yield 'transactionsPanel'}}
         </div>
     </div>
 </template>

@@ -1,11 +1,11 @@
 <template name="transactionsPanelTransfer">
     {{#autoForm collection="Transactions" id="insertTransaction" type="insert"}}
         <div class="form-group">
-            {{>afQuickField name="date" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-11"}}
-            {{>afQuickField name="amount" label="-" placeholder="-" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
-            {{>afQuickField name="amountTo" label="+" placeholder="+" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
-            {{>afQuickField name="account" label="Form acc." template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
-            {{>afQuickField name="accountTo" label="To acc." template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
+            {{> afQuickField name="date" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-11"}}
+            {{> afQuickField name="amount" label="-" placeholder="-" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
+            {{> afQuickField name="amountTo" label="+" placeholder="+" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
+            {{> afQuickField name="account" label="Form acc." template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
+            {{> afQuickField name="accountTo" label="To acc." template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
             {{> afQuickField name="notes" rows=2 template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-11"}}
         </div>
         {{> transactionsPanelFooter}}
@@ -13,13 +13,13 @@
 </template>
 
 <template name="transactionsPanelTransferUpdate">
-    {{#autoForm collection="Transactions" id="updateTransaction" type="insert"}}
+    {{#autoForm collection="Transactions" id="updateTransaction" type="update"}}
         <div class="form-group">
-            {{>afQuickField name="date" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-11"}}
-            {{>afQuickField name="amount" label="-" placeholder="-" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
-            {{>afQuickField name="amountTo" label="+" placeholder="+" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
-            {{>afQuickField name="account" label="Form acc." template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
-            {{>afQuickField name="accountTo" label="To acc." template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
+            {{> afQuickField name="date" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-11"}}
+            {{> afQuickField name="amount" label="-" placeholder="-" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
+            {{> afQuickField name="amountTo" label="+" placeholder="+" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
+            {{> afQuickField name="account" label="Form acc." template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
+            {{> afQuickField name="accountTo" label="To acc." template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
             {{> afQuickField name="notes" rows=2 template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-11"}}
         </div>
         {{> transactionsPanelFooter}}

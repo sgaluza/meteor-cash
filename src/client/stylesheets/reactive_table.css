@@ -1,0 +1,17 @@
+.reactive-table div.date-month-day {
+
+}
+
+.reactive-table div.date-day-of-week {
+    font-size: small;
+    color: cadetblue;
+}
+
+.reactive-table div.categories-list {
+    font-weight: bold;
+}
+
+.reactive-table div.categories-notes {
+    font-size: small;
+    color: gray;
+}

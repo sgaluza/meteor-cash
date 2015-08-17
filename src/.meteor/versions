@@ -32,8 +32,6 @@ iron:location@1.0.9
 iron:middleware-stack@1.0.9
 iron:router@1.0.9
 iron:url@1.0.9
-jamgold:bootstrap3boilerplate@0.0.4_2
-jamgold:isdevelopment@0.0.1
 jquery@1.11.3_2
 json@1.0.3
 launch-screen@1.0.2
