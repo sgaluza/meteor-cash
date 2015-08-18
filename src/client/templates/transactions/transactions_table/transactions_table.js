@@ -84,11 +84,15 @@ Template.transactionsTable.helpers({
 Template.transactionsTable.events({
     'click .reactive-table tbody tr': function (event) {
         var selectedRowId = $(event.currentTarget).find('.hidden').text();
-
-        Session.set('transactions_selectedRow', selectedRowId);
-        Router.go('transactions.update', '');
-
         var transaction = Transactions.findOne(selectedRowId);
+
+        Router.go('transactions.update', {
+            type: TransactionsTypes[transaction.type],
+            id: transaction._id
+        });
+
+
+
         if (transaction.categories) {
             var categories = Categories.find({_id: {$in: transaction.categories}}).fetch();
             var categoriesTags =  _.map(categories, function (item) {

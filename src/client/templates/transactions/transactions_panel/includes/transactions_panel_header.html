@@ -1,13 +1,13 @@
 <template name="transactionsPanelHeader">
     <ul id="transactionsPanelNav" class="nav nav-pills">
-        <li class="active">
+        <li class="{{activeType 'yield'}}">
             <a name="transactionsPanelYield" href="{{pathFor 'transactions.add' type='yield'}}">Yield</a>
         </li>
-        <li>
+        <li class="{{activeType 'expense'}}">
             <a name="transactionsPanelExpense" href="{{pathFor 'transactions.add' type='expense'}}">Expense</a>
         </li>
         {{#if transferOn}}
-            <li>
+            <li class="{{activeType 'transfer'}}">
                 <a name="transactionsPanelTransfer" href="{{pathFor 'transactions.add' type='transfer'}}">Transfer</a>
             </li>
         {{/if}}

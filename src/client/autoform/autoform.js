@@ -1,3 +1,5 @@
+AutoForm.setDefaultTemplateForType('autoForm', 'plain');
+
 AutoForm.hooks({
     accountCreate: {
         onSuccess: function(){

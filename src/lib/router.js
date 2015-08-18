@@ -66,16 +66,16 @@ Router.route('/transactions/update/:type/:id', {
 
         switch (this.params.type) {
             case 'yield':
-                panelTemplate ='transactionsPanelUpdateYield';
+                panelTemplate ='transactionsPanelYieldUpdate';
                 break;
             case 'expense':
-                panelTemplate = 'transactionsPanelUpdateExpense';
+                panelTemplate = 'transactionsPanelExpenseUpdate';
                 break;
             case 'transfer':
-                panelTemplate = 'transactionsPanelUpdateTransfer';
+                panelTemplate = 'transactionsPanelTransferUpdate';
                 break;
             default:
-                panelTemplate = 'transactionsPanelUpdateYield';
+                panelTemplate = 'transactionsPanelYieldUpdate';
         }
 
         this.render(panelTemplate, {to: 'transactionsPanel'});

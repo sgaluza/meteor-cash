@@ -1,6 +1,6 @@
 Template.transactionsPanelFooter.helpers({
     removeButtonOn: function () {
-        return Session.get('transactions_panelTemplate') === 'transactionsPanelYieldUpdate';
+        return Router.current().route.getName() === 'transactions.update';
     },
     categoriesTagsList: function () {
         return Session.get('transactions_categoriesTags');
@@ -9,18 +9,14 @@ Template.transactionsPanelFooter.helpers({
 
 Template.transactionsPanelFooter.events({
     'click #saveTransactionButton': function () {
-        Router.go('transactions')
+        Router.go('transactions');
     },
-    'click #cancelTransactionButton': function (event) {
-        event.preventDefault();
-
-        Session.set('transactions_categoriesTags', []);
+    'click #cancelTransactionButton': function () {
+        Router.go('transactions');
     },
     'click #removeTransactionButton': function () {
         Transactions.remove({_id: Session.get('transactions_selectedRow')});
 
-        Session.set('transactions_selectedRow', '');
-        Session.set('transactions_panelTemplate', '');
         Session.set('transactions_categoriesTags', []);
     },
     'click a': function (event) {
