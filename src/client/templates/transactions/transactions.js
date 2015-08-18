@@ -36,3 +36,7 @@ AutoForm.hooks({
         }
     }
 });
+
+Template.registerHelper('transactionsGetSelectedRowId', function () {
+    return Transactions.findOne({_id: Router.current().params.id});
+});

@@ -1,3 +1,15 @@
+body {
+    margin: 80px 0 0 0;
+}
+
+span.logo-left {
+    color: lightgray;
+}
+
+span.logo-right {
+    color: yellowgreen;
+}
+
 .hidden {
     display: none
 }
@@ -11,5 +23,5 @@ span.label > a {
 }
 
 #transactionsPanelNav > li > a {
-    padding: 0px 5px;
+    padding: 0 5px;
 }

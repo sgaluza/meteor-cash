@@ -68,9 +68,8 @@ Transactions = utils.schemaCollection('Transactions', {
     date: {
         type: Date
     },
-    transaction: {
-        type: Number,
-        optional: true
+    type: {
+        type: Number
     },
     categories: {
         type: [Meteor.ObjectId],
@@ -128,6 +127,10 @@ Transactions = utils.schemaCollection('Transactions', {
                 });
             }
         }
+    },
+    payer: {
+        type: String,
+        optional: true
     },
     recipient: {
         type: String,

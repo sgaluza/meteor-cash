@@ -24,9 +24,3 @@ Template.transactionsPanelExpenseUpdate.events({
         addCategoriesTag(tagId, tagName);
     }
 });
-
-Template.transactionsPanelExpenseUpdate.helpers({
-    getSelectedRow: function () {
-        return Transactions.findOne({_id: Session.get('transactionTableSelectedId')});
-    }
-});

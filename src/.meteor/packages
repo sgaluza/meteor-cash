@@ -10,7 +10,6 @@ aldeed:collection2
 aldeed:autoform
 iron:router
 twbs:bootstrap
-jamgold:bootstrap3boilerplate
 jquery
 insecure
 stevezhu:lodash
@@ -19,3 +18,5 @@ mizzao:jquery-ui
 aslagle:reactive-table
 fortawesome:fontawesome
 reactive-var
+momentjs:moment
+handlebars
