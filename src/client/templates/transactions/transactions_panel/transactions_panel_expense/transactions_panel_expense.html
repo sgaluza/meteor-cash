@@ -2,10 +2,11 @@
     {{#autoForm collection="Transactions" id="insertTransaction" type="insert"}}
         <div class="form-group">
             {{> afQuickField name="type" type="hidden" value="2"}}
-            {{>afQuickField name="date" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
-            {{>afQuickField name="amount" placeholder="-" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
-            {{>afQuickField name="categories" label="Cat." template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
-            {{>afQuickField name="account" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
+            {{> afQuickField name="date" label=false}}
+            {{> afQuickField name="amount" label=false template="mcExpense"}}
+            {{> afQuickField name="categories" label=false}}
+            {{> afQuickField name="account" label=false}}
+            {{> afQuickField name="notes" placeholder="Notes..." label=false rows=2}}
         </div>
         {{> transactionsPanelFooter}}
     {{/autoForm}}
@@ -14,10 +15,11 @@
 <template name="transactionsPanelExpenseUpdate">
     {{#autoForm collection="Transactions" id="updateTransaction" type="update" doc=transactionsGetSelectedRowId}}
         <div class="form-group">
-            {{>afQuickField name="date" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
-            {{>afQuickField name="amount" placeholder="-" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
-            {{>afQuickField name="categories" label="Cat." template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
-            {{>afQuickField name="account" template="bootstrap3-horizontal" label-class="col-sm-1" input-col-class="col-sm-5"}}
+            {{> afQuickField name="date" label=false}}
+            {{> afQuickField name="amount" label=false template="mcExpense"}}
+            {{> afQuickField name="categories" label=false}}
+            {{> afQuickField name="account" label=false}}
+            {{> afQuickField name="notes" placeholder="Notes..." label=false rows=2}}
         </div>
         {{> transactionsPanelFooter}}
     {{/autoForm}}

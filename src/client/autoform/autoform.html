@@ -1,29 +1,29 @@
-<template name="quickForm_default">
-    {{#autoForm qfAutoFormContext}}
+<template name="afInputNumber_mcIncome">
+    <div class="input-group">
+        <span class="input-group-addon">+</span>
+        <input type="number" value="{{this.value}}" class="form-control" {{attsPlusFormControlClass}}/>
+    </div>
+</template>
 
-        {{#with grouplessFields}}
-            {{> afQuickFields quickFieldsAtts}}
-        {{/with}}
+<template name="afInputNumber_mcExpense">
+    <div class="input-group">
+        <span class="input-group-addon">-</span>
+        <input type="number" value="{{this.value}}" class="form-control" {{attsPlusFormControlClass}}/>
+    </div>
+</template>
 
-        {{#each fieldGroups}}
-            <fieldset class="af-fieldGroup">
-                {{#with fieldGroupLabel}}
-                    <legend class="af-fieldGroup-heading">{{this}}</legend>
-                {{/with}}
-                {{> afQuickFields quickFieldsAtts}}
-            </fieldset>
+<template name="afSelect_mcIncome">
+    <select {{attsPlusFormControlClass}}>
+        {{#each this.items}}
+            {{#if this.optgroup}}
+                <optgroup label="{{this.optgroup}}">
+                    {{#each this.items}}
+                        <option {{afSelectOptionAtts}}>{{this.label}}</option>
+                    {{/each}}
+                </optgroup>
+            {{else}}
+                <option {{afSelectOptionAtts}}>{{this.label}}</option>
+            {{/if}}
         {{/each}}
-
-        {{#if qfShouldRenderButton}}
-            <div class="form-group">
-                <button type="submit" {{submitButtonAtts}}>
-                    {{#with ../atts.buttonContent}}
-                        {{this}}
-                    {{else}}
-                        Submit
-                    {{/with}}
-                </button>
-            </div>
-        {{/if}}
-    {{/autoForm}}
+    </select>
 </template>

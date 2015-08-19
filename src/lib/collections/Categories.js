@@ -31,7 +31,7 @@ Categories = utils.schemaCollection('Categories', {
                     items.push({
                         label: _.repeat('• ', level) + ' ' + category.title,
                         value: category._id
-                    })
+                    });
                     if(category.children) {
                         _(category.children)
                             .sortBy('title')
