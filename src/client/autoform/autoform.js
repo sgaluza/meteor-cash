@@ -1,4 +1,9 @@
-AutoForm.setDefaultTemplateForType('autoForm', 'plain');
+//Template.afInputNumber_mcIncome.helpers({
+//    inputGroupOn: function () {
+//        return true;
+//    }
+//});
+
 
 AutoForm.hooks({
     accountCreate: {

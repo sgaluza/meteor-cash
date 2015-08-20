@@ -1,12 +1,14 @@
-Template.registerHelper('accountsGetCategories', function () {
-    return Accounts.find();
-});
-
 Template.accounts.onRendered(function () {
-    Template.accounts.initTree();
+    $('#accountsTree').treeview({
+        data: Template.accounts.getTree(),
+        onNodeSelected: function (event, data) {
+            Session.set('accounts_updatedId', data._id);
+            $('#accountsModalUpdate').modal();
+        }
+    });
 });
 
-Template.accounts.initTree = function () {
+Template.accounts.getTree = function () {
     var parentAccount,
         accounts = Accounts.find().fetch() || [];
 
@@ -22,7 +24,7 @@ Template.accounts.initTree = function () {
         var currency = getCurrencyById(doc.currencyId);
 
         _.assign(doc, {
-            text: doc.title + ' ~ ' + getBalance(doc.balance) + '<sup> ' + currency.symbol + '</sup>&nbsp;<sub style="color: gray">' + currency.name + '</sub>'
+            text: doc.title + ' ~ ' + getBalance(doc.balance) + '<sup> ' + currency.symbol + '</sup>&nbsp;<div class="pull-right" style="color: gray"><i>' + currency.name + '</i></div>'
         });
 
         if (doc.parentId) {
@@ -38,20 +40,27 @@ Template.accounts.initTree = function () {
         }
     });
 
-    $('#accountsTree').treeview({
-        data: _.filter(accounts, function () {
-            return !accounts.parentId;
-        }),
-        onNodeSelected: function (event, data) {
-            Session.set('docForUpdate', data._id);
-            Template.accounts.callModal('accountUpdateModal', 'accountUpdate', 'Update Account');
-        }
+    return _.filter(accounts, function (account) {
+        return !account.parentId;
     });
 };
 
 Template.accounts.events({
-    "click #createAccount": function() {
+    'click #createAccount': function () {
         $('#accountsModalCreate').modal();
+    },
+    'submit form': function () {
+        Session.set('accounts_treeView', Template.accounts.getTree());
     }
+});
+
+Deps.autorun(function () {
+    $('#accountsTree').treeview({
+        data: Session.get('accounts_treeView'),
+        onNodeSelected: function (event, data) {
+            Session.set('accounts_updatedId', data._id);
+            $('#accountsModalUpdate').modal();
+        }
+    });
 });
 

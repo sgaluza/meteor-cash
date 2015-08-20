@@ -76,6 +76,9 @@ Transactions = utils.schemaCollection('Transactions', {
         optional: true,
         autoform: {
             type: 'select',
+            //afFieldInput: {
+            //    multiple: true
+            //},
             firstOption: 'Select a category',
             selectOnBlur: true,
             options: function () {

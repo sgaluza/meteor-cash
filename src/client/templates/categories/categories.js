@@ -1,34 +1,14 @@
-Template.categoryEditModal.helpers({
-    categories: function(){
-        return Categories.find();
-    }
-});
-
-Template.categoryUpdateModal.helpers({
-    categories: function(){
-        return Categories.find();
-    }
-});
-
-Template.categoryEditModal.onRendered(function(){
-    $('input[name=title]').focus();
-});
-
-Template.categoryUpdateModal.onRendered(function(){
-    $('input[name=title]').focus();
-});
-
 Template.categories.onRendered(function () {
-    Template.categories.initTree();
+    $('#categoriesTree').treeview({
+        data: Template.categories.getTree(),
+        onNodeSelected: function (event, data) {
+            Session.set('categories_updatedId', data._id);
+            $('#categoriesModalUpdate').modal();
+        }
+    });
 });
 
-Template.categoryUpdateModal.helpers({
-    docForUpdate: function () {
-        return Categories.findOne({_id: Session.get('docForUpdate')});
-    }
-});
-
-Template.categories.initTree = function () {
+Template.categories.getTree = function () {
     var parentCategory;
     var categories = Categories.find().fetch();
 
@@ -54,28 +34,26 @@ Template.categories.initTree = function () {
         }
     });
 
-    $('#tree').treeview({
-        data: _.filter(categories, function (doc) {
-            return !doc.parentId;
-        }),
-        onNodeSelected: function (event, data) {
-            Session.set('docForUpdate', data._id);
-
-            Bootstrap3boilerplate.Modal.dynamicTemplate.set("categoryUpdateModal");
-            Bootstrap3boilerplate.Modal.formId.set("categoryUpdate");
-            Bootstrap3boilerplate.Modal.title.set("Update Category");
-            Bootstrap3boilerplate.Modal.show();
-            $('input[name=title]').focus();
-        }
+    return _.filter(categories, function (category) {
+        return !category.parentId;
     });
 };
 
 Template.categories.events({
-    "click #add-category": function() {
-        Bootstrap3boilerplate.Modal.dynamicTemplate.set("categoryEditModal");
-        Bootstrap3boilerplate.Modal.formId.set("categoryEdit");
-        Bootstrap3boilerplate.Modal.title.set("Add Category");
-        Bootstrap3boilerplate.Modal.show();
-        $('input[name=title]').focus();
+    'click #createCategory': function () {
+        $('#categoriesModalCreate').modal();
+    },
+    'submit form': function () {
+        Session.set('categories_tree', Template.categories.getTree());
     }
+});
+
+Deps.autorun(function () {
+    $('#categoriesTree').treeview({
+        data: Session.get('categories_tree'),
+        onNodeSelected: function (event, data) {
+            Session.set('categories_updatedId', data._id);
+            $('#categoriesModalUpdate').modal();
+        }
+    });
 });
