@@ -1,12 +1,15 @@
 <template name="transactionsInfo">
     <div class="row">
         <div class="col-md-8">
-            <div class="jumbotron">
-                <h1>{{allMoney}}&nbsp;{{currency}}</h1>
+            <div style="background-color: lightblue; border-radius: 8px; padding: 10px;">
+                <h3>{{allMoney}}&nbsp;{{currency}}</h3>
 
                 {{#each accountsList}}
-                    <div><h2>{{title}}</h2>{{balance}}&nbsp;({{currencyId}})</div>
+                    <div><h4><a href="#">{{title}}</a></h4>{{balance}}&nbsp;({{currencyId}})</div>
                 {{/each}}
+            </div>
+            <div style="margin-top: 20px; background-color: lightcyan; border-radius: 8px; padding: 10px">
+                <p>Forecast of your balance:</p>
             </div>
         </div>
     </div>
