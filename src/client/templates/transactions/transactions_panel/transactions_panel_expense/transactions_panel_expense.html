@@ -6,7 +6,9 @@
             {{> afQuickField name="amount" label=false template="mcExpense"}}
             {{> afQuickField name="categories" label=false}}
             {{> afQuickField name="account" label=false}}
-            {{> afQuickField name="notes" placeholder="Notes..." label=false rows=2}}
+            <p>You can also add a <a href="#" id="addRecipient">recipient</a> or <a href="#" id="addNotes">notes</a></p>
+            {{> afQuickField name="recipient" class="hidden" placeholder="Recipient name" label=false}}
+            {{> afQuickField name="notes" class="hidden" placeholder="Text of notes" label=false rows=2}}
         </div>
         {{> transactionsPanelFooter}}
     {{/autoForm}}
@@ -19,7 +21,12 @@
             {{> afQuickField name="amount" label=false template="mcExpense"}}
             {{> afQuickField name="categories" label=false}}
             {{> afQuickField name="account" label=false}}
-            {{> afQuickField name="notes" placeholder="Notes..." label=false rows=2}}
+            {{#if recipientOn}}
+                {{> afQuickField name="recipient" placeholder="Recipient name" label=false}}
+            {{/if}}
+            {{#if notesOn}}
+                {{> afQuickField name="notes" placeholder="Text of notes" label=false rows=2}}
+            {{/if}}
         </div>
         {{> transactionsPanelFooter}}
     {{/autoForm}}

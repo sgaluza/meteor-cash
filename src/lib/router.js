@@ -2,13 +2,15 @@ Router.configure({
     layoutTemplate: 'layout'
 });
 
-if (Meteor.isClient) {
-    //Bootstrap3boilerplate.init();
-}
-
 Router.route('/', {
     action: function () {
-        this.render('transactions');
+        this.render('overview');
+    }
+});
+
+Router.route('/overview', {
+    action: function () {
+        this.render('overview');
     }
 });
 

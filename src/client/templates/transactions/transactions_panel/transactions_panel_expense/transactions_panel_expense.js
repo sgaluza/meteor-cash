@@ -13,6 +13,12 @@ Template.transactionsPanelExpense.events({
         var tagName = $(event.target).find("[value=" + tagId + "]").text();
 
         addCategoriesTag(tagId, tagName);
+    },
+    'click #addRecipient': function () {
+        $('input[name=recipient]').removeClass('hidden');
+    },
+    'click #addNotes': function () {
+        $('textarea[name=notes]').removeClass('hidden');
     }
 });
 
@@ -22,5 +28,14 @@ Template.transactionsPanelExpenseUpdate.events({
         var tagName = $(event.target).find("[value=" + tagId + "]").text();
 
         addCategoriesTag(tagId, tagName);
+    }
+});
+
+Template.transactionsPanelExpenseUpdate.helpers({
+    'recipientOn': function () {
+        return _.has(Transactions.findOne({_id: Router.current().params.id}), 'recipient');
+    },
+    'notesOn': function () {
+        return _.has(Transactions.findOne({_id: Router.current().params.id}), 'notes');
     }
 });

@@ -12,6 +12,51 @@
     </div>
 </template>
 
+<template name="afInputDate_mc">
+    <input type="date" value="{{this.value}}" {{attsPlusFormControlClass}}/>
+</template>
+
+<template name="afFormGroup_mc">
+    <div class="form-group {{#if afFieldIsInvalid name=this.name}}has-error{{/if}} {{afFormGroupClass}}" data-required={{required}} {{afFormGroupAtts}}>
+        {{#unless skipLabel}}
+            <label {{bsFieldLabelAtts}}>{{#if this.labelText}}{{this.labelText}}{{else}}{{afFieldLabelText name=this.name}}{{/if}}</label>
+        {{/unless}}
+        {{> afFieldInput this.afFieldInputAtts}}
+        <span class="help-block">{{{afFieldMessage name=this.name}}}</span>
+    </div>
+</template>
+
+<template name="quickForm_mc">
+    {{#autoForm qfAutoFormContext}}
+
+        {{#with grouplessFields}}
+            {{> afQuickFields quickFieldsAtts}}
+        {{/with}}
+
+        {{#each fieldGroups}}
+            <fieldset class="af-fieldGroup">
+                {{#with fieldGroupLabel}}
+                    <legend class="af-fieldGroup-heading">{{this}}</legend>
+                {{/with}}
+                {{> afQuickFields quickFieldsAtts}}
+            </fieldset>
+        {{/each}}
+
+        {{#if qfShouldRenderButton}}
+            <div class="form-group">
+                <button type="submit" {{submitButtonAtts}}>
+                    {{#with ../atts.buttonContent}}
+                        {{this}}
+                    {{else}}
+                        Submit
+                    {{/with}}
+                </button>
+            </div>
+        {{/if}}
+
+    {{/autoForm}}
+</template>
+
 <template name="afSelect_mcIncome">
     <select {{attsPlusFormControlClass}}>
         {{#each this.items}}

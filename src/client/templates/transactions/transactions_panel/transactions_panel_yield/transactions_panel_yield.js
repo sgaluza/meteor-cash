@@ -13,6 +13,12 @@ Template.transactionsPanelYield.events({
        var tagName = $(event.target).find("[value=" + tagId + "]").text();
 
        addCategoriesTag(tagId, tagName);
+   },
+   'click #addPayer': function () {
+       $('input[name=payer]').removeClass('hidden');
+   },
+   'click #addNotes': function () {
+       $('textarea[name=notes]').removeClass('hidden');
    }
 });
 
@@ -22,5 +28,14 @@ Template.transactionsPanelYieldUpdate.events({
         var tagName = $(event.target).find("[value=" + tagId + "]").text();
 
         addCategoriesTag(tagId, tagName);
+    }
+});
+
+Template.transactionsPanelYieldUpdate.helpers({
+    payerOn: function () {
+        return _.has(Transactions.findOne({_id: Router.current().params.id}), 'payer');
+    },
+    notesOn: function () {
+        return _.has(Transactions.findOne({_id: Router.current().params.id}), 'notes');;
     }
 });
