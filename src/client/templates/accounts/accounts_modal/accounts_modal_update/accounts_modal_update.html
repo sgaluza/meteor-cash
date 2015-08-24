@@ -4,14 +4,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Create Account</h4>
+                    <h4 class="modal-title">Update Account</h4>
                 </div>
                 {{#autoForm collection="Accounts" id="updateAccount" type="update" doc=updatedDoc}}
                     <div class="modal-body">
-                            {{> afQuickField name="title"}}
+                            {{> afQuickField name="name"}}
                             {{> afQuickField name="balance"}}
                             {{> afQuickField name="currencyId"}}
-                            {{> afQuickField name="parentId"}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
