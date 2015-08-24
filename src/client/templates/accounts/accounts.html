@@ -2,10 +2,33 @@
     <h1>Accounts</h1>
     <div class="row">
         <div class="col-md-6">
-            <div id="accountsTree"></div>
+            <ul class="list-group">
+                {{#each accounts}}
+                    <li class="list-group-item">
+                        <div>
+                            <span><i>{{name}}</i></span>
+                            <span>&nbsp;balance:&nbsp;</span>
+                            <span>{{balance}}</span>
+                            <span>{{> accountCurrency currency currencyId}}</span>
+                            <span style="margin-left: 20px">
+                                <a href="#{{_id}}" id="updateAccount"><span class="glyphicon glyphicon-pencil"></span></a>
+                            </span>
+                        </div>
+                    </li>
+                {{/each}}
+            </ul>
         </div>
     </div>
     {{> accountsModalCreate}}
     {{> accountsModalUpdate}}
     <a href="#" class="btn btn-primary" id="createAccount">Create Account</a>
+</template>
+
+<template name="accountCurrency">
+    {{#if symbol}}
+        <span>
+            <sup>{{symbol}}</sup>
+        </span>
+        <span>({{name}})</span>
+    {{/if}}
 </template>

@@ -4,7 +4,9 @@ Template.categories.onRendered(function () {
         onNodeSelected: function (event, data) {
             Session.set('categories_updatedId', data._id);
             $('#categoriesModalUpdate').modal();
-        }
+        },
+        selectedColor: '#000000',
+        selectedBackColor: '#FFFFFF'
     });
 });
 
@@ -54,6 +56,8 @@ Deps.autorun(function () {
         onNodeSelected: function (event, data) {
             Session.set('categories_updatedId', data._id);
             $('#categoriesModalUpdate').modal();
-        }
+        },
+        selectedColor: '#000000',
+        selectedBackColor: '#FFFFFF'
     });
 });

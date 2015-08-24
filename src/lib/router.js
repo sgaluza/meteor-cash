@@ -15,8 +15,16 @@ Router.route('/overview', {
 });
 
 Router.route('/accounts', {
+    name: 'accounts',
     action: function () {
         this.render('accounts');
+    }
+});
+
+Router.route('/accounts/edit/:id', {
+    name: 'accounts.edit',
+    action: function () {
+        this.render();
     }
 });
 

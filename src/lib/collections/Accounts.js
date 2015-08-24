@@ -1,7 +1,7 @@
 Accounts = utils.schemaCollection("Accounts", {
-    title     : {
+    name     : {
         type  : String,
-        label : "Account",
+        label : "Account name",
         max   : 200,
         index : true,
         unique: true,
@@ -11,11 +11,8 @@ Accounts = utils.schemaCollection("Accounts", {
     },
     balance: {
         type: Number,
-        label: "Opening Balance",
-        min: 0,
-        autoform: {
-            placeholder: "Enter value of your balance"
-        }
+        defaultValue: 0,
+        min: 0
     },
     currencyId: {
         type : Meteor.ObjectID,
@@ -31,29 +28,6 @@ Accounts = utils.schemaCollection("Accounts", {
                         value: item.cc
                     }
                 });
-            }
-        }
-    },
-    parentId  : {
-        type : Meteor.ObjectID,
-        label: "Parent Account",
-        optional: true,
-        autoform: {
-            firstOption: "Select Account's parent",
-            selectOnBlur: true,
-            type : "select",
-            options: function () {
-                return _(Accounts.find().fetch() || [])
-                    .filter(function (item) {
-                        return !item.parentId;
-                    })
-                    .map(function (item) {
-                        return {
-                            label: item.title,
-                            value: item._id
-                        }
-                    })
-                    .value();
             }
         }
     }
