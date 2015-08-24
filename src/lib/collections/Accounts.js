@@ -1,7 +1,7 @@
 Accounts = utils.schemaCollection("Accounts", {
     name     : {
         type  : String,
-        label : "Account",
+        label : "Account name",
         max   : 200,
         index : true,
         unique: true,
@@ -11,11 +11,8 @@ Accounts = utils.schemaCollection("Accounts", {
     },
     balance: {
         type: Number,
-        label: "Opening Balance",
-        min: 0,
-        autoform: {
-            placeholder: "Enter value of your balance"
-        }
+        defaultValue: 0,
+        min: 0
     },
     currencyId: {
         type : Meteor.ObjectID,
