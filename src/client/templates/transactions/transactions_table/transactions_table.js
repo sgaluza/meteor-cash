@@ -37,10 +37,12 @@ Template.transactionsTable.helpers({
                         var categoriesMap =  categories.length ? _.map(categories, function (item) {
                             return item.title;
                         }).join(', ') : 'Without category';
+
+                        var payer = object.payer ? ' — ' + object.payer : '';
                         var recipient = object.recipient ? ' — ' + object.recipient : '';
                         var notes = object.notes ? object.notes : '';
 
-                        var html = '<div class="categories-list">' + categoriesMap + '<span class="categories-recipient">'+ recipient +'</span></div>'
+                        var html = '<div class="categories-list">' + categoriesMap + '<span class="categories-recipient">'+ recipient + payer + '</span></div>'
                                  + '<div class="categories-notes">' + notes + '</div>';
 
                         return new Spacebars.SafeString(html);
