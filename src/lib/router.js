@@ -77,6 +77,13 @@ Router.route('/transactions', {
 
 Router.route('/transactions/add/:type', {
     name: 'transactions.add',
+    onBeforeAction: function () {
+        if (Meteor.subscribe('Accounts') &&
+            Meteor.subscribe('Categories') &&
+            Meteor.subscribe('Transactions')) {
+            this.next();
+        }
+    },
     action: function () {
         var panelTemplate = '';
 
@@ -102,6 +109,13 @@ Router.route('/transactions/add/:type', {
 
 Router.route('/transactions/update/:type/:id', {
     name: 'transactions.update',
+    onBeforeAction: function () {
+        if (Meteor.subscribe('Accounts') &&
+            Meteor.subscribe('Categories') &&
+            Meteor.subscribe('Transactions')) {
+            this.next();
+        }
+    },
     action: function () {
         var panelTemplate = '';
 

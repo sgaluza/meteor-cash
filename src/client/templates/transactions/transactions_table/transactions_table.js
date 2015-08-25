@@ -33,16 +33,13 @@ Template.transactionsTable.helpers({
                     key: '_categories',
                     label: '',
                     fn: function (empty, object) {
-                        var categories = Categories.find({_id: {$in: object.categories}}).fetch() || [];
-                        var categoriesMap =  categories.length ? _.map(categories, function (item) {
-                            return item.title;
-                        }).join(', ') : 'Without category';
+                        var categories = Categories.findOne(object.categories) || {};
 
                         var payer = object.payer ? ' — ' + object.payer : '';
                         var recipient = object.recipient ? ' — ' + object.recipient : '';
                         var notes = object.notes ? object.notes : '';
 
-                        var html = '<div class="categories-list">' + categoriesMap + '<span class="categories-recipient">'+ recipient + payer + '</span></div>'
+                        var html = '<div class="categories-list">' + categories.title + '<span class="categories-recipient">'+ recipient + payer + '</span></div>'
                                  + '<div class="categories-notes">' + notes + '</div>';
 
                         return new Spacebars.SafeString(html);
@@ -74,8 +71,8 @@ Template.transactionsTable.helpers({
                         var account = Accounts.findOne(object.account);
                         var accountTo = Accounts.findOne(object.accountTo);
 
-                        var html = (account && accountTo)
-                            ? '<div>' + account.name + (accountTo ? ' → ' + accountTo.name : '') + '</div>'
+                        var html = account
+                            ? '<span>' + account.name + (accountTo ? ' → ' + accountTo.name : '') + '</span>'
                             : '';
 
                         return new Spacebars.SafeString(html);
