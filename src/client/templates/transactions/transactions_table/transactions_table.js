@@ -9,6 +9,7 @@ Template.transactionsTable.helpers({
                 {
                     key: '_id',
                     label: '',
+                    sortable: false,
                     headerClass: function () {
                         return 'hidden'
                     },
@@ -17,9 +18,12 @@ Template.transactionsTable.helpers({
                     }
                 },
                 {
-                    key: '_date',
+                    key: 'date',
                     label: '',
-                    fn: function (empty, object) {
+                    sortable: false,
+                    sortByValue: true,
+                    sortDirection: 'descending',
+                    fn: function (value, object) {
                         var date = moment(object.date),
                             monthDay = date.format('MMMM D'),
                             dayOfWeek = date.format('dddd');
@@ -32,6 +36,7 @@ Template.transactionsTable.helpers({
                 {
                     key: '_categories',
                     label: '',
+                    sortable: false,
                     fn: function (empty, object) {
                         var categories = Categories.findOne(object.categories) || {};
 
@@ -48,6 +53,7 @@ Template.transactionsTable.helpers({
                 {
                     key: '_transactions',
                     label: '',
+                    sortable: false,
                     fn: function (empty, object) {
                         var amount = object.amount;
                         var amountTo = object.amountTo;
@@ -67,6 +73,7 @@ Template.transactionsTable.helpers({
                 {
                     key: '_accounts',
                     label: '',
+                    sortable: false,
                     fn: function (empty, object) {
                         var account = Accounts.findOne(object.account);
                         var accountTo = Accounts.findOne(object.accountTo);
