@@ -38,7 +38,7 @@ Template.transactionsTable.helpers({
                     label: '',
                     sortable: false,
                     fn: function (empty, object) {
-                        var categories = Categories.findOne(object.categories) || {};
+                        var categories = Categories.findOne(object.categories) || {title: 'No category'};
 
                         var payer = object.payer ? ' — ' + object.payer : '';
                         var recipient = object.recipient ? ' — ' + object.recipient : '';
@@ -99,20 +99,5 @@ Template.transactionsTable.events({
             type: TransactionsTypes[transaction.type],
             id: transaction._id
         });
-
-
-
-        if (transaction.categories) {
-            var categories = Categories.find({_id: {$in: transaction.categories}}).fetch();
-            var categoriesTags =  _.map(categories, function (item) {
-                return {
-                    tagId: item._id,
-                    tagName: item.title
-                }
-            });
-
-            Session.set('transactions_categoriesTags', categoriesTags);
-        }
-
     }
 });

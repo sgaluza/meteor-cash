@@ -7,7 +7,7 @@ Template.accountsModalUpdate.helpers({
 Template.accountsModalUpdate.events({
     'submit form': function () {
         if (AutoForm.validateForm('updateAccount')) {
-            AutoForm.resetForm('updateAccount');
+            Router.go('accounts');
             $('#accountsModalUpdate').modal('hide');
         }
     }
