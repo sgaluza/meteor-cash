@@ -11,8 +11,10 @@ Accounts = utils.schemaCollection("Accounts", {
     },
     balance: {
         type: Number,
-        defaultValue: 0,
-        min: 0
+        min: 0,
+        autoform: {
+            defaultValue: 0
+        }
     },
     currencyId: {
         type : Meteor.ObjectID,
