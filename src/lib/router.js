@@ -16,15 +16,41 @@ Router.route('/overview', {
 
 Router.route('/accounts', {
     name: 'accounts',
+    onBeforeAction: function () {
+        if (Meteor.subscribe('Accounts')) {
+            this.next();
+        }
+    },
     action: function () {
-        this.render('accounts');
+        this.render('accounts', {
+            data: function () {
+                return {
+                    accounts: Accounts.find()
+                }
+            }
+        });
     }
 });
 
 Router.route('/accounts/edit/:id', {
     name: 'accounts.edit',
+    onBeforeAction: function () {
+        if (Meteor.subscribe('Accounts')) {
+            Session.set('accounts_updatedId', this.params.id);
+            this.next();
+        }
+    },
     action: function () {
-        this.render();
+        this.render('accounts', {
+            data: function () {
+                return {
+                    accounts: Accounts.find()
+                }
+            }
+        });
+    },
+    onStop: function () {
+        Session.set('accounts_updatedId', null);
     }
 });
 
@@ -36,6 +62,13 @@ Router.route('/categories', {
 
 Router.route('/transactions', {
     name: 'transactions',
+    onBeforeAction: function () {
+        if (Meteor.subscribe('Accounts') &&
+            Meteor.subscribe('Categories') &&
+            Meteor.subscribe('Transactions')) {
+            this.next();
+        }
+    },
     action: function () {
         this.render('transactions');
         this.render('transactionsPanelDefault', {to: 'transactionsPanel'});

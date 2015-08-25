@@ -59,7 +59,8 @@ Template.transactionsTable.helpers({
                                 currencyId: 1
                             }
                         });
-                        var currency = _.result(_.find(currencies, {cc: account.currencyId}), 'symbol');
+
+                        var currency = account ? _.result(_.find(currencies, {cc: account.currencyId}), 'symbol') : '';
 
                         var html = '<div>' + amount + (amountTo ? ' → ' + amountTo : '') + ' <sup>' + currency + '</sup>';
 
@@ -73,7 +74,9 @@ Template.transactionsTable.helpers({
                         var account = Accounts.findOne(object.account);
                         var accountTo = Accounts.findOne(object.accountTo);
 
-                        var html = '<div>' + account.title + (accountTo ? ' → ' + accountTo.title : '') + '</div>';
+                        var html = (account && accountTo)
+                            ? '<div>' + account.name + (accountTo ? ' → ' + accountTo.name : '') + '</div>'
+                            : '';
 
                         return new Spacebars.SafeString(html);
                     }

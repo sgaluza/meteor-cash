@@ -1,4 +1,3 @@
-Meteor.subscribe('Accounts');
 Meteor.subscribe('Categories');
 Meteor.subscribe('Currencies');
 Meteor.subscribe('Parties');

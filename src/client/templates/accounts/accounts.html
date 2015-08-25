@@ -11,7 +11,7 @@
                             <span>{{balance}}</span>
                             <span>{{> accountCurrency currency currencyId}}</span>
                             <span style="margin-left: 20px">
-                                <a href="#{{_id}}" id="updateAccount"><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a href="{{pathFor 'accounts'}}/edit/{{_id}}"><span class="glyphicon glyphicon-pencil"></span></a>
                             </span>
                         </div>
                     </li>
