@@ -6,6 +6,8 @@ Template.accountsModalUpdate.helpers({
 
 Template.accountsModalUpdate.events({
     'submit form': function () {
-        $('#accountsModalUpdate').modal('hide');
+        if (AutoForm.validateForm('updateAccount')) {
+            $('#accountsModalUpdate').modal('hide');
+        }
     }
 });
