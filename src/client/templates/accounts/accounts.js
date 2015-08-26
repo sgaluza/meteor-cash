@@ -1,26 +1,22 @@
 Template.accounts.helpers({
     currency: function (currencyId) {
-        return _.find(currencies, {cc: currencyId}) || {symbol: '', name: ''};
+        return Currencies.findOne({code: currencyId});
     }
 });
 
 Template.accounts.events({
     'click #createAccount': function () {
+        AutoForm.resetForm('insertAccount');
         $('#accountsModalCreate').modal();
     },
-    'click #updateAccount': function (event) {
-        event.preventDefault();
-
-        var currentTarget = event.currentTarget;
-
-        Session.set('accounts_updatedId', currentTarget.hash ? currentTarget.hash.slice(1) : '');
+    'click a.account-edit': function () {
+        AutoForm.resetForm('updateAccount');
         $('#accountsModalUpdate').modal();
+    },
+    'mouseenter li.account-item': function (event) {
+        $(event.currentTarget).find('div.pull-right').show();
+    },
+    'mouseleave li.account-item': function (event) {
+        $(event.currentTarget).find('div.pull-right').hide();
     }
 });
-
-Deps.autorun(function () {
-    if (Session.get('accounts_updatedId')) {
-        $('#accountsModalUpdate').modal();
-    }
-});
-

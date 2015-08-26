@@ -6,28 +6,28 @@ Accounts = utils.schemaCollection("Accounts", {
         index : true,
         unique: true,
         autoform: {
-            placeholder: "Enter your account name"
+            placeholder: "Name your account"
         }
     },
     balance: {
         type: Number,
         min: 0,
         autoform: {
-            defaultValue: 0
+            placeholder: "Enter the initial balance"
         }
     },
     currencyId: {
         type : Meteor.ObjectID,
         label: "Currency",
         autoform: {
-            firstOption: "Select Account's currency",
+            firstOption: "Select the Account currency",
             selectOnBlur: true,
             type: "select",
             options: function () {
-                return _.map(currencies, function (item) {
+                return _.map(Currencies.find().fetch(), function (item) {
                     return {
                         label: item.name + " (" + item.symbol + ")",
-                        value: item.cc
+                        value: item.code
                     }
                 });
             }
