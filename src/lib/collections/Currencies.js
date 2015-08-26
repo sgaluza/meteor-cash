@@ -1,16 +1,24 @@
+var query = {enable: true};
+
 Currencies = utils.schemaCollection('Currencies', {
-    title: {
+    code: {
         type: String,
-        label: "Currency",
-        max: 200,
+        label: "Currency code",
+        max: 3,
         index: true,
         unique: true
     },
+    name: {
+        type: String,
+        label: 'Currency name',
+        max: 100
+    },
     symbol: {
         type: String,
-        label: "Symbol",
-        max: 20,
-        index: true,
-        unique: true
+        label: "Currency symbol",
+        max: 20
+    },
+    enable: {
+        type: Boolean
     }
-});
+}, query);

@@ -25,3 +25,11 @@ span.label > a {
 #transactionsPanelNav > li > a {
     padding: 0 5px;
 }
+
+.account-edit {
+    /*display: none;*/
+}
+
+.account-currency {
+    color: gray;
+}

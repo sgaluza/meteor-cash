@@ -4,13 +4,13 @@
         <div class="col-md-6">
             <ul class="list-group">
                 {{#each accounts}}
-                    <li class="list-group-item">
-                        <div>
-                            <span><i>{{name}}</i></span>
-                            <span>&nbsp;{{> accountCurrency currency currencyId}}</span>
-                            <span style="margin-left: 20px">
-                                <a href="{{pathFor 'accounts'}}/edit/{{_id}}"><span class="glyphicon glyphicon-pencil"></span></a>
-                            </span>
+                    <li class="list-group-item account-item clearfix">
+                        <div class="pull-left">
+                            <span>{{name}}</span>
+                            <span>{{> accountCurrency currency currencyId}}</span>
+                        </div>
+                        <div class="pull-right" hidden='true'>
+                            <a href="{{pathFor route='accounts' hash=_id}}" class="account-edit">Edit</a>
                         </div>
                     </li>
                 {{/each}}
@@ -24,6 +24,6 @@
 
 <template name="accountCurrency">
     {{#if symbol}}
-        <span>({{name}})</span>
+        <span class="account-currency">&nbsp;&rarr;&nbsp;<i>{{name}}, {{code}}</i></span>
     {{/if}}
 </template>

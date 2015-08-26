@@ -17,7 +17,7 @@ Router.route('/overview', {
 Router.route('/accounts', {
     name: 'accounts',
     onBeforeAction: function () {
-        if (Meteor.subscribe('Accounts')) {
+        if (Meteor.subscribe('Accounts') && Meteor.subscribe('Currencies')) {
             this.next();
         }
     },
