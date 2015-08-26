@@ -9,6 +9,7 @@ Template.transactionsTable.helpers({
                 {
                     key: '_id',
                     label: '',
+                    sortable: false,
                     headerClass: function () {
                         return 'hidden'
                     },
@@ -17,9 +18,12 @@ Template.transactionsTable.helpers({
                     }
                 },
                 {
-                    key: '_date',
+                    key: 'date',
                     label: '',
-                    fn: function (empty, object) {
+                    sortable: false,
+                    sortByValue: true,
+                    sortDirection: 'descending',
+                    fn: function (value, object) {
                         var date = moment(object.date),
                             monthDay = date.format('MMMM D'),
                             dayOfWeek = date.format('dddd');
@@ -32,17 +36,15 @@ Template.transactionsTable.helpers({
                 {
                     key: '_categories',
                     label: '',
+                    sortable: false,
                     fn: function (empty, object) {
-                        var categories = Categories.find({_id: {$in: object.categories}}).fetch() || [];
-                        var categoriesMap =  categories.length ? _.map(categories, function (item) {
-                            return item.title;
-                        }).join(', ') : 'Without category';
+                        var categories = Categories.findOne(object.categories) || {title: 'No category'};
 
                         var payer = object.payer ? ' — ' + object.payer : '';
                         var recipient = object.recipient ? ' — ' + object.recipient : '';
                         var notes = object.notes ? object.notes : '';
 
-                        var html = '<div class="categories-list">' + categoriesMap + '<span class="categories-recipient">'+ recipient + payer + '</span></div>'
+                        var html = '<div class="categories-list">' + categories.title + '<span class="categories-recipient">'+ recipient + payer + '</span></div>'
                                  + '<div class="categories-notes">' + notes + '</div>';
 
                         return new Spacebars.SafeString(html);
@@ -51,6 +53,7 @@ Template.transactionsTable.helpers({
                 {
                     key: '_transactions',
                     label: '',
+                    sortable: false,
                     fn: function (empty, object) {
                         var amount = object.amount;
                         var amountTo = object.amountTo;
@@ -59,7 +62,8 @@ Template.transactionsTable.helpers({
                                 currencyId: 1
                             }
                         });
-                        var currency = _.result(_.find(currencies, {cc: account.currencyId}), 'symbol');
+
+                        var currency = account ? _.result(_.find(currencies, {cc: account.currencyId}), 'symbol') : '';
 
                         var html = '<div>' + amount + (amountTo ? ' → ' + amountTo : '') + ' <sup>' + currency + '</sup>';
 
@@ -69,11 +73,14 @@ Template.transactionsTable.helpers({
                 {
                     key: '_accounts',
                     label: '',
+                    sortable: false,
                     fn: function (empty, object) {
                         var account = Accounts.findOne(object.account);
                         var accountTo = Accounts.findOne(object.accountTo);
 
-                        var html = '<div>' + account.title + (accountTo ? ' → ' + accountTo.title : '') + '</div>';
+                        var html = account
+                            ? '<span>' + account.name + (accountTo ? ' → ' + accountTo.name : '') + '</span>'
+                            : '';
 
                         return new Spacebars.SafeString(html);
                     }
@@ -92,20 +99,5 @@ Template.transactionsTable.events({
             type: TransactionsTypes[transaction.type],
             id: transaction._id
         });
-
-
-
-        if (transaction.categories) {
-            var categories = Categories.find({_id: {$in: transaction.categories}}).fetch();
-            var categoriesTags =  _.map(categories, function (item) {
-                return {
-                    tagId: item._id,
-                    tagName: item.title
-                }
-            });
-
-            Session.set('transactions_categoriesTags', categoriesTags);
-        }
-
     }
 });

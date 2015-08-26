@@ -1,5 +1,8 @@
 Template.accountsModalCreate.events({
     'submit form': function () {
-        $('#accountsModalCreate').modal('hide');
+        if (AutoForm.validateForm('insertAccount')) {
+            AutoForm.resetForm('insertAccount');
+            $('#accountsModalCreate').modal('hide');
+        }
     }
 });

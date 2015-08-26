@@ -6,13 +6,10 @@ Transactions = utils.schemaCollection('Transactions', {
         type: Number
     },
     categories: {
-        type: [Meteor.ObjectId],
+        type: Meteor.ObjectId,
         optional: true,
         autoform: {
             type: 'select',
-            //afFieldInput: {
-            //    multiple: true
-            //},
             firstOption: 'Select a category',
             selectOnBlur: true,
             options: function () {

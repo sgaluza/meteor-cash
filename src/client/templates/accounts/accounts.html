@@ -7,11 +7,9 @@
                     <li class="list-group-item">
                         <div>
                             <span><i>{{name}}</i></span>
-                            <span>&nbsp;balance:&nbsp;</span>
-                            <span>{{balance}}</span>
-                            <span>{{> accountCurrency currency currencyId}}</span>
+                            <span>&nbsp;{{> accountCurrency currency currencyId}}</span>
                             <span style="margin-left: 20px">
-                                <a href="#{{_id}}" id="updateAccount"><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a href="{{pathFor 'accounts'}}/edit/{{_id}}"><span class="glyphicon glyphicon-pencil"></span></a>
                             </span>
                         </div>
                     </li>
@@ -26,9 +24,6 @@
 
 <template name="accountCurrency">
     {{#if symbol}}
-        <span>
-            <sup>{{symbol}}</sup>
-        </span>
         <span>({{name}})</span>
     {{/if}}
 </template>

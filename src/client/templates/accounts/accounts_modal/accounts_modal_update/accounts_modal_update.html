@@ -8,8 +8,9 @@
                 </div>
                 {{#autoForm collection="Accounts" id="updateAccount" type="update" doc=updatedDoc}}
                     <div class="modal-body">
-                            {{> afQuickField name="name"}}
-                            {{> afQuickField name="currencyId"}}
+                        {{> afQuickField name="name"}}
+                        {{> afQuickField name="balance"}}
+                        {{> afQuickField name="currencyId"}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
