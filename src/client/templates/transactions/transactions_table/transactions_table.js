@@ -1,6 +1,6 @@
 Template.transactionsTable.helpers({
     transactionRows: function () {
-        return Transactions.find();
+        return Transactions.find({}, {sort: {date: -1}});
     },
     transactionRowsSettings: function () {
         return {
@@ -10,80 +10,39 @@ Template.transactionsTable.helpers({
                     key: '_id',
                     label: '',
                     sortable: false,
-                    headerClass: function () {
-                        return 'hidden'
-                    },
-                    cellClass: function () {
-                        return 'hidden';
-                    }
+                    headerClass: 'hidden',
+                    cellClass: 'hidden'
                 },
                 {
-                    key: 'date',
+                    key: '_date',
                     label: '',
                     sortable: false,
+                    //sortOrder: 1,
+                    //sortDirection: 'descending',
                     sortByValue: true,
-                    sortDirection: 'descending',
+                    tmpl: Template.transactionsTableDate,
                     fn: function (value, object) {
-                        var date = moment(object.date),
-                            monthDay = date.format('MMMM D'),
-                            dayOfWeek = date.format('dddd');
-                        var html = '<div class="date-month-day">' + monthDay + '</div>'
-                                 + '<div class="date-day-of-week">' + dayOfWeek + '</div>';
-
-                        return new Spacebars.SafeString(html);
+                        console.log(value, object);
+                        return value;
                     }
                 },
                 {
-                    key: '_categories',
+                    key: '_category',
                     label: '',
                     sortable: false,
-                    fn: function (empty, object) {
-                        var categories = Categories.findOne(object.categories) || {title: 'No category'};
-
-                        var payer = object.payer ? ' — ' + object.payer : '';
-                        var recipient = object.recipient ? ' — ' + object.recipient : '';
-                        var notes = object.notes ? object.notes : '';
-
-                        var html = '<div class="categories-list">' + categories.title + '<span class="categories-recipient">'+ recipient + payer + '</span></div>'
-                                 + '<div class="categories-notes">' + notes + '</div>';
-
-                        return new Spacebars.SafeString(html);
-                    }
+                    tmpl: Template.transactionsTableCategory
                 },
                 {
-                    key: '_transactions',
+                    key: '_transaction',
                     label: '',
                     sortable: false,
-                    fn: function (empty, object) {
-                        var amount = object.amount;
-                        var amountTo = object.amountTo;
-                        var account = Accounts.findOne(object.account, {
-                            fields: {
-                                currencyId: 1
-                            }
-                        });
-
-                        var currency = account ? _.result(_.find(currencies, {cc: account.currencyId}), 'symbol') : '';
-
-                        var html = '<div>' + amount + (amountTo ? ' → ' + amountTo : '') + ' <sup>' + currency + '</sup>';
-
-                        return new Spacebars.SafeString(html);
-                    }
+                    tmpl: Template.transactionsTableTransaction
                 },
                 {
-                    key: '_accounts',
+                    key: '_account',
                     label: '',
                     sortable: false,
-                    fn: function (empty, object) {
-                        var account = Accounts.findOne(object.account);
-                        var accountTo = Accounts.findOne(object.accountTo);
-
-                        var html = account
-                            ? '<span>' + account.name + (accountTo ? ' → ' + accountTo.name : '') + '</span>'
-                            : '';
-
-                        return new Spacebars.SafeString(html);
-                    }
+                    tmpl: Template.transactionsTableAccount
                 }
             ]
         }
@@ -99,5 +58,56 @@ Template.transactionsTable.events({
             type: TransactionsTypes[transaction.type],
             id: transaction._id
         });
+    }
+});
+
+Template.transactionsTableDate.helpers({
+    date: function () {
+        var mdate = moment(this.date);
+
+        return {
+            dayOfMonth: mdate.format('MMMM D'),
+            dayOfWeek: mdate.format('dddd')
+        }
+    }
+});
+
+Template.transactionsTableCategory.helpers({
+    category: function () {
+        var category = Categories.findOne(this.categories) || {title: 'No category'},
+            payer = this.payer ? ' — ' + this.payer : '',
+            recipient = this.recipient ? ' — ' + this.recipient : '',
+            notes = this.notes ? this.notes : '';
+
+        return {
+            name: category.title,
+            payer: payer,
+            recipient: recipient,
+            notes: notes
+        };
+    }
+});
+
+Template.transactionsTableTransaction.helpers({
+    transaction: function () {
+        var account = Accounts.findOne(this.account, {fields: {currencyId: 1}});
+        var currency = account ? Currencies.findOne({code: account.currencyId}) : {symbol: ''};
+
+        return {
+            amount: this.amount || '',
+            amountTo: this.amountTo ? ' → ' + this.amountTo : '',
+            currency: currency.symbol
+        };
+    }
+});
+
+Template.transactionsTableAccount.helpers({
+    account: function () {
+        var accounts = Accounts.find({_id: {$in: [this.account, this.accountTo]}}).fetch();
+
+        return {
+            name: accounts.length > 0 ? accounts[0].name : '',
+            to: accounts.length > 1 ? ' → ' + accounts[1].name : ''
+        }
     }
 });

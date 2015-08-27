@@ -9,6 +9,13 @@ Router.route('/', {
 });
 
 Router.route('/overview', {
+    name: 'overview',
+    onBeforeAction: function () {
+        if (Meteor.subscribe('Transactions') &&
+            Meteor.subscribe('Accounts')) {
+            this.next();
+        }
+    },
     action: function () {
         this.render('overview');
     }
@@ -65,7 +72,8 @@ Router.route('/transactions', {
     onBeforeAction: function () {
         if (Meteor.subscribe('Accounts') &&
             Meteor.subscribe('Categories') &&
-            Meteor.subscribe('Transactions')) {
+            Meteor.subscribe('Transactions') &&
+            Meteor.subscribe('Currencies')) {
             this.next();
         }
     },
