@@ -56,7 +56,7 @@ Transactions = utils.schemaCollection('Transactions', {
                 return _.map(Accounts.find().fetch(), function (item) {
                     return {
                         value: item._id,
-                        label: item.title
+                        label: item.name
                     }
                 });
             }
