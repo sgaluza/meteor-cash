@@ -37,3 +37,7 @@ span.label > a {
 .transactions-filter {
     width: 50%;
 }
+
+.transactions-fixed-addon {
+    width: 15px;
+}
