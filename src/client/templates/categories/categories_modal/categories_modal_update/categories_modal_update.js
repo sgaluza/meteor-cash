@@ -6,6 +6,10 @@ Template.categoriesModalUpdate.helpers({
 
 Template.categoriesModalUpdate.events({
     'submit form': function () {
-        $('#categoriesModalUpdate').modal('hide');
+        var validatedName = AutoForm.getFieldValue('name', 'updateCategory');
+
+        if (AutoForm.validateForm('updateCategory') && !Categories.findOne({name: validatedName})) {
+            $('#categoriesModalUpdate').modal('hide');
+        }
     }
 });
