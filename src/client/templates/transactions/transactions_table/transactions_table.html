@@ -1,4 +1,10 @@
 <template name="transactionsTable">
+    <div class="input-group transactions-filter">
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-search"></span>
+      </span>
+        <input class="form-control transactions-filter-input" type="text"/>
+    </div>
     {{> reactiveTable collection=transactionRows settings=transactionRowsSettings}}
 </template>
 

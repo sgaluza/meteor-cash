@@ -33,3 +33,7 @@ span.label > a {
 .account-currency {
     color: gray;
 }
+
+.transactions-filter {
+    width: 50%;
+}
