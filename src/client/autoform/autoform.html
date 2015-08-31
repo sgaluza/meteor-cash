@@ -1,14 +1,20 @@
-<template name="afInputNumber_mcIncome">
-    <div class="input-group">
-        <span class="input-group-addon"><div class="transactions-fixed-addon"><span class="glyphicon glyphicon-plus"></span></div></span>
-        <input type="number" value="{{this.value}}" class="form-control" {{attsPlusFormControlClass}}/>
-    </div>
-</template>
-
 <template name="afInputNumber_mcExpense">
     <div class="input-group">
         <span class="input-group-addon"><div class="transactions-fixed-addon"><span class="glyphicon glyphicon-minus"></span></div></span>
         <input type="number" value="{{this.value}}" class="form-control" {{attsPlusFormControlClass}}/>
+        {{#if currencyForAmount}}
+            <span class="input-group-addon"><div class="transactions-fixed-addon">{{currencyForAmount}}</div></span>
+        {{/if}}
+    </div>
+</template>
+
+<template name="afInputNumber_mcIncome">
+    <div class="input-group">
+        <span class="input-group-addon"><div class="transactions-fixed-addon"><span class="glyphicon glyphicon-plus"></span></div></span>
+        <input type="number" value="{{this.value}}" class="form-control" {{attsPlusFormControlClass}}/>
+        {{#if currencyForAmountTo}}
+            <span class="input-group-addon"><div class="transactions-fixed-addon">{{currencyForAmountTo}}</div></span>
+        {{/if}}
     </div>
 </template>
 
@@ -55,20 +61,4 @@
         {{/if}}
 
     {{/autoForm}}
-</template>
-
-<template name="afSelect_mcIncome">
-    <select {{attsPlusFormControlClass}}>
-        {{#each this.items}}
-            {{#if this.optgroup}}
-                <optgroup label="{{this.optgroup}}">
-                    {{#each this.items}}
-                        <option {{afSelectOptionAtts}}>{{this.label}}</option>
-                    {{/each}}
-                </optgroup>
-            {{else}}
-                <option {{afSelectOptionAtts}}>{{this.label}}</option>
-            {{/if}}
-        {{/each}}
-    </select>
 </template>
