@@ -1,33 +1,31 @@
-//Template.afInputNumber_mcIncome.helpers({
-//    inputGroupOn: function () {
-//        return true;
-//    }
-//});
+Template.afInputNumber_mcExpense.helpers({
+    'currencyForAmount': function () {
+        var accountId = Session.get('transactions_accountId');
+        var currencyCode = _.result(Accounts.findOne(accountId), 'currencyId');
+
+        return  _.result(Currencies.findOne({code: currencyCode}), 'symbol');
+    }
+});
+
+Template.afInputNumber_mcIncome.helpers({
+    'currencyForAmountTo': function () {
+        var accountToId = Session.get('transactions_accountToId');
+        var currencyCode = _.result(Accounts.findOne(accountToId), 'currencyId');
+
+        return _.result(Currencies.findOne({code: currencyCode}), 'symbol');
+    }
+});
 
 
 AutoForm.hooks({
-    accountCreate: {
-        onSuccess: function(){
-            Template.accounts.initTree();
-            //Bootstrap3boilerplate.Modal.hide();
-        }
-    },
-    accountUpdate: {
-        onSuccess: function(){
-            Template.accounts.initTree();
-            //Bootstrap3boilerplate.Modal.hide();
-        }
-    },
     categoryEdit: {
         onSuccess: function(){
             Template.categories.initTree();
-            //Bootstrap3boilerplate.Modal.hide();
         }
     },
     categoryUpdate: {
         onSuccess: function(){
             Template.categories.initTree();
-            //Bootstrap3boilerplate.Modal.hide();
         }
     }
 });

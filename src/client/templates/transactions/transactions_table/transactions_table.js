@@ -1,10 +1,22 @@
+Template.transactionsTable.created = function () {
+    this.filter = new ReactiveTable.Filter('transactionsTable', ['_date', '_category', '_transactions', '_account']);
+};
+
+function getTransactionsRows () {
+    return Transactions.find();
+}
+
 Template.transactionsTable.helpers({
     transactionRows: function () {
-        return Transactions.find({}, {sort: {date: -1}});
+        return getTransactionsRows();
     },
     transactionRowsSettings: function () {
         return {
             showFilter: false,
+            filters: {
+                fields: ['_date', '_category', '_transactions', '_account'],
+                filters: ['transactionsFilter']
+            },
             fields: [
                 {
                     key: '_id',
@@ -58,6 +70,11 @@ Template.transactionsTable.events({
             type: TransactionsTypes[transaction.type],
             id: transaction._id
         });
+    },
+    'keyup .transactions-filter, input .transactions-filter-input': function (event, template) {
+        var input = $(event.target).val();
+        var transactionsCursor = getTransactionsRows();
+        var transactions = transactionsCursor.fetch().length ? transactionsCursor.fetch() : [];
     }
 });
 

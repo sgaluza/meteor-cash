@@ -1,6 +1,8 @@
 Template.accountsModalCreate.events({
     'submit form': function () {
-        if (AutoForm.validateForm('insertAccount')) {
+        var validatedName = AutoForm.getFieldValue('name', 'insertAccount');
+
+        if (AutoForm.validateForm('insertAccount') && !Accounts.findOne({name: validatedName})) {
             $('#accountsModalCreate').modal('hide');
         }
     }

@@ -14,6 +14,10 @@ Template.transactionsPanelExpense.events({
 
         addCategoriesTag(tagId, tagName);
     },
+    'change select[name=account]': function () {
+        var accountId = $('select[name=account]').val();
+        Session.set('transactions_accountId', accountId);
+    },
     'click #addRecipient': function () {
         $('input[name=recipient]').removeClass('hidden');
     },

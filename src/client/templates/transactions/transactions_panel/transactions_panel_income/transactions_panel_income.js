@@ -8,11 +8,15 @@ var addCategoriesTag = function (id, name) {
 };
 
 Template.transactionsPanelYield.events({
-   'change select[name="categories"]': function (event) {
+   'change select[name=categories]': function (event) {
        var tagId = $(event.target).val();
        var tagName = $(event.target).find("[value=" + tagId + "]").text();
 
        addCategoriesTag(tagId, tagName);
+   },
+   'change select[name=account]': function () {
+       var accountToId = $('select[name=account]').val();
+       Session.set('transactions_accountToId', accountToId);
    },
    'click #addPayer': function () {
        $('input[name=payer]').removeClass('hidden');

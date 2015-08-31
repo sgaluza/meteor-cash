@@ -33,3 +33,11 @@ span.label > a {
 .account-currency {
     color: gray;
 }
+
+.transactions-filter {
+    width: 50%;
+}
+
+.transactions-fixed-addon {
+    width: 15px;
+}

@@ -2,6 +2,7 @@ Template.categories.onRendered(function () {
     $('#categoriesTree').treeview({
         data: Template.categories.getTree(),
         onNodeSelected: function (event, data) {
+            AutoForm.resetForm('updateCategory');
             Session.set('categories_updatedId', data._id);
             $('#categoriesModalUpdate').modal();
         },
@@ -43,6 +44,7 @@ Template.categories.getTree = function () {
 
 Template.categories.events({
     'click #createCategory': function () {
+        AutoForm.resetForm('insertCategory');
         $('#categoriesModalCreate').modal();
     },
     'submit form': function () {
@@ -54,6 +56,7 @@ Deps.autorun(function () {
     $('#categoriesTree').treeview({
         data: Session.get('categories_tree'),
         onNodeSelected: function (event, data) {
+            AutoForm.resetForm('updateCategory');
             Session.set('categories_updatedId', data._id);
             $('#categoriesModalUpdate').modal();
         },

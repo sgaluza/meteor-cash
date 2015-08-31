@@ -6,7 +6,9 @@ Template.accountsModalUpdate.helpers({
 
 Template.accountsModalUpdate.events({
     'submit form': function () {
-        if (AutoForm.validateForm('updateAccount')) {
+        var validatedName = AutoForm.getFieldValue('name', 'updateAccount');
+
+        if (AutoForm.validateForm('updateAccount') && !Accounts.findOne({name: validatedName})) {
             $('#accountsModalUpdate').modal('hide');
         }
     }

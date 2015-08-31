@@ -1,5 +1,9 @@
 Template.categoriesModalCreate.events({
     'submit form': function () {
-        $('#categoriesModalCreate').modal('hide');
+        var validatedName = AutoForm.getFieldValue('name', 'insertCategory');
+
+        if (AutoForm.validateForm('insertCategory') && !Categories.findOne({name: validatedName})) {
+            $('#categoriesModalCreate').modal('hide');
+        }
     }
 });
