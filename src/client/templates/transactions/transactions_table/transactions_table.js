@@ -1,5 +1,5 @@
 Template.transactionsTable.created = function () {
-    this.filter = new ReactiveTable.Filter('transactionsTable', ['_date', '_category', '_transactions', '_account']);
+    this.filter = new ReactiveTable.Filter('transactions-filter', ['_id']);
 };
 
 function getTransactionsRows() {
@@ -7,16 +7,13 @@ function getTransactionsRows() {
 }
 
 Template.transactionsTable.helpers({
-    transactionRows        : function () {
+    transactionRows: function () {
         return getTransactionsRows();
     },
     transactionRowsSettings: function () {
         return {
             showFilter: false,
-            filters   : {
-                fields : ['_date', '_category', '_transactions', '_account'],
-                filters: ['transactionsFilter']
-            },
+            filters   : ['transactions-filter'],
             fields    : [
                 {
                     key        : '_id',
@@ -60,7 +57,7 @@ Template.transactionsTable.helpers({
 });
 
 Template.transactionsTable.events({
-    'click .reactive-table tbody tr'                              : function (event) {
+    'click .reactive-table tbody tr' : function (event) {
         var selectedRowId = $(event.currentTarget).find('.hidden').text();
         var transaction = Transactions.findOne(selectedRowId);
 
@@ -71,8 +68,16 @@ Template.transactionsTable.events({
     },
     'keyup .transactions-filter, input .transactions-filter-input': function (event, template) {
         var input = $(event.target).val();
-        var transactionsCursor = getTransactionsRows();
-        var transactions = transactionsCursor.fetch().length ? transactionsCursor.fetch() : [];
+
+        if (input) {
+            var compared = _.map(Transactions.find({search: {$regex: input, $options: 'i'}}).fetch(), function (item) {
+                return item._id;
+            });
+
+            template.filter.set({$in: compared});
+        } else {
+            template.filter.set('');
+        }
     }
 });
 
@@ -88,8 +93,7 @@ Template.transactionsTableHumanDate.helpers({
 
         return {
             dayOfMonth: mdate.format('MMMM D'),
-            dayOfWeek : mdate.format('dddd'),
-            test: this
+            dayOfWeek : mdate.format('dddd')
         }
     }
 });
