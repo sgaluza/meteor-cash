@@ -2,59 +2,57 @@ Template.transactionsTable.created = function () {
     this.filter = new ReactiveTable.Filter('transactionsTable', ['_date', '_category', '_transactions', '_account']);
 };
 
-function getTransactionsRows () {
+function getTransactionsRows() {
     return Transactions.find();
 }
 
 Template.transactionsTable.helpers({
-    transactionRows: function () {
+    transactionRows        : function () {
         return getTransactionsRows();
     },
     transactionRowsSettings: function () {
         return {
             showFilter: false,
-            filters: {
-                fields: ['_date', '_category', '_transactions', '_account'],
+            filters   : {
+                fields : ['_date', '_category', '_transactions', '_account'],
                 filters: ['transactionsFilter']
             },
-            fields: [
+            fields    : [
                 {
-                    key: '_id',
-                    label: '',
-                    sortable: false,
+                    key        : '_id',
+                    label      : '',
+                    sortable   : false,
                     headerClass: 'hidden',
-                    cellClass: 'hidden'
+                    cellClass  : 'hidden'
                 },
                 {
-                    key: '_date',
-                    label: '',
-                    sortable: false,
-                    //sortOrder: 1,
-                    //sortDirection: 'descending',
-                    sortByValue: true,
+                    key        : '_date',
+                    label      : 'Date',
+                    sortOrder: 1,
+                    sortDirection: 'descending',
+                    headerClass: 'hidden',
                     tmpl: Template.transactionsTableDate,
                     fn: function (value, object) {
-                        console.log(value, object);
-                        return value;
+                        return new Date(object.date).getTime();
                     }
                 },
                 {
-                    key: '_category',
-                    label: '',
+                    key     : '_category',
+                    label   : '',
                     sortable: false,
-                    tmpl: Template.transactionsTableCategory
+                    tmpl    : Template.transactionsTableCategory
                 },
                 {
-                    key: '_transaction',
-                    label: '',
+                    key     : '_transaction',
+                    label   : '',
                     sortable: false,
-                    tmpl: Template.transactionsTableTransaction
+                    tmpl    : Template.transactionsTableTransaction
                 },
                 {
-                    key: '_account',
-                    label: '',
+                    key     : '_account',
+                    label   : '',
                     sortable: false,
-                    tmpl: Template.transactionsTableAccount
+                    tmpl    : Template.transactionsTableAccount
                 }
             ]
         }
@@ -62,13 +60,13 @@ Template.transactionsTable.helpers({
 });
 
 Template.transactionsTable.events({
-    'click .reactive-table tbody tr': function (event) {
+    'click .reactive-table tbody tr'                              : function (event) {
         var selectedRowId = $(event.currentTarget).find('.hidden').text();
         var transaction = Transactions.findOne(selectedRowId);
 
         Router.go('transactions.update', {
             type: TransactionsTypes[transaction.type],
-            id: transaction._id
+            id  : transaction._id
         });
     },
     'keyup .transactions-filter, input .transactions-filter-input': function (event, template) {
@@ -80,11 +78,18 @@ Template.transactionsTable.events({
 
 Template.transactionsTableDate.helpers({
     date: function () {
-        var mdate = moment(this.date);
+        return new Date(this.date).getTime() / 1000;
+    }
+});
+
+Template.transactionsTableHumanDate.helpers({
+    humanDate: function () {
+        var mdate = moment.unix(this);
 
         return {
             dayOfMonth: mdate.format('MMMM D'),
-            dayOfWeek: mdate.format('dddd')
+            dayOfWeek : mdate.format('dddd'),
+            test: this
         }
     }
 });
@@ -97,10 +102,10 @@ Template.transactionsTableCategory.helpers({
             notes = this.notes ? this.notes : '';
 
         return {
-            name: category.title,
-            payer: payer,
+            name     : category.title,
+            payer    : payer,
             recipient: recipient,
-            notes: notes
+            notes    : notes
         };
     }
 });
@@ -111,7 +116,7 @@ Template.transactionsTableTransaction.helpers({
         var currency = account ? Currencies.findOne({code: account.currencyId}) : {symbol: ''};
 
         return {
-            amount: this.amount || '',
+            amount  : this.amount || '',
             amountTo: this.amountTo ? ' → ' + this.amountTo : '',
             currency: currency.symbol
         };
@@ -124,7 +129,7 @@ Template.transactionsTableAccount.helpers({
 
         return {
             name: accounts.length > 0 ? accounts[0].name : '',
-            to: accounts.length > 1 ? ' → ' + accounts[1].name : ''
+            to  : accounts.length > 1 ? ' → ' + accounts[1].name : ''
         }
     }
 });

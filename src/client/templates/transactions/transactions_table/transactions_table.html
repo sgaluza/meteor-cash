@@ -9,8 +9,13 @@
 </template>
 
 <template name="transactionsTableDate">
-    <div class="date-month-day">{{date.dayOfMonth}}</div>
-    <div class="date-day-of-week">{{date.dayOfWeek}}</div>
+    {{> transactionsTableHumanDate date}}
+</template>
+
+<template name="transactionsTableHumanDate">
+    <div class="date-month-day">{{humanDate.dayOfMonth}}</div>
+    <div class="date-day-of-week">{{humanDate.dayOfWeek}}</div>
+    {{humanDate.test}}
 </template>
 
 <template name="transactionsTableCategory">
