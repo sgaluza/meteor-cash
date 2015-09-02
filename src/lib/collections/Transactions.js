@@ -73,5 +73,9 @@ Transactions = utils.schemaCollection('Transactions', {
     notes: {
         type: String,
         optional: true
+    },
+    search: {
+        type: [String],
+        index: true
     }
 });

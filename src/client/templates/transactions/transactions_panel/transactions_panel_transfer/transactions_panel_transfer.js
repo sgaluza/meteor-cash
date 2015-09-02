@@ -14,6 +14,6 @@ Template.transactionsPanelTransfer.events({
 
 Template.transactionsPanelTransferUpdate.helpers({
     'notesOn': function () {
-        return _.has(Transactions.findOnd({_id: Router.current().params.id}), 'notes');
+        return _.has(Transactions.findOne({_id: Router.current().params.id}), 'notes');
     }
 });

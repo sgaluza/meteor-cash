@@ -2,36 +2,29 @@ Session.set('transactions_panelTemplate', '');
 Session.set('transactions_selectedRow', '');
 Session.set('transactions_categoriesTags', []);
 
+var assignSearchToDoc = function(doc) {
+    var search = getSearchArray(doc);
+    return search.length ?_.assign(doc, {search: search}) : doc;
+};
+
+var getSearchArray = function(doc) {
+    return _.compact([
+        _.result(Categories.findOne(doc.categories), 'title'),
+        _.result(Accounts.findOne(doc.account), 'name'),
+        doc.payer,
+        doc.notes
+    ]);
+};
+
 AutoForm.hooks({
     insertTransaction: {
         formToDoc: function (doc) {
-            //var categoriesToSave = _.map(Session.get('transactions_categoriesTags'), function (item) {
-            //    return item.tagId;
-            //});
-            //
-            //Session.set('transactions_categoriesTags', []);
-            //
-            //_.assign(doc, {
-            //    categories: categoriesToSave
-            //});
-
-            return doc;
+            return assignSearchToDoc(doc);
         }
     },
     updateTransaction: {
         formToModifier: function (modifier) {
-            //var categoriesToSave = _.map(Session.get('transactions_categoriesTags'), function (item) {
-            //    return item.tagId;
-            //});
-            //
-            //Session.set('transactions_categoriesTags', []);
-            //
-            //_.assign(modifier.$set, {
-            //    categories: categoriesToSave
-            //});
-            //
-            //delete modifier.$unset;
-
+            _.assign(modifier['$set'], getSearchArray(modifier['$set']));
             return modifier;
         }
     }
