@@ -2,7 +2,7 @@
     {{#autoForm collection="Transactions" id="insertTransaction" type="insert"}}
         <div class="form-group">
             {{> afQuickField name="type" label=false type="hidden" value="1"}}
-            {{> afQuickField name="date" label=false value=currentDate}}
+            {{> afQuickField name="date" type="bootstrap-datepicker" label=false value=currentDate}}
             {{> afQuickField name="amount" label=false template="mcIncome"}}
             {{> afQuickField name="categories" label=false}}
             {{> afQuickField name="account" label=false}}
@@ -17,7 +17,7 @@
 <template name="transactionsPanelYieldUpdate">
     {{#autoForm collection="Transactions" id="updateTransaction" type="update" doc=transactionsGetSelectedRowId}}
         <div class="form-group">
-            {{> afQuickField name="date" label=false}}
+            {{> afQuickField name="date" type="bootstrap-datepicker" label=false}}
             {{> afQuickField name="amount" label=false template="mcIncome"}}
             {{> afQuickField name="categories" label=false}}
             {{> afQuickField name="account" label=false}}
