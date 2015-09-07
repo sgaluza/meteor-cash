@@ -12,8 +12,7 @@ Template.transactionsPanelFooter.events({
         Router.go('transactions');
     },
     'click #removeTransactionButton': function () {
-        Transactions.remove({_id: Session.get('transactions_selectedRow')});
-
-        Session.set('transactions_categoriesTags', []);
+        Transactions.remove({_id: Router.current().params.id});
+        Router.go('transactions');
     }
 });

@@ -2,7 +2,7 @@ if (Meteor.isClient) {
     var config = {
         session_categoriesTags: 'transactions_categoriesTags',
         session_selectedRow   : 'transactions_selectedRow',
-        session_panelTemplate : 'transactions_panelTemplate',
+        session_panelTemplate : 'transactions_panelTemplate'
     };
 
     function TransactionsTools(config) {
