@@ -121,9 +121,6 @@ Router.route('/transactions/add/:type', {
 Router.route('/transactions/update/:type/:id', {
     name: 'transactions.update',
     onBeforeAction: function () {
-        Session.set('transactions_accountId', null);
-        Session.set('transactions_accountToId', null);
-
         if (Meteor.subscribe('Accounts') &&
             Meteor.subscribe('Categories') &&
             Meteor.subscribe('Transactions')) {

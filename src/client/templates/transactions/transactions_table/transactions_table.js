@@ -60,6 +60,8 @@ Template.transactionsTable.events({
     'click .reactive-table tbody tr' : function (event) {
         var selectedRowId = $(event.currentTarget).find('.hidden').text();
         var transaction = Transactions.findOne(selectedRowId);
+        Session.set('transactions_accountId', transaction.account);
+        if (transaction.accountTo) Session.set('transactions_accountToId', transaction.accountTo);
 
         Router.go('transactions.update', {
             type: TransactionsTypes[transaction.type],
@@ -106,7 +108,7 @@ Template.transactionsTableCategory.helpers({
             notes = this.notes ? this.notes : '';
 
         return {
-            name     : category.title,
+            name     : (this.type == 3) ? '' : category.title,
             payer    : payer,
             recipient: recipient,
             notes    : notes
@@ -116,13 +118,16 @@ Template.transactionsTableCategory.helpers({
 
 Template.transactionsTableTransaction.helpers({
     transaction: function () {
-        var account = Accounts.findOne(this.account, {fields: {currencyId: 1}});
-        var currency = account ? Currencies.findOne({code: account.currencyId}) : {symbol: ''};
+        var account = Accounts.findOne(this.account, {fields: {currencyId: 1}}),
+            accountTo = Accounts.findOne(this.accountTo, {fields: {currencyId: 1}}),
+            currency = account ? Currencies.findOne({code: account.currencyId}) : {symbol: ''},
+            currencyTo = accountTo ? Currencies.findOne({code: accountTo.currencyId}) : {symbol: ''};
 
         return {
             amount  : this.amount || '',
             amountTo: this.amountTo ? ' → ' + this.amountTo : '',
-            currency: currency.symbol
+            currency: currency.symbol,
+            currencyTo: currencyTo.symbol
         };
     }
 });

@@ -19,7 +19,11 @@
 
 <template name="transactionsTableCategory">
     <div class="categories-list">
-        <span>{{category.name}}</span>
+        {{#if category.name}}
+            <span>{{category.name}}</span>
+        {{else}}
+            <br>
+        {{/if}}
         <span class="categories-recipient">{{category.recipient}}{{category.payer}}</span>
     </div>
     <div class="categories-notes">
@@ -29,8 +33,8 @@
 
 <template name="transactionsTableTransaction">
     <div>
-        <span>{{transaction.amount}}</span>
-        <span>{{transaction.amountTo}}&nbsp;<sup>{{transaction.currency}}</sup></span>
+        <span>{{transaction.amount}}&nbsp;<sup>{{transaction.currency}}</sup></span>
+        <span>{{transaction.amountTo}}&nbsp;<sup>{{transaction.currencyTo}}</sup></span>
     </div>
 </template>
 
