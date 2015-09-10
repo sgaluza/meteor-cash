@@ -9,8 +9,9 @@
                             <span>{{name}}</span>
                             <span>{{> accountCurrency currency currencyId}}</span>
                         </div>
-                        <div class="pull-right" hidden='true'>
-                            <a href="{{pathFor route='accounts' hash=_id}}" class="account-edit">Edit</a>
+                        <div class="pull-right clearfix" hidden='true'>
+                            <a href="{{pathFor route='accounts' hash=_id}}" class="account-edit pull-left">Edit</a>
+                            <a href="{{pathFor route='accounts' hash=_id}}" class="account-delete pull-right margin-left-5">Delete</a>
                         </div>
                     </li>
                 {{/each}}
@@ -19,6 +20,7 @@
     </div>
     {{> accountsModalCreate}}
     {{> accountsModalUpdate}}
+    {{> accountsModalDelete}}
     <a href="#" class="btn btn-primary" id="createAccount">Create Account</a>
 </template>
 
