@@ -41,11 +41,13 @@ AutoForm.hooks({
     insertCategory: {
         onSuccess: function() {
             $('#categoriesModalCreate').modal('hide');
+            Session.set('categories_tree', Template.categories.getTree());
         }
     },
     updateCategory: {
         onSuccess: function() {
             $('#categoriesModalUpdate').modal('hide');
+            Session.set('categories_tree', Template.categories.getTree());
         }
     }
 });

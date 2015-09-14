@@ -46,9 +46,6 @@ Template.categories.events({
     'click #createCategory': function () {
         AutoForm.resetForm('insertCategory');
         $('#categoriesModalCreate').modal();
-    },
-    'submit form': function () {
-        Session.set('categories_tree', Template.categories.getTree());
     }
 });
 
