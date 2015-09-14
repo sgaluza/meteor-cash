@@ -79,7 +79,6 @@ Router.route('/transactions', {
     },
     action: function () {
         this.render('transactions');
-        this.render('transactionsPanelDefault', {to: 'transactionsPanel'});
     }
 });
 

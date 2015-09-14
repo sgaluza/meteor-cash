@@ -27,5 +27,25 @@ AutoForm.hooks({
         onSuccess: function(){
             Template.categories.initTree();
         }
+    },
+    insertAccount: {
+        onSuccess: function() {
+            $('#accountsModalCreate').modal('hide');
+        }
+    },
+    updateAccount: {
+        onSuccess: function() {
+            $('#accountsModalUpdate').modal('hide');
+        }
+    },
+    insertCategory: {
+        onSuccess: function() {
+            $('#categoriesModalCreate').modal('hide');
+        }
+    },
+    updateCategory: {
+        onSuccess: function() {
+            $('#categoriesModalUpdate').modal('hide');
+        }
     }
 });

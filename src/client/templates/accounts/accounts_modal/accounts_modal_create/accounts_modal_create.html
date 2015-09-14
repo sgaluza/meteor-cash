@@ -6,7 +6,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Create Account</h4>
                 </div>
-                {{#autoForm collection="Accounts" id="insertAccount" type="insert"}}
+                {{#autoForm collection="Accounts" id="insertAccount" type="insert" validation="submit"}}
                     <div class="modal-body">
                         {{> afQuickField name="name"}}
                         {{> afQuickField name="balance" defaultValue=0}}

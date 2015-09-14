@@ -5,14 +5,27 @@ Template.transactionsPanelFooter.helpers({
 });
 
 Template.transactionsPanelFooter.events({
-    'click #saveTransactionButton': function () {
-        Router.go('transactions');
+    'click #saveTransactionButton': function (event) {
+        if (Router.current().route.getName() === 'transactions.update') {
+            Router.go('/transactions/add/expense');
+        }
+        else {
+            Session.set('transactions_accountId', null);
+            Session.set('transactions_accountToId', null);
+        }
     },
-    'click #cancelTransactionButton': function () {
-        Router.go('transactions');
+    'click #cancelTransactionButton': function (event) {
+        if (Router.current().route.getName() === 'transactions.update') {
+            Router.go('/transactions/add/expense');
+        }
+        else {
+            Session.set('transactions_accountId', null);
+            Session.set('transactions_accountToId', null);
+            event.delegateTarget.reset();
+        }
     },
     'click #removeTransactionButton': function () {
         Transactions.remove({_id: Router.current().params.id});
-        Router.go('transactions');
+        Router.go('/transactions/add/expense');
     }
 });

@@ -134,11 +134,12 @@ Template.transactionsTableTransaction.helpers({
 
 Template.transactionsTableAccount.helpers({
     account: function () {
-        var accounts = Accounts.find({_id: {$in: [this.account, this.accountTo]}}).fetch();
+        var account = Accounts.findOne(this.account, {fields: {name: 1}}),
+            accountTo = this.accountTo ? Accounts.findOne(this.accountTo, {fields: {name: 1}}) : "";
 
         return {
-            name: accounts.length > 0 ? accounts[0].name : '',
-            to  : accounts.length > 1 ? ' → ' + accounts[1].name : ''
+            name: account.name,
+            to  : accountTo ? ' → ' + accountTo.name : ""
         }
     }
 });

@@ -6,7 +6,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Update Category</h4>
                 </div>
-                {{#autoForm collection="Categories" id="updateCategory" type="update" doc=updatedDoc}}
+                {{#autoForm collection="Categories" id="updateCategory" type="update" doc=updatedDoc validation="submit"}}
                     <div class="modal-body">
                         {{> afQuickField name="title"}}
                         {{> afQuickField name="parentId"}}
