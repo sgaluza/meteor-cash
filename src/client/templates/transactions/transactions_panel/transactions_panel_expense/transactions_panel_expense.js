@@ -32,6 +32,12 @@ Template.transactionsPanelExpenseUpdate.events({
         var tagName = $(event.target).find("[value=" + tagId + "]").text();
 
         addCategoriesTag(tagId, tagName);
+    },
+    'click #addRecipient': function () {
+        $('input[name=recipient]').removeClass('hidden');
+    },
+    'click #addNotes': function () {
+        $('textarea[name=notes]').removeClass('hidden');
     }
 });
 

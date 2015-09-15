@@ -1,9 +1,7 @@
 <template name="transactionsPanel">
     <div class="panel panel-default">
         <div class="panel-body">
-            {{#if transactionsPanelOn}}
-                {{> transactionsPanelHeader}}
-            {{/if}}
+            {{> transactionsPanelHeader}}
             {{> yield 'transactionsPanel'}}
         </div>
     </div>

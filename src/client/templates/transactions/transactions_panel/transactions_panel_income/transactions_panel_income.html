@@ -21,11 +21,16 @@
             {{> afQuickField name="amount" label=false template="mcIncome"}}
             {{> afQuickField name="categories" label=false}}
             {{> afQuickField name="account" label=false}}
+            <p>You can also add a <a href="#" id="addPayer">payer</a> or <a href="#" id="addNotes">notes</a></p>
             {{#if payerOn}}
                 {{> afQuickField name="payer" placeholder="Payer name" label=false}}
+            {{else}}
+                {{> afQuickField name="payer" class="hidden" placeholder="Payer name" label=false}}
             {{/if}}
             {{#if notesOn}}
                 {{> afQuickField name="notes" placeholder="Text of notes" label=false rows=2}}
+            {{else}}
+                {{> afQuickField name="notes" class="hidden" placeholder="Text of notes" label=false rows=2}}
             {{/if}}
         </div>
         {{> transactionsPanelFooter}}

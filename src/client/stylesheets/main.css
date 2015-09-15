@@ -38,8 +38,9 @@ span.label > a {
     width: 50%;
 }
 
-.transactions-fixed-addon {
-    width: 15px;
+.input-group-addon {
+    padding: 0;
+    width: 40px;
 }
 .dropdown-menu {
     margin-top: 80px;

@@ -27,5 +27,27 @@ AutoForm.hooks({
         onSuccess: function(){
             Template.categories.initTree();
         }
+    },
+    insertAccount: {
+        onSuccess: function() {
+            $('#accountsModalCreate').modal('hide');
+        }
+    },
+    updateAccount: {
+        onSuccess: function() {
+            $('#accountsModalUpdate').modal('hide');
+        }
+    },
+    insertCategory: {
+        onSuccess: function() {
+            $('#categoriesModalCreate').modal('hide');
+            Session.set('categories_tree', Template.categories.getTree());
+        }
+    },
+    updateCategory: {
+        onSuccess: function() {
+            $('#categoriesModalUpdate').modal('hide');
+            Session.set('categories_tree', Template.categories.getTree());
+        }
     }
 });

@@ -32,6 +32,12 @@ Template.transactionsPanelYieldUpdate.events({
         var tagName = $(event.target).find("[value=" + tagId + "]").text();
 
         addCategoriesTag(tagId, tagName);
+    },
+    'click #addPayer': function () {
+        $('input[name=payer]').removeClass('hidden');
+    },
+    'click #addNotes': function () {
+        $('textarea[name=notes]').removeClass('hidden');
     }
 });
 
