@@ -1,66 +1,22 @@
-Template.categories.onRendered(function () {
-    $('#categoriesTree').treeview({
-        data: Template.categories.getTree(),
-        onNodeSelected: function (event, data) {
-            AutoForm.resetForm('updateCategory');
-            Session.set('categories_updatedId', data._id);
-            $('#categoriesModalUpdate').modal();
-        },
-        selectedColor: '#000000',
-        selectedBackColor: '#FFFFFF'
-    });
-});
-
-Template.categories.getTree = function () {
-    var parentCategory;
-    var categories = Categories.find().fetch();
-
-    if (!categories) {
-        return [];
+Template.categories.helpers({
+    categories: function () {
+        return Categories.find().fetch();
     }
-
-    _.forEach(categories, function (doc) {
-        _.assign(doc, {
-            text: doc.title
-        });
-
-        if (doc.parentId) {
-            parentCategory = _.find(categories, {_id: doc.parentId});
-
-            if (parentCategory) {
-                if (parentCategory.nodes) {
-                    parentCategory.nodes.push(doc);
-                } else {
-                    parentCategory.nodes = [doc];
-                }
-            }
-        }
-    });
-
-    return _.filter(categories, function (category) {
-        return !category.parentId;
-    });
-};
+});
 
 Template.categories.events({
     'click #createCategory': function () {
         AutoForm.resetForm('insertCategory');
         $('#categoriesModalCreate').modal();
     },
-    'submit form': function () {
-        Session.set('categories_tree', Template.categories.getTree());
+    'click a.category-edit': function () {
+        AutoForm.resetForm('updateCategory');
+        $('#categoriesModalUpdate').modal();
+    },
+    'mouseenter li.category-item': function (event) {
+        $(event.currentTarget).find('div.pull-right').show();
+    },
+    'mouseleave li.category-item': function (event) {
+        $(event.currentTarget).find('div.pull-right').hide();
     }
-});
-
-Deps.autorun(function () {
-    $('#categoriesTree').treeview({
-        data: Session.get('categories_tree'),
-        onNodeSelected: function (event, data) {
-            AutoForm.resetForm('updateCategory');
-            Session.set('categories_updatedId', data._id);
-            $('#categoriesModalUpdate').modal();
-        },
-        selectedColor: '#000000',
-        selectedBackColor: '#FFFFFF'
-    });
 });

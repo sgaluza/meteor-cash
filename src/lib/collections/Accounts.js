@@ -9,6 +9,11 @@ Accounts = utils.schemaCollection("Accounts", {
             placeholder: "Name your account"
         }
     },
+    names     : {
+        type: "select",
+        label : "Please, choose account to re-assign transactions of the removed account to:",
+        optional : true
+    },
     balance: {
         type: Number,
         min: 0,

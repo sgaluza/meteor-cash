@@ -41,3 +41,9 @@ span.label > a {
 .transactions-fixed-addon {
     width: 15px;
 }
+.dropdown-menu {
+    margin-top: 80px;
+}
+.margin-left-5 {
+    margin-left: 5px;
+}
