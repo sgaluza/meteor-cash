@@ -1,6 +1,7 @@
 Transactions = utils.schemaCollection('Transactions', {
     date: {
-        type: Date
+        type: Date,
+        optional: true
     },
     type: {
         type: Number

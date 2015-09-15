@@ -42,3 +42,9 @@ span.label > a {
     padding: 0;
     width: 40px;
 }
+.dropdown-menu {
+    margin-top: 80px;
+}
+.margin-left-5 {
+    margin-left: 5px;
+}

@@ -13,6 +13,10 @@ Template.accounts.events({
         AutoForm.resetForm('updateAccount');
         $('#accountsModalUpdate').modal();
     },
+    'click a.account-delete': function () {
+        AutoForm.resetForm('deleteAccount');
+        $('#accountsModalDelete').modal();
+    },
     'mouseenter li.account-item': function (event) {
         $(event.currentTarget).find('div.pull-right').show();
     },
