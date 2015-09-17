@@ -1,9 +1,21 @@
 Template.transactionsInfo.helpers({
     allMoney: function () {
+        var accounts = Accounts.find().fetch();
+        var exRates = Exrates.find().fetch();
+
         return _.reduce(_.map(Transactions.find().fetch(), function (doc) {
+            var currency = _.result(_.findWhere(accounts, {'_id' : doc.account}), 'currencyId');
+            var rateUSD = _.result(_.findWhere(exRates, {'Cur_Abbreviation' : 'USD'}), 'Cur_OfficialRate');
+            if (currency === 'USD') {
                 return doc.amount;
+            } else if (currency === 'BYR') {
+                return Number((doc.amount / rateUSD).toFixed(2));
+            } else {
+                var rate = _.result(_.findWhere(exRates, {'Cur_Abbreviation' : currency}), 'Cur_OfficialRate');
+                return Number(((doc.amount * rate) / rateUSD).toFixed(2));
+            }
         }), function (memo, num) {
-            return memo + num;
+            return (memo + num);
         });
     },
     currency: function () {
