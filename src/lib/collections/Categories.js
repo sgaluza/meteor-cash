@@ -29,7 +29,7 @@ Categories = utils.schemaCollection('Categories', {
                 var items = [];
                 var addItem = function(category, level){
                     items.push({
-                        label: _.repeat('• ', level) + ' ' + category.title,
+                        label: _.repeat('\u2022', level) + ' ' + category.title,
                         value: category._id
                     });
                     if(category.children) {

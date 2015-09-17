@@ -13,7 +13,6 @@ twbs:bootstrap
 jquery
 insecure
 stevezhu:lodash
-bootstrap-treeview
 mizzao:jquery-ui
 aslagle:reactive-table
 fortawesome:fontawesome
@@ -24,3 +23,4 @@ aldeed:autoform-select2
 maazalik:highcharts
 rajit:bootstrap3-datepicker
 aldeed:autoform-bs-datepicker
+mrt:jqtree

@@ -2,18 +2,7 @@
     <h1>Categories</h1>
     <div class="row">
         <div class="col-md-6">
-            <ul class="list-group">
-                {{#each categories}}
-                    <li class="list-group-item category-item clearfix">
-                        <div class="pull-left">
-                            <span>{{title}}</span>
-                        </div>
-                        <div class="pull-right" hidden='true'>
-                            <a href="{{pathFor route='categories' hash=_id}}" class="category-edit">Edit</a>
-                        </div>
-                    </li>
-                {{/each}}
-            </ul>
+            <div id="categoriesTree"></div>
         </div>
     </div>
     {{> categoriesModalCreate}}
