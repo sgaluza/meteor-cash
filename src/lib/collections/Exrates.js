@@ -1,23 +1,20 @@
 Exrates = utils.schemaCollection('exrates', {
-    id: {
-        type: Meteor.ObjectId
-    },
     attributes: {
         type: Object
     },
-    Cur_QuotName: {
+    name: {
         type: String
     },
-    Cur_Scale: {
+    scale: {
         type: Number
     },
-    Cur_OfficialRate: {
+    rate: {
         type: Number
     },
-    Cur_Code: {
+    code: {
         type: Number
     },
-    Cur_Abbreviation: {
+    abbreviation: {
         type: String
     }
 });

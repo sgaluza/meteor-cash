@@ -5,13 +5,13 @@ Template.transactionsInfo.helpers({
 
         return accounting.formatNumber(_.reduce(_.map(Transactions.find().fetch(), function (doc) {
             var currency = _.result(_.findWhere(accounts, {'_id' : doc.account}), 'currencyId');
-            var rateUSD = _.result(_.findWhere(exRates, {'Cur_Abbreviation' : 'USD'}), 'Cur_OfficialRate');
+            var rateUSD = _.result(_.findWhere(exRates, {'abbreviation' : 'USD'}), 'rate');
             if (currency === 'USD') {
                 return doc.amount;
             } else if (currency === 'BYR') {
                 return Number((doc.amount / rateUSD).toFixed(2));
             } else {
-                var rate = _.result(_.findWhere(exRates, {'Cur_Abbreviation' : currency}), 'Cur_OfficialRate');
+                var rate = _.result(_.findWhere(exRates, {'abbreviation' : currency}), 'rate');
                 return Number(((doc.amount * rate) / rateUSD).toFixed(2));
             }
         }), function (memo, num) {
