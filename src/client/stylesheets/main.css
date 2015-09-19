@@ -48,3 +48,57 @@ span.label > a {
 .margin-left-5 {
     margin-left: 5px;
 }
+
+#categoriesTree {
+    margin-bottom: 20px;
+}
+
+ul.jqtree-tree {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-left: 0;
+}
+
+ul.jqtree-tree ul.jqtree_common {
+    margin-left: 0;
+}
+
+div.jqtree-element {
+    border-top: 1px solid #ddd;
+    padding: 10px 15px;
+}
+
+ul.jqtree-tree > li:nth-child(1) > div {
+    border-top: none;
+}
+
+ul.jqtree-tree .jqtree-toggler{
+    margin-left: 30px;
+    font-size: 14px;
+    top: 32%;
+}
+
+div.jqtree-element span.jqtree_common.jqtree-title {
+    margin-left: 15px;
+}
+
+ul.jqtree_common ul.jqtree_common span.jqtree_common {
+    margin-left: 30px;
+}
+
+ul.jqtree_common ul.jqtree_common ul.jqtree_common span.jqtree_common {
+    margin-left: 45px;
+}
+
+ul.jqtree_common ul.jqtree_common ul.jqtree_common ul.jqtree_common span.jqtree_common {
+    margin-left: 60px;
+}
+
+ul.jqtree_common ul.jqtree_common .jqtree-toggler{
+    margin-left: 45px;
+}
+
+ul.jqtree_common ul.jqtree_common ul.jqtree_common .jqtree-toggler{
+    margin-left: 60px;
+}
+
