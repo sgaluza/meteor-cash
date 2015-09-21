@@ -1,5 +1,8 @@
 <template name="categories">
-    <h1>Categories</h1>
+    <div class="create-account-category-header-btn">
+        <h1>Categories</h1>
+        <a href="#" class="btn btn-primary" id="createCategory">Create Category</a>
+    </div>
     <div class="row">
         <div class="col-md-6">
             <div id="categoriesTree"></div>
@@ -7,5 +10,4 @@
     </div>
     {{> categoriesModalCreate}}
     {{> categoriesModalUpdate}}
-    <a href="#" class="btn btn-primary" id="createCategory">Create Category</a>
 </template>

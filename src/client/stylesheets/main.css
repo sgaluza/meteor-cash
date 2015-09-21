@@ -23,9 +23,15 @@ span.label > a {
 }
 
 #transactionsPanelNav > li > a {
-    padding: 0 5px;
+    padding: 5px 10px;
 }
-
+#transactionsPanelNav + div.panel.panel-default {
+    border-top: 0;
+    border-radius: 0 0 4px 4px;
+}
+#transactionsPanelNav + div.panel.panel-default .panel-body {
+    padding-top: 25px;
+}
 .account-edit {
     /*display: none;*/
 }
@@ -101,4 +107,10 @@ ul.jqtree_common ul.jqtree_common .jqtree-toggler{
 ul.jqtree_common ul.jqtree_common ul.jqtree_common .jqtree-toggler{
     margin-left: 60px;
 }
-
+.create-account-category-header-btn h1, a {
+    display: inline-block;
+}
+.create-account-category-header-btn a {
+    vertical-align: super;
+    margin-left: 20px;
+}
