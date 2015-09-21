@@ -12,7 +12,6 @@ binary-heap@1.0.3
 blaze@2.1.2
 blaze-tools@1.0.3
 boilerplate-generator@1.0.3
-bootstrap-treeview@0.0.1
 callback-hook@1.0.3
 check@1.0.5
 ddp@1.1.0
@@ -51,6 +50,7 @@ mizzao:jquery-ui@1.11.4
 mobile-status-bar@1.0.3
 momentjs:moment@2.10.6
 mongo@1.1.0
+mrt:jqtree@0.19.0
 observe-sequence@1.0.6
 ordered-dict@1.0.3
 rajit:bootstrap3-datepicker@1.4.1
