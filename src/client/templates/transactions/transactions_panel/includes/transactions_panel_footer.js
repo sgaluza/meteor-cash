@@ -25,7 +25,6 @@ Template.transactionsPanelFooter.events({
         }
     },
     'click #removeTransactionButton': function () {
-        Transactions.remove({_id: Router.current().params.id});
-        Router.go('/transactions/add/expense');
+        $('#transactionsModalDelete').modal();
     }
 });
