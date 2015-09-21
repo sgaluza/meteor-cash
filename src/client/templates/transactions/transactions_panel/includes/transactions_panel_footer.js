@@ -16,16 +16,31 @@ Template.transactionsPanelFooter.events({
     },
     'click #cancelTransactionButton': function (event) {
         if (Router.current().route.getName() === 'transactions.update') {
-            Router.go('/transactions/add/expense');
+            switch (Router.current().params.type) {
+                case 'expense':
+                    Router.go('/transactions/add/expense');
+                    break;
+                case 'yield':
+                    Router.go('/transactions/add/yield');
+                    break;
+                case 'transfer':
+                    Router.go('/transactions/add/transfer');
+                    break;
+                default:
+                    Router.go('/transactions/add/transfer');
+            }
         }
         else {
             Session.set('transactions_accountId', null);
             Session.set('transactions_accountToId', null);
-            event.delegateTarget.reset();
+            $(':input','#insertTransaction')
+                .not(':button, :submit, :reset, :input[name="date"]')
+                .val('')
+                .removeAttr('checked')
+                .removeAttr('selected');
         }
     },
     'click #removeTransactionButton': function () {
-        Transactions.remove({_id: Router.current().params.id});
-        Router.go('/transactions/add/expense');
+        $('#transactionsModalDelete').modal();
     }
 });

@@ -1,4 +1,4 @@
-aldeed:autoform@5.4.1
+aldeed:autoform@5.5.0
 aldeed:autoform-bs-datepicker@1.1.1
 aldeed:autoform-select2@2.0.2
 aldeed:collection2@2.5.0
@@ -12,6 +12,7 @@ binary-heap@1.0.3
 blaze@2.1.2
 blaze-tools@1.0.3
 boilerplate-generator@1.0.3
+bootstrap-treeview@0.0.1
 callback-hook@1.0.3
 check@1.0.5
 ddp@1.1.0
@@ -37,6 +38,7 @@ iron:url@1.0.9
 jquery@1.11.3_2
 json@1.0.3
 launch-screen@1.0.2
+lepozepo:accounting@1.0.0
 livedata@1.0.13
 logging@1.0.7
 maazalik:highcharts@0.4.0

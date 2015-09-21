@@ -124,8 +124,8 @@ Template.transactionsTableTransaction.helpers({
             currencyTo = accountTo ? Currencies.findOne({code: accountTo.currencyId}) : {symbol: ''};
 
         return {
-            amount  : this.amount || '',
-            amountTo: this.amountTo ? ' → ' + this.amountTo : '',
+            amount  : accounting.formatNumber(this.amount, 2) || '',
+            amountTo: this.amountTo ? ' → ' + accounting.formatNumber(this.amountTo, 2) : '',
             currency: currency.symbol,
             currencyTo: currencyTo.symbol
         };

@@ -1,5 +1,5 @@
 <template name="transactionsPanelHeader">
-    <ul id="transactionsPanelNav" class="nav nav-pills">
+    <ul id="transactionsPanelNav" class="nav nav-tabs">
         <li class="{{activeType 'expense'}}">
             <a name="transactionsPanelExpense" href="{{pathFor 'transactions.add' type='expense'}}">Expense</a>
         </li>
@@ -12,5 +12,4 @@
             </li>
         {{/if}}
     </ul>
-    <hr>
 </template>

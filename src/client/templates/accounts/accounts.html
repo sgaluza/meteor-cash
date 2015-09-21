@@ -1,5 +1,8 @@
 <template name="accounts">
-    <h1>Accounts</h1>
+    <div class="create-account-category-header-btn">
+        <h1>Accounts</h1>
+        <a href="#" class="btn btn-primary" id="createAccount">Create Account</a>
+    </div>
     <div class="row">
         <div class="col-md-6">
             <ul class="list-group">
@@ -21,7 +24,6 @@
     {{> accountsModalCreate}}
     {{> accountsModalUpdate}}
     {{> accountsModalDelete}}
-    <a href="#" class="btn btn-primary" id="createAccount">Create Account</a>
 </template>
 
 <template name="accountCurrency">
