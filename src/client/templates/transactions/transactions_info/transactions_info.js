@@ -33,5 +33,12 @@ Template.transactionsInfo.helpers({
                 }), 2) || '0'
             })
         });
+    },
+    accounts: function () {
+        var accounts = Accounts.find().fetch();
+
+        return _.forEach(accounts, function(account) {
+            account.balance = accounting.formatNumber(account.balance, 2);
+        });
     }
 });

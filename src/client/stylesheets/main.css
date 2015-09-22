@@ -114,3 +114,14 @@ ul.jqtree_common ul.jqtree_common ul.jqtree_common .jqtree-toggler{
     vertical-align: super;
     margin-left: 20px;
 }
+.transactions-info {
+    background-color: lightblue;
+    border-radius: 8px;
+    padding: 10px;
+}
+.accounts-list {
+    margin-top: 20px;
+    background-color: lightcyan;
+    border-radius: 8px;
+    padding: 10px
+}
