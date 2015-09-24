@@ -7,6 +7,10 @@ var addCategoriesTag = function (id, name) {
     }
 };
 
+Template.transactionsPanelYield.onRendered(function() {
+    $(".bootstrap-tagsinput").addClass('hidden');
+})
+
 Template.transactionsPanelYield.events({
    'change select[name=categories]': function (event) {
        var tagId = $(event.target).val();
@@ -19,7 +23,7 @@ Template.transactionsPanelYield.events({
        Session.set('transactions_accountToId', accountToId);
    },
    'click #addPayer': function () {
-       $('input[name=payer]').removeClass('hidden');
+       $(".bootstrap-tagsinput").removeClass('hidden');
    },
    'click #addNotes': function () {
        $('textarea[name=notes]').removeClass('hidden');
@@ -34,7 +38,7 @@ Template.transactionsPanelYieldUpdate.events({
         addCategoriesTag(tagId, tagName);
     },
     'click #addPayer': function () {
-        $('input[name=payer]').removeClass('hidden');
+        $(".bootstrap-tagsinput").removeClass('hidden');
     },
     'click #addNotes': function () {
         $('textarea[name=notes]').removeClass('hidden');

@@ -114,3 +114,7 @@ ul.jqtree_common ul.jqtree_common ul.jqtree_common .jqtree-toggler{
     vertical-align: super;
     margin-left: 20px;
 }
+
+.typeahead.dropdown-menu {
+    margin-top: 5px;
+}

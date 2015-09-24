@@ -6,6 +6,13 @@ function getTransactionsRows() {
     return Transactions.find();
 }
 
+function getTags(tags){
+    _.forEach(tags, function(t, key) {
+        tags[key] = Tags.findOne({_id: t}) ? Tags.findOne({_id: t}).title : t;
+    })
+    return tags;
+};
+
 Template.transactionsTable.helpers({
     transactionRows: function () {
         return getTransactionsRows();
@@ -103,8 +110,8 @@ Template.transactionsTableHumanDate.helpers({
 Template.transactionsTableCategory.helpers({
     category: function () {
         var category = Categories.findOne(this.categories) || {title: 'No category'},
-            payer = this.payer ? ' — ' + this.payer : '',
-            recipient = this.recipient ? ' — ' + this.recipient : '',
+            payer = this.payer ? ' — ' + getTags(this.payer) : '',
+            recipient = this.recipient ? ' — ' + getTags(this.recipient) : '',
             notes = this.notes ? this.notes : '';
 
         return {
@@ -120,8 +127,8 @@ Template.transactionsTableTransaction.helpers({
     transaction: function () {
         var account = Accounts.findOne(this.account, {fields: {currencyId: 1}}),
             accountTo = Accounts.findOne(this.accountTo, {fields: {currencyId: 1}}),
-            currency = account ? Currencies.findOne({code: account.currencyId}) : {symbol: ''},
-            currencyTo = accountTo ? Currencies.findOne({code: accountTo.currencyId}) : {symbol: ''};
+            currency = account ? _.find(currencies, function(c) {return c.code == account.currencyId}) : {symbol: ''},
+            currencyTo = accountTo ? _.find(currencies, function(c) {return c.code == accountTo.currencyId}) : {symbol: ''};
 
         return {
             amount  : accounting.formatNumber(this.amount, 2) || '',
@@ -138,7 +145,7 @@ Template.transactionsTableAccount.helpers({
             accountTo = this.accountTo ? Accounts.findOne(this.accountTo, {fields: {name: 1}}) : "";
 
         return {
-            name: account.name,
+            name: account ? account.name : "",
             to  : accountTo ? ' → ' + accountTo.name : ""
         }
     }

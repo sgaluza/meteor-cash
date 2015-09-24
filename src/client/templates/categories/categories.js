@@ -6,7 +6,6 @@ Template.categories.onRendered(function () {
         autoOpen: true,
         selectable: false,
         useContextMenu: false,
-        dragAndDrop: true,
         onCreateLi: function(node, $li) {
             $li.find('.jqtree-element').append('<a href="/categories/#'+ node._id +'" class="category-edit pull-right" hidden="true">Edit</a>');
         }
@@ -69,7 +68,6 @@ Deps.autorun(function () {
         autoOpen: true,
         selectable: false,
         useContextMenu: false,
-        dragAndDrop: true,
         onCreateLi: function(node, $li) {
             $li.find('.jqtree-element').append('<a href="/categories/#'+ node._id +'" class="category-edit pull-right" hidden="true">Edit</a>');
         }
