@@ -1,3 +1,4 @@
+ajduke:bootstrap-tagsinput@0.7.0
 aldeed:autoform@5.5.0
 aldeed:autoform-bs-datepicker@1.1.1
 aldeed:autoform-select2@2.0.2
@@ -15,6 +16,7 @@ boilerplate-generator@1.0.3
 bootstrap-treeview@0.0.1
 callback-hook@1.0.3
 check@1.0.5
+cloudspider:autoform-tags-typeahead@0.7.1
 ddp@1.1.0
 deps@1.0.7
 ejson@1.0.6
@@ -51,6 +53,7 @@ mizzao:jquery-ui@1.11.4
 mobile-status-bar@1.0.3
 momentjs:moment@2.10.6
 mongo@1.1.0
+mrt:bootstrap3-typeahead@0.1.1
 mrt:jqtree@0.19.0
 observe-sequence@1.0.6
 ordered-dict@1.0.3

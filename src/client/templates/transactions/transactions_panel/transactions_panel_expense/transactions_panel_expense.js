@@ -7,6 +7,10 @@ var addCategoriesTag = function (id, name) {
     }
 };
 
+Template.transactionsPanelExpense.onRendered(function(){
+    $(".bootstrap-tagsinput").addClass('hidden');
+});
+
 Template.transactionsPanelExpense.events({
     'change select[name="categoryId"]': function (event) {
         var tagId = $(event.target).val();
@@ -19,7 +23,7 @@ Template.transactionsPanelExpense.events({
         Session.set('transactions_accountId', accountId);
     },
     'click #addRecipient': function () {
-        $('input[name=recipient]').removeClass('hidden');
+        $(".bootstrap-tagsinput").removeClass('hidden');
     },
     'click #addNotes': function () {
         $('textarea[name=notes]').removeClass('hidden');
@@ -34,7 +38,7 @@ Template.transactionsPanelExpenseUpdate.events({
         addCategoriesTag(tagId, tagName);
     },
     'click #addRecipient': function () {
-        $('input[name=recipient]').removeClass('hidden');
+        $(".bootstrap-tagsinput").removeClass('hidden');
     },
     'click #addNotes': function () {
         $('textarea[name=notes]').removeClass('hidden');

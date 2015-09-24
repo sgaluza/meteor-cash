@@ -94,12 +94,18 @@ Transactions = utils.schemaCollection('Transactions', {
         }
     },
     payer: {
-        type: String,
-        optional: true
+        type: [String],
+        optional: true,
+        autoform: {
+            type: 'tagsTypeahead'
+        }
     },
     recipient: {
-        type: String,
-        optional: true
+        type: [String],
+        optional: true,
+        autoform: {
+            type: 'tagsTypeahead'
+        }
     },
     notes: {
         type: String,

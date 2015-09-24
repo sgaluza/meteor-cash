@@ -7,7 +7,7 @@
             {{> afQuickField name="categories" label=false}}
             {{> afQuickField name="account" label=false}}
             <p>You can also add a <a href="#" id="addRecipient">recipient</a> or <a href="#" id="addNotes">notes</a></p>
-            {{> afQuickField name="recipient" class="hidden" placeholder="Recipient name" label=false}}
+            {{> afQuickField name="recipient" placeholder="Recipient name" label=false}}
             {{> afQuickField name="notes" class="hidden" placeholder="Text of notes" label=false rows=2}}
         </div>
         {{> transactionsPanelFooter}}
@@ -25,7 +25,7 @@
             {{#if recipientOn}}
                 {{> afQuickField name="recipient" placeholder="Recipient name" label=false}}
             {{else}}
-                {{> afQuickField name="recipient" class="hidden" placeholder="Recipient name" label=false}}
+                {{> afQuickField name="recipient" placeholder="Recipient name" label=false}}
             {{/if}}
             {{#if notesOn}}
                 {{> afQuickField name="notes" placeholder="Text of notes" label=false rows=2}}
