@@ -72,6 +72,11 @@ AutoForm.hooks({
                 })
             }
             return doc;
+        },
+        onSuccess: function(){
+            $('input[data-schema-key=recipient]').tagsinput('removeAll');
+            $('input[data-schema-key=payer]').tagsinput('removeAll');
+            $(".bootstrap-tagsinput").addClass('hidden');
         }
     },
     updateTransaction: {
