@@ -125,3 +125,7 @@ ul.jqtree_common ul.jqtree_common ul.jqtree_common .jqtree-toggler{
     border-radius: 8px;
     padding: 10px
 }
+
+.typeahead.dropdown-menu {
+    margin-top: 5px;
+}

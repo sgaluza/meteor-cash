@@ -29,7 +29,7 @@ Accounts = utils.schemaCollection("Accounts", {
             selectOnBlur: true,
             type: "select",
             options: function () {
-                return _.map(Currencies.find().fetch(), function (item) {
+                return _.map(currencies, function (item) {
                     return {
                         label: item.name + " (" + item.symbol + ")",
                         value: item.code

@@ -1,6 +1,6 @@
 Template.accounts.helpers({
     currency: function (currencyId) {
-        return Currencies.findOne({code: currencyId});
+        return _.find(currencies, function(c){return c.code == currencyId});
     }
 });
 

@@ -11,7 +11,7 @@ var getSearchArray = function(doc) {
     return _.compact([
         _.result(Categories.findOne(doc.categories), 'title'),
         _.result(Accounts.findOne(doc.account), 'name'),
-        doc.payer,
+        //doc.payer,
         doc.notes
     ]);
 };
