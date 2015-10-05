@@ -12,7 +12,6 @@ Template.importExport.events({
                             result[key.toLowerCase()] = value;
 
                         });
-                        debugger;
                         if (t.type == 'Expense') {
                             t.type = 1;
                         } else if (t.type == 'Income') {
@@ -27,6 +26,9 @@ Template.importExport.events({
                         } else {
                             t.search= new Array(t.categories, t.account);
                             t.categories = _.result(_.find(Categories.find().fetch(), {'title' : t.categories}), '_id');
+                        }
+                        if (t.tags) {
+                            t.tags = t.tags.split(',');
                         }
                         t.account = _.result(_.find(Accounts.find().fetch(), {'name' : t.account}), '_id');
                         t.date = moment(new Date(t.date.replace(/(\d+)\/(\d+)\/(\d+)/, '$2/$1/$3'))).add(3, 'hours').toDate();
