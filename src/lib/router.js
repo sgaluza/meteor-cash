@@ -147,3 +147,23 @@ Router.route('/transactions/update/:type/:id', {
         this.render(panelTemplate, {to: 'transactionsPanel'});
     }
 });
+
+Router.route('/import-export', {
+    name: 'importExport',
+    onBeforeAction: function () {
+        if (Meteor.subscribe('Accounts') &&
+            Meteor.subscribe('Categories') &&
+            Meteor.subscribe('Transactions')) {
+            this.next();
+        }
+    },
+    action: function () {
+        this.render('importExport', {
+            data: function () {
+                return {
+                    transactions: Transactions.find()
+                }
+            }
+        });
+    }
+});

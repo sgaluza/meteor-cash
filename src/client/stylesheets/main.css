@@ -129,3 +129,9 @@ ul.jqtree_common ul.jqtree_common ul.jqtree_common .jqtree-toggler{
 .typeahead.dropdown-menu {
     margin-top: 5px;
 }
+#csv-file {
+    padding: 10px;
+    font-size: 12px;
+    background: #F0F0F0;
+    margin-bottom: 10px;
+}

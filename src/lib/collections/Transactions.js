@@ -111,6 +111,10 @@ Transactions = utils.schemaCollection('Transactions', {
         type: String,
         optional: true
     },
+    tag: {
+        type: String,
+        optional: true
+    },
     search: {
         type: [String],
         index: true

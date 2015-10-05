@@ -9,9 +9,9 @@ function getTransactionsRows() {
 function getTags(tags){
     _.forEach(tags, function(t, key) {
         tags[key] = Tags.findOne({_id: t}) ? Tags.findOne({_id: t}).title : t;
-    })
+    });
     return tags;
-};
+}
 
 Template.transactionsTable.helpers({
     transactionRows: function () {
