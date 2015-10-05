@@ -61,9 +61,9 @@ AutoForm.hooks({
     },
     insertTransaction: {
         formToDoc: function(doc) {
-            if (doc.recipient && doc.recipient.length > 0){
-                _.forEach(doc.recipient, function(r, key) {
-                    doc.recipient[key] = Tags.findOne({title: r})._id;
+            if (doc.tags && doc.tags.length > 0){
+                _.forEach(doc.tags, function(t, key) {
+                    doc.tags[key] = Tags.findOne({title: t})._id;
                 })
             }
             if (doc.payer && doc.payer.length > 0){
@@ -74,16 +74,16 @@ AutoForm.hooks({
             return doc;
         },
         onSuccess: function(){
-            $('input[data-schema-key=recipient]').tagsinput('removeAll');
+            $('input[data-schema-key=tags]').tagsinput('removeAll');
             $('input[data-schema-key=payer]').tagsinput('removeAll');
             $(".bootstrap-tagsinput").addClass('hidden');
         }
     },
     updateTransaction: {
         formToModifier: function(doc) {
-            if (doc.$set.recipient && doc.$set.recipient.length > 0){
-                _.forEach(doc.$set.recipient, function(r, key) {
-                    doc.$set.recipient[key] = Tags.findOne({title: r})._id;
+            if (doc.$set.tags && doc.$set.tags.length > 0){
+                _.forEach(doc.$set.tags, function(t, key) {
+                    doc.$set.tags[key] = Tags.findOne({title: t})._id;
                 })
             }
             if (doc.$set.payer && doc.$set.payer.length > 0){
@@ -94,9 +94,9 @@ AutoForm.hooks({
             return doc;
         },
         docToForm: function(doc) {
-            if (doc.recipient && doc.recipient.length > 0){
-                _.forEach(doc.recipient, function(r, key) {
-                    doc.recipient[key] = Tags.findOne({_id: r}).title;
+            if (doc.tags && doc.tags.length > 0){
+                _.forEach(doc.tags, function(t, key) {
+                    doc.tags[key] = Tags.findOne({_id: t}).title;
                 })
             }
             if (doc.payer && doc.payer.length > 0){

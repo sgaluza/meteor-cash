@@ -38,7 +38,7 @@ Template.transactionsPanelFooter.events({
                 .val('')
                 .removeAttr('checked')
                 .removeAttr('selected');
-            $('input[data-schema-key=recipient]').tagsinput('removeAll');
+            $('input[data-schema-key=tags]').tagsinput('removeAll');
             $('input[data-schema-key=payer]').tagsinput('removeAll');
             $(".bootstrap-tagsinput").addClass('hidden');
         }
