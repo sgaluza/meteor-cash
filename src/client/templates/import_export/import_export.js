@@ -28,7 +28,17 @@ Template.importExport.events({
                             t.categories = _.result(_.find(Categories.find().fetch(), {'title' : t.categories}), '_id');
                         }
                         if (t.tags) {
-                            t.tags = t.tags.split(',');
+                            var tags = t.tags.split(',');
+                            t.tags = [];
+                            _.forEach(tags, function(tag) {
+                                debugger;
+                                if (_.find(Tags.find().fetch(), {'title' : tag})) {
+                                    t.tags.push(_.result(_.find(Tags.find().fetch(), {'title' : tag}), '_id'));
+                                } else {
+                                    Tags.insert({'title' : tag});
+                                    t.tags.push(_.result(_.find(Tags.find().fetch(), {'title' : tag}), '_id'));
+                                }
+                            });
                         }
                         t.account = _.result(_.find(Accounts.find().fetch(), {'name' : t.account}), '_id');
                         t.date = moment(new Date(t.date.replace(/(\d+)\/(\d+)\/(\d+)/, '$2/$1/$3'))).add(3, 'hours').toDate();
