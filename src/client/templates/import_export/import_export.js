@@ -31,7 +31,7 @@ Template.importExport.events({
                             var tags = t.tags.split(',');
                             t.tags = [];
                             _.forEach(tags, function(tag) {
-                                debugger;
+                                t.search.push(tag);
                                 if (_.find(Tags.find().fetch(), {'title' : tag})) {
                                     t.tags.push(_.result(_.find(Tags.find().fetch(), {'title' : tag}), '_id'));
                                 } else {
@@ -39,6 +39,9 @@ Template.importExport.events({
                                     t.tags.push(_.result(_.find(Tags.find().fetch(), {'title' : tag}), '_id'));
                                 }
                             });
+                        }
+                        if (t.notes) {
+                            t.search.push(t.notes);
                         }
                         t.account = _.result(_.find(Accounts.find().fetch(), {'name' : t.account}), '_id');
                         t.date = moment(new Date(t.date.replace(/(\d+)\/(\d+)\/(\d+)/, '$2/$1/$3'))).add(3, 'hours').toDate();

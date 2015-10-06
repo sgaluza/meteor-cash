@@ -9,7 +9,8 @@ Meteor.methods({
             "Account",
             "AmountTo",
             "AccountTo",
-            "Tags"
+            "Tags",
+            "Notes"
         ];
 
         var data = [];
@@ -34,7 +35,8 @@ Meteor.methods({
                 _.result(_.find(Accounts.find().fetch(), {'_id' : t.account}), 'name'),
                 t.amountTo || '',
                 _.result(_.find(Accounts.find().fetch(), {'_id' : t.accountTo}), 'name') || '',
-                t.tags || ''
+                t.tags || '',
+                t.notes || ''
             ]);
         });
 
