@@ -9,9 +9,9 @@ function getTransactionsRows() {
 function getTags(tags){
     _.forEach(tags, function(t, key) {
         tags[key] = Tags.findOne({_id: t}) ? Tags.findOne({_id: t}).title : t;
-    })
+    });
     return tags;
-};
+}
 
 Template.transactionsTable.helpers({
     transactionRows: function () {
@@ -111,13 +111,13 @@ Template.transactionsTableCategory.helpers({
     category: function () {
         var category = Categories.findOne(this.categories) || {title: 'No category'},
             payer = this.payer ? ' — ' + getTags(this.payer) : '',
-            recipient = this.recipient ? ' — ' + getTags(this.recipient) : '',
+            tags = this.tags ? ' — ' + getTags(this.tags) : '',
             notes = this.notes ? this.notes : '';
 
         return {
             name     : (this.type == 3) ? '' : category.title,
             payer    : payer,
-            recipient: recipient,
+            tags     : tags,
             notes    : notes
         };
     }

@@ -22,7 +22,7 @@ Template.transactionsPanelExpense.events({
         var accountId = $('select[name=account]').val();
         Session.set('transactions_accountId', accountId);
     },
-    'click #addRecipient': function () {
+    'click #addTags': function () {
         $(".bootstrap-tagsinput").removeClass('hidden');
     },
     'click #addNotes': function () {
@@ -37,7 +37,7 @@ Template.transactionsPanelExpenseUpdate.events({
 
         addCategoriesTag(tagId, tagName);
     },
-    'click #addRecipient': function () {
+    'click #addTags': function () {
         $(".bootstrap-tagsinput").removeClass('hidden');
     },
     'click #addNotes': function () {
@@ -46,8 +46,8 @@ Template.transactionsPanelExpenseUpdate.events({
 });
 
 Template.transactionsPanelExpenseUpdate.helpers({
-    'recipientOn': function () {
-        return _.has(Transactions.findOne({_id: Router.current().params.id}), 'recipient');
+    'tagsOn': function () {
+        return _.has(Transactions.findOne({_id: Router.current().params.id}), 'tags');
     },
     'notesOn': function () {
         return _.has(Transactions.findOne({_id: Router.current().params.id}), 'notes');

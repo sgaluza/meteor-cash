@@ -1,7 +1,6 @@
 Transactions = utils.schemaCollection('Transactions', {
     date: {
-        type: Date,
-        optional: true
+        type: Date
     },
     type: {
         type: Number
@@ -100,7 +99,7 @@ Transactions = utils.schemaCollection('Transactions', {
             type: 'tagsTypeahead'
         }
     },
-    recipient: {
+    tags: {
         type: [String],
         optional: true,
         autoform: {

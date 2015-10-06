@@ -1,7 +1,7 @@
 Template.transactionsInfo.helpers({
     allMoney: function () {
-        var accounts = Accounts.find().fetch();
-        var exRates = Exrates.find().fetch();
+        var accounts = Accounts.find().fetch(),
+            exRates = Template.instance().rates.get();
 
         return accounting.formatNumber(_.reduce(_.map(Transactions.find().fetch(), function (doc) {
             var currency = _.result(_.findWhere(accounts, {'_id' : doc.account}), 'currencyId');
@@ -33,5 +33,22 @@ Template.transactionsInfo.helpers({
                 }), 2) || '0'
             })
         });
+    },
+    accounts: function () {
+        var accounts = Accounts.find().fetch();
+
+        return _.forEach(accounts, function(account) {
+            account.balance = accounting.formatNumber(account.balance, 2);
+        });
     }
 });
+
+Template.transactionsInfo.created = function (){
+    var self = this;
+    self.rates = new ReactiveVar();
+
+    HTTP.post('http://localhost:8888', {data: {date: moment().format('YYYY-MM-DD')}}, function(error, result){
+
+        self.rates.set(result.data);
+    });
+};
