@@ -113,6 +113,9 @@ Router.route('/transactions/add/:type', {
         }
 
         this.render(panelTemplate, {to: 'transactionsPanel'});
+    },
+    onStop: function() {
+        AutoForm.resetForm('insertTransaction');
     }
 });
 
