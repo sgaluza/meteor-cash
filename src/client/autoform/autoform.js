@@ -63,6 +63,7 @@ AutoForm.hooks({
         formToDoc: function(doc) {
             if (doc.tags && doc.tags.length > 0){
                 _.forEach(doc.tags, function(t, key) {
+                    doc.search.push(doc.tags[key]);
                     doc.tags[key] = Tags.findOne({title: t})._id;
                 })
             }
@@ -81,8 +82,15 @@ AutoForm.hooks({
     },
     updateTransaction: {
         formToModifier: function(doc) {
+            doc.$set.search = [];
+            doc.$set.search.push(_.result(Categories.findOne(doc.$set.categories), 'title'));
+            doc.$set.search.push(_.result(Accounts.findOne(doc.$set.account), 'name'));
+            if (doc.$set.notes) {
+                doc.$set.search.push(doc.$set.notes);
+            }
             if (doc.$set.tags && doc.$set.tags.length > 0){
                 _.forEach(doc.$set.tags, function(t, key) {
+                    doc.$set.search.push(doc.$set.tags[key]);
                     doc.$set.tags[key] = Tags.findOne({title: t})._id;
                 })
             }

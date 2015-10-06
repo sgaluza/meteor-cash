@@ -9,7 +9,7 @@ var addCategoriesTag = function (id, name) {
 
 Template.transactionsPanelYield.onRendered(function() {
     $(".bootstrap-tagsinput").addClass('hidden');
-})
+});
 
 Template.transactionsPanelYield.events({
    'change select[name=categories]': function (event) {
