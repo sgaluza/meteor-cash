@@ -17,9 +17,9 @@ Meteor.methods({
 
         var transactions = Transactions.find().fetch();
         function getTypeName(typeId) {
-            if (typeId == 1) {
+            if (typeId == 2) {
                 return 'Expense'
-            } else if (typeId == 2) {
+            } else if (typeId == 1) {
                 return 'Income'
             } else {
                 return 'Transfer'
