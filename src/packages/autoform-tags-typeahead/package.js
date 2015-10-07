@@ -20,7 +20,7 @@ Package.onUse(function (api) {
     ]);
 
     api.addFiles([
-        'common/tag.js',
+        'common/tag.js'
     ], ['server', 'client']);
 
     api.addFiles([
