@@ -40,23 +40,39 @@ AutoForm.hooks({
     insertAccount: {
         onSuccess: function() {
             $('#accountsModalCreate').modal('hide');
+            var currencyId = this.insertDoc.currencyId,
+                currency = _.result(_.find(currencies, function(c){return c.code == currencyId}), 'symbol');
+            alertify.log('Account <strong>' + this.insertDoc.name + '</strong> with balance <strong>' + this.insertDoc.balance + ' ' + currency + '</strong> was created');
         }
     },
     updateAccount: {
         onSuccess: function() {
             $('#accountsModalUpdate').modal('hide');
+            var currencyId = this.updateDoc.$set.currencyId,
+                currency = _.result(_.find(currencies, function(c){return c.code == currencyId}), 'symbol');
+            alertify.log('Account <strong>' + this.updateDoc.$set.name + '</strong> with balance <strong>' + this.updateDoc.$set.balance + ' ' + currency + '</strong> was updated');
         }
     },
     insertCategory: {
         onSuccess: function() {
             $('#categoriesModalCreate').modal('hide');
             Session.set('categories_tree', Template.categories.getTree());
+            var parent = '';
+            if (this.insertDoc.parentId) {
+                parent = '(with parent category <strong>' + _.result(Categories.findOne(this.insertDoc.parentId), 'title') + '</strong>)';
+            }
+            alertify.log('Category <strong>' + this.insertDoc.title + '</strong> ' + parent + ' was created');
         }
     },
     updateCategory: {
         onSuccess: function() {
             $('#categoriesModalUpdate').modal('hide');
             Session.set('categories_tree', Template.categories.getTree());
+            var parent = '';
+            if (this.updateDoc.$set.parentId) {
+                parent = '(with parent category <strong>' + _.result(Categories.findOne(this.updateDoc.$set.parentId), 'title') + '</strong>)';
+            }
+            alertify.log('Category <strong>' + this.updateDoc.$set.title + '</strong> ' + parent + ' was updated');
         }
     },
     insertTransaction: {
@@ -75,6 +91,22 @@ AutoForm.hooks({
             return doc;
         },
         onSuccess: function(){
+            var user = _.result(Accounts.findOne(this.insertDoc.account), 'name'),
+                currencyId = _.result(Accounts.findOne(this.insertDoc.account), 'currencyId'),
+                currency = _.result(_.find(currencies, function(c){return c.code == currencyId}), 'symbol'),
+                category = '',
+                type;
+            if (this.insertDoc.type == 2) {
+                type = 'Expense';
+            } else if (this.insertDoc.type == 1) {
+                type = 'Income';
+            } else if (this.insertDoc.type == 3) {
+                type = 'Transfer';
+            }
+            if (this.insertDoc.categories) {
+                var category = ' (category: <strong>' + _.result(Categories.findOne(this.insertDoc.categories), 'title') + '</strong>)';
+            }
+            alertify.log('<strong>' + type + '</strong> Transaction (<strong>' + this.insertDoc.amount + ' ' + currency + '</strong>) was added for account <strong>' + user + '</strong>' + category);
             $('input[data-schema-key=tags]').tagsinput('removeAll');
             $('input[data-schema-key=payer]').tagsinput('removeAll');
             $(".bootstrap-tagsinput").addClass('hidden');
@@ -113,6 +145,24 @@ AutoForm.hooks({
                 })
             }
             return doc;
+        },
+        onSuccess: function(){
+            var user = _.result(Accounts.findOne(this.updateDoc.$set.account), 'name'),
+                currencyId = _.result(Accounts.findOne(this.updateDoc.$set.account), 'currencyId'),
+                currency = _.result(_.find(currencies, function(c){return c.code == currencyId}), 'symbol'),
+                category = '',
+                type = '';
+            if (this.updateDoc.$set.type == 2) {
+                type = 'Expense';
+            } else if (this.updateDoc.$set.type == 1) {
+                type = 'Income';
+            } else if (this.updateDoc.$set.type == 3) {
+                type = 'Transfer';
+            }
+            if (this.updateDoc.$set.categories) {
+                var category = ' (category: <strong>' + _.result(Categories.findOne(this.updateDoc.$set.categories), 'title') + '</strong>)';
+            }
+            alertify.log('<strong>' + type + '</strong> Transaction (<strong>' + this.updateDoc.$set.amount + ' ' + currency + '</strong>) was updated for account <strong>' + user + '</strong>' + category);
         }
     }
 });

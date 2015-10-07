@@ -30,6 +30,7 @@
 <template name="transactionsPanelTransferUpdate">
     {{#autoForm collection="Transactions" id="updateTransaction" type="update" doc=transactionsGetSelectedRowId}}
         <div class="form-group">
+            {{> afQuickField name="type" type="hidden" value="3"}}
             {{> afQuickField name="date" data-date-autoclose="true" type="bootstrap-datepicker" label=false}}
             <div class="row">
                 <div class="col-sm-4">

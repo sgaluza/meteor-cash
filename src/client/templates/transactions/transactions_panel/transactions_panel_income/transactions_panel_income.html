@@ -17,6 +17,7 @@
 <template name="transactionsPanelYieldUpdate">
     {{#autoForm collection="Transactions" id="updateTransaction" type="update" doc=transactionsGetSelectedRowId}}
         <div class="form-group">
+            {{> afQuickField name="type" label=false type="hidden" value="1"}}
             {{> afQuickField name="date" data-date-autoclose="true" type="bootstrap-datepicker" label=false}}
             {{> afQuickField name="amount" label=false template="mcIncome"}}
             {{> afQuickField name="categories" label=false}}

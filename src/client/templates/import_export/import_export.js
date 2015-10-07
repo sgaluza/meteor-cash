@@ -7,15 +7,16 @@ Template.importExport.events({
             Papa.parse(template.find('#csv-file').files[0], {
                 header: true,
                 complete: function (results) {
+                    var msg;
                     _.each(results.data, function(t) {
                         t = _.transform(t, function (result, value, key) {
                             result[key.toLowerCase()] = value;
 
                         });
                         if (t.type == 'Expense') {
-                            t.type = 1;
-                        } else if (t.type == 'Income') {
                             t.type = 2;
+                        } else if (t.type == 'Income') {
+                            t.type = 1;
                         } else if (t.type == 'Transfer') {
                             t.type = 3;
                         }
@@ -47,9 +48,19 @@ Template.importExport.events({
                         t.date = moment(new Date(t.date.replace(/(\d+)\/(\d+)\/(\d+)/, '$2/$1/$3'))).add(3, 'hours').toDate();
                         Transactions.insert(t);
                     });
+                    if (results.data.length == 0) {
+                        msg = 'No transactions in this file.';
+                    } else if (results.data.length == 1) {
+                        msg = results.data.length + ' Transaction was imported successful';
+                    } else {
+                        msg = results.data.length + ' Transactions were imported successful';
+                    }
+                    alertify.log(msg);
                 },
                 skipEmptyLines: true
             });
+        } else {
+            alertify.log('Please, choose *.csv file');
         }
     }
 });

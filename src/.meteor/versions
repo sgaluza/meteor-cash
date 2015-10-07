@@ -58,6 +58,7 @@ mrt:bootstrap3-typeahead@0.1.1
 mrt:jqtree@0.19.0
 observe-sequence@1.0.6
 ordered-dict@1.0.3
+ovcharik:alertify@0.3.11
 rajit:bootstrap3-datepicker@1.4.1
 random@1.0.3
 reactive-dict@1.1.0
