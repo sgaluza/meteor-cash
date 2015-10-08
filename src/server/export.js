@@ -25,6 +25,13 @@ Meteor.methods({
                 return 'Transfer'
             }
         }
+        function getTagNames(tags) {
+            var tagNames = [];
+            _.forEach(tags, function(tag) {
+                tagNames.push(_.result(_.find(Tags.find().fetch(), {'_id' : tag}), 'title'));
+            });
+            return tagNames;
+        }
         _.each(transactions, function(t) {
             data.push([
                 t._id,
@@ -35,7 +42,7 @@ Meteor.methods({
                 _.result(_.find(Accounts.find().fetch(), {'_id' : t.account}), 'name'),
                 t.amountTo || '',
                 _.result(_.find(Accounts.find().fetch(), {'_id' : t.accountTo}), 'name') || '',
-                t.tags || '',
+                getTagNames(t.tags),
                 t.notes || ''
             ]);
         });
