@@ -13,7 +13,7 @@ Template.sortableItems.helpers({
             onSort: function (event) {
                 var el = event.target.children;
                 _.forEach(el, function(e){
-                    var index = _.findIndex(temp, {id: e.id});
+                    var index = _.findIndex(el, {id: e.id});
                     Accounts.update({_id: e.id}, {$set: {order: index*10}});
                 });
             }
