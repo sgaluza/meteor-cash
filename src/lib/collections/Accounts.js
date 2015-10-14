@@ -14,6 +14,9 @@ Accounts = utils.schemaCollection("Accounts", {
         label : "Please, choose account to re-assign transactions of the removed account to:",
         optional : true
     },
+    order     : {
+        type: Number
+    },
     balance: {
         type: Number,
         min: 0,
