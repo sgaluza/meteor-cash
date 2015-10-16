@@ -54,6 +54,12 @@ span.label > a {
 .margin-left-5 {
     margin-left: 5px;
 }
+.margin-top-20 {
+    margin-top: 20px;
+}
+.margin-bottom-20 {
+    margin-bottom: 20px;
+}
 
 #categoriesTree {
     margin-bottom: 20px;
@@ -129,7 +135,7 @@ ul.jqtree_common ul.jqtree_common ul.jqtree_common .jqtree-toggler{
 .typeahead.dropdown-menu {
     margin-top: 5px;
 }
-#csv-file {
+#csv-file, #json-file {
     padding: 10px;
     font-size: 12px;
     background: #F0F0F0;
