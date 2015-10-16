@@ -9,10 +9,10 @@ Template.afInputNumber_mcExpense.helpers({
 
 Template.afInputNumber_mcIncome.helpers({
     'currencyForAmount': function () {
-        var accountId = Session.get('transactions_accountId');
+        var accountId = Session.get('transactions_accountToId');
         var currencyCode = _.result(Accounts.findOne(accountId), 'currencyId');
 
-        return  _.result(_.find(currencies, function(c){return c.code == currencyCode}), 'symbol');
+        return _.result(_.find(currencies, function(c){return c.code == currencyCode}), 'symbol');
     }
 });
 
