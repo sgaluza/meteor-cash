@@ -120,6 +120,42 @@ Template.transactionsTableCategory.helpers({
             tags     : tags,
             notes    : notes
         };
+    },
+    account: function () {
+        var account = Accounts.findOne(this.account, {fields: {name: 1}}),
+            accountTo = this.accountTo ? Accounts.findOne(this.accountTo, {fields: {name: 1}}) : "";
+
+        return {
+            name: account ? account.name : "",
+            to  : accountTo ? ' → ' + accountTo.name : ""
+        }
+    },
+    rate: function () {
+        if (this.accountTo != undefined && Template.instance().rates.get()) {
+            var exRates = Template.instance().rates.get(),
+                account = Accounts.findOne(this.account, {fields: {currencyId: 1}}),
+                accountTo = Accounts.findOne(this.accountTo, {fields: {currencyId: 1}}),
+                rate,
+                currency,
+                currencyTo;
+            if (account.currencyId === 'BYR' || accountTo.currencyId === 'BYR') {
+                if (account.currencyId === 'BYR' && accountTo.currencyId === 'BYR') {
+                    rate = 1;
+                } else if (account.currencyId === 'BYR') {
+                    rate = _.result(_.find(exRates, function(c) {return c.abbreviation == accountTo.currencyId}), 'rate');
+                } else {
+                    rate = _.result(_.find(exRates, function(c) {return c.abbreviation == account.currencyId}), 'rate');
+                }
+            } else {
+                currency = _.find(exRates, function(c) {return c.abbreviation == account.currencyId});
+                currencyTo = _.find(exRates, function(c) {return c.abbreviation == accountTo.currencyId});
+                rate = (currency.rate / currencyTo.rate).toFixed(2);
+            }
+
+            return {
+                rate: ' — Exchange rate ' + rate
+            }
+        }
     }
 });
 
@@ -150,3 +186,13 @@ Template.transactionsTableAccount.helpers({
         }
     }
 });
+
+Template.transactionsTableCategory.created = function (){
+    var self = this;
+    self.rates = new ReactiveVar();
+
+    HTTP.post('http://localhost:8888', {data: {date: moment().format('YYYY-MM-DD')}}, function(error, result){
+
+        self.rates.set(result.data);
+    });
+};

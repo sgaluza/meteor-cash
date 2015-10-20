@@ -22,7 +22,13 @@
         {{#if category.name}}
             <span>{{category.name}}</span>
         {{else}}
-            <br>
+            {{#if account.to}}
+                <span>{{account.name}}</span>
+                <span>{{account.to}}</span>
+                <span>{{rate.rate}}</span>
+                {{else}}
+                <br>
+            {{/if}}
         {{/if}}
         <span class="categories-tags">{{category.tags}}{{category.payer}}</span>
     </div>
