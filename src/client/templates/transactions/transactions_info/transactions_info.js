@@ -1,38 +1,131 @@
 Template.transactionsInfo.helpers({
     allMoney: function () {
-        var accounts = Accounts.find().fetch(),
-            exRates = Template.instance().rates.get();
+        var exRates = Template.instance().rates.get(),
+            transactions = Transactions.find().fetch(),
+            rateUSD = _.result(_.findWhere(exRates, {'abbreviation' : 'USD'}), 'rate'),
+            result = {},
+            summ = 0,
+            temp;
 
-        return accounting.formatNumber(_.reduce(_.map(Transactions.find().fetch(), function (doc) {
-            var currency = _.result(_.findWhere(accounts, {'_id' : doc.account}), 'currencyId');
-            var rateUSD = _.result(_.findWhere(exRates, {'abbreviation' : 'USD'}), 'rate');
-            if (currency === 'USD') {
-                return doc.amount;
-            } else if (currency === 'BYR') {
-                return Number((doc.amount / rateUSD).toFixed(2));
-            } else {
-                var rate = _.result(_.findWhere(exRates, {'abbreviation' : currency}), 'rate');
-                return Number(((doc.amount * rate) / rateUSD).toFixed(2));
-            }
-        }), function (memo, num) {
-            return memo + num;
-        }), 2);
+        if (Accounts.find().fetch().length > 0) {
+            _.forEach(transactions, function(t) {
+                var currencyId = Accounts.find({_id: t.account}).fetch()[0].currencyId;
+                t['currencyId'] = currencyId;
+                if (t.type === 3) {
+                    var currencyIdTo = Accounts.find({_id: t.accountTo}).fetch()[0].currencyId,
+                        transactionsTo = {
+                            'currencyId' : currencyIdTo,
+                            'amount'     : t.amountTo,
+                            'toAccount'  : true,
+                            'type'       : 3
+                        };
+                    transactions.push(transactionsTo);
+                }
+            });
+
+            transactions.forEach(function(t){
+                if(!result.hasOwnProperty(t.currencyId)) {
+                    result[t.currencyId] = 0;
+                }
+
+                if (t.currencyId === 'USD') {
+                    if (t.type === 3) {
+                        if(t.toAccount) {
+                            summ += t.amount;
+                        } else {
+                            summ -= t.amount;
+                        }
+                    } else if (t.type === 1) {
+                        summ += t.amount;
+                    } else {
+                        summ -= t.amount;
+                    }
+                } else if (t.currencyId === 'BYR') {
+                    if (t.type === 3) {
+                        if(t.toAccount) {
+                            temp = t.amount / rateUSD;
+                            summ += temp;
+                        } else {
+                            temp = t.amount / rateUSD;
+                            summ -= temp;
+                        }
+                    } else if (t.type === 1) {
+                        temp = t.amount / rateUSD;
+                        summ += temp;
+                    } else {
+                        temp = t.amount / rateUSD;
+                        summ -= temp;
+                    }
+                } else {
+                    var rate = _.result(_.findWhere(exRates, {'abbreviation' : currency}), 'rate');
+                    if (t.type === 3) {
+                        if(t.toAccount) {
+                            temp = (t.amount * rate) / rateUSD;
+                            summ += temp;
+                        } else {
+                            temp = (t.amount * rate) / rateUSD;
+                            summ -= temp;
+                        }
+                    } else if (t.type === 1) {
+                        temp = (t.amount * rate) / rateUSD;
+                        summ += temp;
+                    } else {
+                        temp = (t.amount * rate) / rateUSD;
+                        summ -= temp;
+                    }
+                }
+
+            });
+        }
+
+        return accounting.formatNumber(summ, 2);
     },
     currency: function () {
         return '$';
     },
     accountsList: function () {
-        var accounts = Accounts.find().fetch();
+        var transactions = Transactions.find().fetch(),
+            result = {},
+            summ = [];
 
-        return _.map(accounts, function(doc) {
-            return _.assign(doc, {
-                balance: accounting.formatNumber(_.reduce(_.map(Transactions.find({account: doc._id}).fetch(), function (subdoc) {
-                    return subdoc.amount;
-                }), function (memo, num) {
-                    return memo + num;
-                }), 2) || '0'
-            })
+        _.forEach(transactions, function(t) {
+            var currencyId = Accounts.find({_id: t.account}).fetch()[0].currencyId;
+            t['currencyId'] = currencyId;
+            if (t.type === 3) {
+                var currencyIdTo = Accounts.find({_id: t.accountTo}).fetch()[0].currencyId,
+                    transactionsTo = {
+                        'currencyId' : currencyIdTo,
+                        'amount'     : t.amountTo,
+                        'toAccount'  : true,
+                        'type'       : 3
+                    };
+                transactions.push(transactionsTo);
+            }
         });
+
+        transactions.forEach(function(t){
+            if(!result.hasOwnProperty(t.currencyId)) {
+                result[t.currencyId] = 0;
+            }
+            if (t.type === 3) {
+                if(t.toAccount) {
+                    result[t.currencyId] += t.amount;
+                } else {
+                    result[t.currencyId] -= t.amount;
+                }
+            } else if (t.type === 1) {
+                result[t.currencyId] += t.amount;
+            } else {
+                result[t.currencyId] -= t.amount;
+            }
+
+        });
+
+        for (var key in result) {
+            summ.push({currencyId: key, balance: accounting.formatNumber(result[key], 2)});
+        }
+
+        return summ;
     },
     accounts: function () {
         var accounts = Accounts.find().fetch();
