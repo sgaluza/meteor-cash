@@ -26,7 +26,7 @@ Template.categories.onRendered(function () {
         useContextMenu: false,
         dragAndDrop: true,
         onCreateLi: function(node, $li) {
-            $li.find('.jqtree-element').append('<a href="/categories/#'+ node._id +'" class="category-edit pull-right" hidden="true">Edit</a>');
+            $li.find('.jqtree-element').append('<a href="/categories/#'+ node._id +'" class="category-delete pull-right margin-left-5" hidden="true">Delete</a><a href="/categories/#'+ node._id +'" class="category-edit pull-right" hidden="true">Edit</a>');
         }
     });
 
@@ -90,10 +90,16 @@ Template.categories.events({
         AutoForm.resetForm('updateCategory');
         $('#categoriesModalUpdate').modal();
     },
+    'click a.category-delete': function () {
+        AutoForm.resetForm('deleteCategory');
+        $('#categoriesModalDelete').modal();
+    },
     'mouseenter div.jqtree-element': function (event) {
         $(event.currentTarget).find('a.category-edit').show();
+        $(event.currentTarget).find('a.category-delete').show();
     },
     'mouseleave div.jqtree-element': function (event) {
         $(event.currentTarget).find('a.category-edit').hide();
+        $(event.currentTarget).find('a.category-delete').hide();
     }
 });
