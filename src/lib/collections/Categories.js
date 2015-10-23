@@ -53,5 +53,9 @@ Categories = utils.schemaCollection('Categories', {
                 return items;
             }
         }
+    },
+    order: {
+        type: Number,
+        optional: true
     }
 });

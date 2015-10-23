@@ -27,6 +27,7 @@ Template.categoriesModalDelete.events({
         }
         Categories.remove({_id: Iron.controller().getParams().hash});
         $('#categoriesModalDelete').modal('hide');
+        $('#categoriesTree').tree('loadData', Template.categories.getTree());
         alertify.log('Category <strong>' + category.title + '</strong> was deleted');
         Router.go('categories');
     }
