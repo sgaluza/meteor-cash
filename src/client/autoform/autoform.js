@@ -27,16 +27,6 @@ Template.afInputNumber_mcTransfer.helpers({
 
 
 AutoForm.hooks({
-    categoryEdit: {
-        onSuccess: function(){
-            Template.categories.initTree();
-        }
-    },
-    categoryUpdate: {
-        onSuccess: function(){
-            Template.categories.initTree();
-        }
-    },
     insertAccount: {
         onSuccess: function() {
             $('#accountsModalCreate').modal('hide');
@@ -56,7 +46,7 @@ AutoForm.hooks({
     insertCategory: {
         onSuccess: function() {
             $('#categoriesModalCreate').modal('hide');
-            Session.set('categories_tree', Template.categories.getTree());
+            $('#categoriesTree').tree('loadData', Template.categories.getTree());
             var parent = '';
             if (this.insertDoc.parentId) {
                 parent = '(with parent category <strong>' + _.result(Categories.findOne(this.insertDoc.parentId), 'title') + '</strong>)';
@@ -67,11 +57,13 @@ AutoForm.hooks({
     updateCategory: {
         onSuccess: function() {
             $('#categoriesModalUpdate').modal('hide');
-            Session.set('categories_tree', Template.categories.getTree());
+            if (this.updateDoc.$set.parentId) Categories.update({"_id": this.currentDoc._id}, {$unset: {"order": ""}})
+            $('#categoriesTree').tree('loadData', Template.categories.getTree());
             var parent = '';
             if (this.updateDoc.$set.parentId) {
                 parent = '(with parent category <strong>' + _.result(Categories.findOne(this.updateDoc.$set.parentId), 'title') + '</strong>)';
             }
+            Router.go('/categories');
             alertify.log('Category <strong>' + this.updateDoc.$set.title + '</strong> ' + parent + ' was updated');
         }
     },
