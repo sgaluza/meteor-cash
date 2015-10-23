@@ -6,18 +6,7 @@
     <div class="row">
         <div class="col-md-6">
             <ul class="list-group">
-                {{#each accounts}}
-                    <li class="list-group-item account-item clearfix">
-                        <div class="pull-left">
-                            <span>{{name}}</span>
-                            <span>{{> accountCurrency currency currencyId}}</span>
-                        </div>
-                        <div class="pull-right clearfix" hidden='true'>
-                            <a href="{{pathFor route='accounts' hash=_id}}" class="account-edit pull-left">Edit</a>
-                            <a href="{{pathFor route='accounts' hash=_id}}" class="account-delete pull-right margin-left-5">Delete</a>
-                        </div>
-                    </li>
-                {{/each}}
+                {{> sortableItems}}
             </ul>
         </div>
     </div>
@@ -31,3 +20,23 @@
         <span class="account-currency">&nbsp;&rarr;&nbsp;<i>{{name}}, {{code}}</i></span>
     {{/if}}
 </template>
+
+<template name="sortableItems">
+    {{#sortable items=accounts animation="200" handle=".account-item" ghostClass="sortable-ghost" options=accountsOptions}}
+        {{> accountTree}}
+    {{/sortable}}
+</template>
+
+<template name="accountTree">
+    <li class="list-group-item account-item clearfix" id="{{_id}}">
+        <div class="pull-left">
+            <span>{{name}}</span>
+            <span>{{> accountCurrency currency currencyId}}</span>
+        </div>
+        <div class="pull-right clearfix" hidden='true'>
+            <a href="{{pathFor route='accounts' hash=_id}}" class="account-edit pull-left">Edit</a>
+            <a href="{{pathFor route='accounts' hash=_id}}" class="account-delete pull-right margin-left-5">Delete</a>
+        </div>
+    </li>
+</template>
+

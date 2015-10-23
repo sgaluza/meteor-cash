@@ -12,10 +12,14 @@ Template.transactionsModalDelete.events({
         $('.modal-backdrop').remove();
         if (transaction.type == 2) {
             type = 'Expense';
+            Accounts.update({_id: transaction.account}, {$inc: {balance: transaction.amount}});
         } else if (transaction.type == 1) {
             type = 'Income';
+            Accounts.update({_id: transaction.account}, {$inc: {balance: -transaction.amount}});
         } else if (transaction.type == 3) {
             type = 'Transfer';
+            Accounts.update({_id: transaction.account}, {$inc: {balance: transaction.amount}});
+            Accounts.update({_id: transaction.accountTo}, {$inc: {balance: -transaction.amountTo}});
         }
         if (transaction.categories) {
             var category = ' (category: <strong>' + _.result(Categories.findOne(transaction.categories), 'title') + '</strong>)';

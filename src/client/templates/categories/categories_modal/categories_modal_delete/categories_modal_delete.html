@@ -1,0 +1,26 @@
+<template name="categoriesModalDelete">
+    <div class="modal fade" id="categoriesModalDelete">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Delete Category</h4>
+                </div>
+                {{#autoForm collection="Categories" id="deleteCategory" doc=deleteCategory}}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            Do you really want to delete category <strong>{{deleteCategory.title}}</strong>
+                        </div>
+                        <div class="form-group">
+                            {{> afFormGroup name="parentId" label="Please, choose new category for transactions:" firstOption="Select Category"}}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger delete">Delete Category</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                {{/autoForm}}
+            </div>
+        </div>
+    </div>
+</template>
