@@ -87,44 +87,44 @@ Template.transactionsInfo.helpers({
         var transactions = Transactions.find().fetch(),
             result = {},
             summ = [];
+        if (Accounts.find().fetch().length > 0) {
+            _.forEach(transactions, function (t) {
+                var currencyId = Accounts.find({_id: t.account}).fetch()[0].currencyId;
+                t['currencyId'] = currencyId;
+                if (t.type === 3) {
+                    var currencyIdTo = Accounts.find({_id: t.accountTo}).fetch()[0].currencyId,
+                        transactionsTo = {
+                            'currencyId': currencyIdTo,
+                            'amount': t.amountTo,
+                            'toAccount': true,
+                            'type': 3
+                        };
+                    transactions.push(transactionsTo);
+                }
+            });
 
-        _.forEach(transactions, function(t) {
-            var currencyId = Accounts.find({_id: t.account}).fetch()[0].currencyId;
-            t['currencyId'] = currencyId;
-            if (t.type === 3) {
-                var currencyIdTo = Accounts.find({_id: t.accountTo}).fetch()[0].currencyId,
-                    transactionsTo = {
-                        'currencyId' : currencyIdTo,
-                        'amount'     : t.amountTo,
-                        'toAccount'  : true,
-                        'type'       : 3
-                    };
-                transactions.push(transactionsTo);
-            }
-        });
-
-        transactions.forEach(function(t){
-            if(!result.hasOwnProperty(t.currencyId)) {
-                result[t.currencyId] = 0;
-            }
-            if (t.type === 3) {
-                if(t.toAccount) {
+            transactions.forEach(function (t) {
+                if (!result.hasOwnProperty(t.currencyId)) {
+                    result[t.currencyId] = 0;
+                }
+                if (t.type === 3) {
+                    if (t.toAccount) {
+                        result[t.currencyId] += t.amount;
+                    } else {
+                        result[t.currencyId] -= t.amount;
+                    }
+                } else if (t.type === 1) {
                     result[t.currencyId] += t.amount;
                 } else {
                     result[t.currencyId] -= t.amount;
                 }
-            } else if (t.type === 1) {
-                result[t.currencyId] += t.amount;
-            } else {
-                result[t.currencyId] -= t.amount;
+
+            });
+
+            for (var key in result) {
+                summ.push({currencyId: key, balance: accounting.formatNumber(result[key], 2)});
             }
-
-        });
-
-        for (var key in result) {
-            summ.push({currencyId: key, balance: accounting.formatNumber(result[key], 2)});
         }
-
         return summ;
     },
     accounts: function () {

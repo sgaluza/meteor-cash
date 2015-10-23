@@ -26,6 +26,9 @@ AutoForm.hooks({
         formToModifier: function (modifier) {
             _.assign(modifier['$set'], getSearchArray(modifier['$set']));
             return modifier;
+        },
+        onSuccess: function () {
+            return Router.current().params.id;
         }
     }
 });

@@ -150,14 +150,14 @@ AutoForm.hooks({
                 type = '';
             if (this.updateDoc.$set.type == 2) {
                 type = 'Expense';
-                Accounts.update({_id: this.updateDoc.$set.account}, {$inc: {balance: -this.updateDoc.$set.amount}});
+                Accounts.update({_id: this.updateDoc.$set.account}, {$inc: {balance: this.currentDoc.amount-this.updateDoc.$set.amount}});
             } else if (this.updateDoc.$set.type == 1) {
                 type = 'Income';
-                Accounts.update({_id: this.updateDoc.$set.account}, {$inc: {balance: this.updateDoc.$set.amount}});
+                Accounts.update({_id: this.updateDoc.$set.account}, {$inc: {balance: this.updateDoc.$set.amount-this.currentDoc.amount}});
             } else if (this.updateDoc.$set.type == 3) {
                 type = 'Transfer';
-                Accounts.update({_id: this.updateDoc.$set.account}, {$inc: {balance: -this.updateDoc.$set.amount}});
-                Accounts.update({_id: this.updateDoc.$set.accountTo}, {$inc: {balance: this.updateDoc.$set.amountTo}});
+                Accounts.update({_id: this.updateDoc.$set.account}, {$inc: {balance: this.currentDoc.amount-this.updateDoc.$set.amount}});
+                Accounts.update({_id: this.updateDoc.$set.accountTo}, {$inc: {balance: this.updateDoc.$set.amountTo-this.currentDoc.amount}});
             }
             if (this.updateDoc.$set.categories) {
                 var category = ' (category: <strong>' + _.result(Categories.findOne(this.updateDoc.$set.categories), 'title') + '</strong>)';
