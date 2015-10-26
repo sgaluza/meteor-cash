@@ -7,7 +7,7 @@ Template.transactionsInfo.helpers({
             summ = 0,
             temp;
 
-        if (Accounts.find().fetch().length > 0) {
+        if (Accounts.find().fetch().length > 0 && exRates) {
             _.forEach(transactions, function(t) {
                 var currencyId = Accounts.find({_id: t.account}).fetch()[0].currencyId;
                 t['currencyId'] = currencyId;

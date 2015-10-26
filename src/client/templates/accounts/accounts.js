@@ -28,6 +28,28 @@ Template.accounts.events({
     }
 });
 
+var emptyBalance = function(doc) {
+    if (!doc.balance) {
+        doc.balance = 0;
+    }
+    return doc;
+};
+
+AutoForm.hooks({
+    insertAccount: {
+        formToDoc: function (doc) {
+            return emptyBalance(doc);
+        }
+    },
+    updateAccount: {
+        formToModifier: function (modifier) {
+            delete modifier['$unset'].balance;
+            _.assign(modifier['$set'], emptyBalance(modifier['$set']));
+            return modifier;
+        }
+    }
+});
+
 Template.accountTree.events({
     'click a.account-edit': function () {
         AutoForm.resetForm('updateAccount');

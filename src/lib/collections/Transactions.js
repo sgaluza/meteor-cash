@@ -53,7 +53,8 @@ Transactions = utils.schemaCollection('Transactions', {
         }
     },
     amount: {
-        type: Number
+        type: Number,
+        optional: true
     },
     amountTo: {
         type: Number,

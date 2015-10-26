@@ -3,7 +3,7 @@
         <div class="form-group">
             {{> afQuickField name="type" label=false type="hidden" value="1"}}
             {{> afQuickField name="date" data-date-autoclose="true" type="bootstrap-datepicker" label=false value=currentDate}}
-            {{> afQuickField name="amount" label=false template="mcIncome"}}
+            {{> afQuickField name="amount" label=false template="mcIncome" value="0"}}
             {{> afQuickField name="categories" label=false}}
             {{> afQuickField name="account" label=false}}
             <p>You can also add a <a href="#" id="addPayer">payer</a> or <a href="#" id="addNotes">notes</a></p>

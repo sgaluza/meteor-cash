@@ -28,6 +28,9 @@ Template.afInputNumber_mcTransfer.helpers({
 
 AutoForm.hooks({
     insertAccount: {
+        formToDoc: function(doc) {
+            return doc;
+        },
         onSuccess: function() {
             $('#accountsModalCreate').modal('hide');
             var currencyId = this.insertDoc.currencyId,
@@ -36,6 +39,9 @@ AutoForm.hooks({
         }
     },
     updateAccount: {
+        formToModifier: function(doc) {
+            return doc;
+        },
         onSuccess: function() {
             $('#accountsModalUpdate').modal('hide');
             var currencyId = this.updateDoc.$set.currencyId,
@@ -80,6 +86,12 @@ AutoForm.hooks({
                     doc.payer[key] = Tags.findOne({title: r})._id;
                 })
             }
+            if (!doc.amount) {
+                doc.amount = 0;
+            }
+            if (!doc.amountTo) {
+                doc.amountTo = 0;
+            }
             return doc;
         },
         onSuccess: function(){
@@ -110,6 +122,14 @@ AutoForm.hooks({
     },
     updateTransaction: {
         formToModifier: function(doc) {
+            if (!doc.$set.amount) {
+                doc.$set.amount = 0;
+            }
+            if (doc.$set.type === 3) {
+                if (!doc.$set.amountTo) {
+                    doc.$set.amountTo = 0;
+                }
+            }
             doc.$set.search = [];
             doc.$set.search.push(_.result(Categories.findOne(doc.$set.categories), 'title'));
             doc.$set.search.push(_.result(Accounts.findOne(doc.$set.account), 'name'));

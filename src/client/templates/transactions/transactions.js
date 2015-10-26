@@ -24,11 +24,9 @@ AutoForm.hooks({
     },
     updateTransaction: {
         formToModifier: function (modifier) {
+            delete modifier['$unset'].amount;
             _.assign(modifier['$set'], getSearchArray(modifier['$set']));
             return modifier;
-        },
-        onSuccess: function () {
-            return Router.current().params.id;
         }
     }
 });

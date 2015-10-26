@@ -5,7 +5,7 @@
             {{> afQuickField name="date" data-date-autoclose="true" type="bootstrap-datepicker" label=false value=currentDate}}
             <div class="row">
                 <div class="col-sm-4">
-                    {{> afQuickField name="amount" label=false template="mcExpense"}}
+                    {{> afQuickField name="amount" value="0" label=false template="mcExpense"}}
                 </div>
                 <div class="col-sm-8">
                     {{> afQuickField name="account" label="From" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}
@@ -13,7 +13,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-4">
-                    {{> afQuickField name="amountTo" label=false template="mcTransfer" currency=currencyForAmountTo}}
+                    {{> afQuickField name="amountTo" value="0" label=false template="mcTransfer" currency=currencyForAmountTo}}
                     <span>{{currencyForAmountTo}}</span>
                 </div>
                 <div class="col-sm-8">
