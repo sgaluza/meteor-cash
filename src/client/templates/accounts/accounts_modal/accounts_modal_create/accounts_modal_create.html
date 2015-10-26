@@ -9,8 +9,8 @@
                 {{#autoForm collection="Accounts" id="insertAccount" type="insert" validation="submit"}}
                     <div class="modal-body">
                         {{> afQuickField name="name"}}
-                        {{> afQuickField name="balance" value="0"}}
                         {{> afQuickField name="currencyId"}}
+                        {{> afQuickField name="balance" value="0"}}
                         {{> afQuickField name="order" type="hidden" value=order}}
                     </div>
                     <div class="modal-footer">
