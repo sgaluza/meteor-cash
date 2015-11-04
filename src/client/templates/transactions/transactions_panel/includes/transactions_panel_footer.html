@@ -1,22 +1,16 @@
 <template name="transactionsPanelFooter">
-    <div class="form-group">
-        <hr>
-        <div class="pull-right">
-            <button type="submit" id="saveTransactionButton" class="btn btn-success">
-                Save transaction
-            </button>
-            <button type="button" id="cancelTransactionButton" class="btn btn-default">
-                Cancel
-            </button>
-        </div>
-
+    <div class="pull-right buttons">
         {{#if removeButtonOn}}
-            <div class="pull-left">
-                <button type="button" id="removeTransactionButton" class="btn btn-danger">
-                    Remove
-                </button>
-            </div>
+            <button type="button" id="removeTransactionButton" class="btn btn-danger">
+                Remove
+            </button>
         {{/if}}
+        <button type="button" id="cancelTransactionButton" class="btn btn-default margin-left-right-7">
+            Cancel
+        </button>
+        <button type="submit" id="saveTransactionButton" class="btn btn-success">
+            Save transaction
+        </button>
     </div>
     {{> transactionsModalDelete}}
 </template>

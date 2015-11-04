@@ -117,7 +117,6 @@ AutoForm.hooks({
             alertify.log('<strong>' + type + '</strong> Transaction (<strong>' + this.insertDoc.amount + ' ' + currency + '</strong>) was added for account <strong>' + user + '</strong>' + category);
             $('input[data-schema-key=tags]').tagsinput('removeAll');
             $('input[data-schema-key=payer]').tagsinput('removeAll');
-            $(".bootstrap-tagsinput").addClass('hidden');
         }
     },
     updateTransaction: {

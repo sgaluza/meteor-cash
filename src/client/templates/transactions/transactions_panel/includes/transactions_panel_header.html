@@ -1,15 +1,18 @@
 <template name="transactionsPanelHeader">
-    <ul id="transactionsPanelNav" class="nav nav-tabs">
-        <li class="{{activeType 'expense'}}">
-            <a name="transactionsPanelExpense" href="{{pathFor 'transactions.add' type='expense'}}">Expense</a>
-        </li>
-        <li class="{{activeType 'yield'}}">
-            <a name="transactionsPanelYield" href="{{pathFor 'transactions.add' type='yield'}}">Income</a>
-        </li>
-        {{#if transferOn}}
-            <li class="{{activeType 'transfer'}}">
-                <a name="transactionsPanelTransfer" href="{{pathFor 'transactions.add' type='transfer'}}">Transfer</a>
-            </li>
-        {{/if}}
-    </ul>
+    <div class="transactions-header clearfix">
+        <h1>Transactions</h1>
+        <div class="add-transactions-buttons">
+            <a href="{{pathFor 'transactions.add' type='expense'}}" class="addExpance {{activeType 'expense'}}">
+                Add Expence
+            </a>
+            <a href="{{pathFor 'transactions.add' type='yield'}}" class="addIncome {{activeType 'yield'}}">
+                Add Income
+            </a>
+            {{#if transferOn}}
+                <a href="{{pathFor 'transactions.add' type='transfer'}}" class="addTransfer {{activeType 'transfer'}}">
+                    Add Transfer
+                </a>
+            {{/if}}
+        </div>
+    </div>
 </template>

@@ -1,0 +1,14 @@
+<template name="listAccounts">
+    <div class="accounts-list">
+        <div>
+            <h3>List of accounts:</h3>
+            {{#each accounts}}
+                <div class="account">
+                    <h4>{{name}}</h4>
+                    <p>balance:</p>
+                    <p>{{balance}}&nbsp;({{currencyId}})</p>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</template>
