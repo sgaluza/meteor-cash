@@ -57,7 +57,7 @@ Template.transactionsInfo.helpers({
                         summ -= temp;
                     }
                 } else {
-                    var rate = _.result(_.findWhere(exRates, {'abbreviation' : currency}), 'rate');
+                    var rate = _.result(_.findWhere(exRates, {'abbreviation' : t.currencyId}), 'rate');
                     if (t.type === 3) {
                         if(t.toAccount) {
                             temp = (t.amount * rate) / rateUSD;
@@ -120,21 +120,19 @@ Template.transactionsInfo.helpers({
                 }
 
             });
-
-            for (var key in result) {
-                summ.push({currencyId: key, balance: accounting.formatNumber(result[key], 2)});
-            }
+            _.forEach(result, function(sum, cur){
+                var currency = _.findWhere(currencies, {'code' : cur});
+                summ.push({currencyId: currency.symbol, balance: accounting.formatNumber(sum, 2), title: currency.name + ', ' + currency.code});
+            });
         }
         return summ;
-    },
-    accounts: function () {
-        var accounts = Accounts.find().fetch();
-
-        return _.forEach(accounts, function(account) {
-            account.balance = accounting.formatNumber(account.balance, 2);
-        });
     }
 });
+Template.transactionsInfo.rendered = function() {
+    $('.transactions-info-body').mCustomScrollbar({
+        theme: 'minimal-dark'
+    });
+};
 
 Template.transactionsInfo.created = function (){
     var self = this;

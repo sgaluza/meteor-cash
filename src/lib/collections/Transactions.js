@@ -109,7 +109,12 @@ Transactions = utils.schemaCollection('Transactions', {
     },
     notes: {
         type: String,
-        optional: true
+        optional: true,
+        autoform: {
+            afFieldInput: {
+                type: "textarea"
+            }
+        }
     },
     search: {
         type: [String],

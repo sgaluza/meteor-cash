@@ -1,7 +1,4 @@
 Template.transactionsPanelTransfer.events({
-    'click #addNotes': function () {
-        $('textarea[name=notes]').removeClass('hidden');
-    },
     'change select[name=account]': function () {
         var accountId = $('select[name=account]').val();
         Session.set('transactions_accountId', accountId);
@@ -13,9 +10,6 @@ Template.transactionsPanelTransfer.events({
 });
 
 Template.transactionsPanelTransferUpdate.events({
-    'click #addNotes': function () {
-        $('textarea[name=notes]').removeClass('hidden');
-    },
     'change select[name=account]': function () {
         var accountId = $('select[name=account]').val();
         Session.set('transactions_accountId', accountId);

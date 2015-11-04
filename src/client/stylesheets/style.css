@@ -1,0 +1,592 @@
+html {
+    height: 100%;
+}
+body {
+    margin: 80px 0 0 0;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f8f8f8;
+    height: calc(100% - 80px);
+}
+.wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.wrap[rel="main"] {
+    min-height: calc(100% - 101px);
+    margin-bottom: 50px;
+}
+footer {
+    height: 50px;
+    border-top: 1px solid #e3e3e3;
+}
+footer .wrap > div, footer .footer-menu {
+    float: left;
+    line-height: 50px;
+}
+footer .footer-logo {
+    float: left;
+}
+footer .footer-menu {
+    list-style: none;
+    margin: 0 0 0 150px;
+    padding-left: 0;
+}
+footer .footer-menu li {
+    float: left;
+    margin-left: 30px;
+}
+footer .wrap > div {
+    color: #9e9e9e;
+    font-size: 18px;
+}
+footer .wrap > div strong {
+    font-weight: bold;
+}
+footer .footer-menu li a {
+    color: #737373;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+/* HEADER STYLE */
+
+.navbar.navbar-inverse {
+    background-color: #a1df64;
+    border-color: #a1df64;
+    font: 16px 'Aller', 'Allerta', sans-serif;
+}
+.navbar.navbar-inverse .navbar-nav > li > a {
+    color: #0e6300;
+    padding: 0 0 17px 0;
+    margin-right: 40px;
+    margin-top: 24px;
+}
+.navbar.navbar-inverse .navbar-nav > li > a:hover:before, .navbar.navbar-inverse .navbar-nav > li > a.active:before {
+    content: '';
+    border: 10px solid transparent;
+    border-bottom: 8px solid #fff;
+    position: absolute;
+    left: 40%;
+    bottom: 0;
+}
+.navbar-inverse .navbar-brand {
+    color: #0e6300;
+    font-size: 27px;
+    height: 60px;
+    padding: 0;
+}
+.navbar-inverse .navbar-brand:hover {
+    color: #0e6300;
+}
+.navbar-brand > i {
+    color: #fff;
+    font-size: 1.4em;
+    position: relative;
+}
+.navbar-brand > i.fa-circle:before {
+    content: "\f111";
+    position: absolute;
+    top: -10px;
+}
+.navbar-brand > i + div {
+    margin-left: 45px;
+}
+.navbar-collapse {
+    float: left;
+}
+.navbar-collapse ul {
+    height: 60px;
+    margin: 0 0 0 40px;
+}
+.navbar .header-profile-menu {
+    float: right;
+    margin-top: 15px;
+    font-family: 'Open Sans', sans-serif;
+}
+.header-profile-menu > a {
+    color: #0e6300;
+    font-size: 14px;
+    text-decoration: none;
+}
+.header-profile-menu a span.avatar {
+    width: 31px;
+    height: 31px;
+    border-radius: 3px;
+    background: url('/images/face.jpg') center center;
+    display: inline-block;
+    background-size: cover;
+}
+.header-profile-menu a span.avatar + span {
+    position: relative;
+    top: -10px;
+}
+.header-profile-menu > a i {
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+}
+.header-profile-menu > a i:before {
+    position: absolute;
+    top: -14px;
+    right: 0;
+}
+
+/* TRANSACTIONS STYLE */
+
+.transactions-header {
+    /*margin-bottom: 45px;*/
+    padding-top: 25px;
+}
+.transactions-header h1 {
+    color: #333;
+    font-size: 26px;
+    margin: 0;
+    display: block;
+    float: left;
+}
+.transactions-header .add-transactions-buttons {
+    display: block;
+    float: right;
+    position: relative;
+    top: 1px;
+    right: -1px;
+}
+.transactions-header .add-transactions-buttons a {
+    color: #499301;
+    text-decoration: none;
+    line-height: 2em;
+    position: relative;
+    padding: 7px 17px 15px 18px;
+}
+.transactions-header .add-transactions-buttons a.active {
+    background-color: #f6f6f6;
+    border: 1px solid #e2e2e2;
+    border-bottom: #f6f6f6;
+}
+.transactions-header .add-transactions-buttons a:last-child {
+    padding-right: 15px;
+}
+.transactions-header .add-transactions-buttons a:before {
+    width: 27px;
+    height: 16px;
+    display: inline-block;
+    margin-right: 5px;
+    content: '';
+    vertical-align: middle;
+}
+.transactions-header .add-transactions-buttons a.addExpance:before {
+    background: url('images/expence-ico.png');
+}
+.transactions-header .add-transactions-buttons a.addIncome:before {
+    background: url('images/income-ico.png');
+}
+.transactions-header .add-transactions-buttons a.addTransfer:before {
+    background: url('images/transfer-ico.png');
+    width: 28px;
+    height: 19px;
+    top: 4px;
+}
+.transactions-info {
+    background-color: #fff;
+    border-radius: 3px;
+    width: 332px;
+    border: 1px solid #e1e1e1;
+    padding: 15px 15px 28px 9px;
+    float: right;
+}
+.transactions-info-header {
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 17px;
+}
+.transactions-info .currency {
+    float: left;
+}
+.transactions-info .amount {
+    float: right;
+    text-align: right;
+}
+.transactions-info-header .currency {
+    color: #959595;
+    font-size: 15px;
+}
+.transactions-info-header .amount {
+    color: #333333;
+    font-size: 16px;
+    font-weight: bold;
+}
+.transactions-info-body {
+    height: 200px;
+    overflow: auto;
+    width: 321px;
+    padding-right: 16px;
+}
+.transactions-info-body .currency {
+    color: #333;
+    font-size: 13px;
+}
+.transactions-info-body .amount {
+    color: #7cbc3d;
+    font-size: 14px;
+    font-weight: bold;
+}
+.transactions-info-body .transaction {
+    margin-top: 20px;
+}
+.transaction-body {
+    float: left;
+    width: 855px;
+    max-height: 670px;
+    border: 1px solid #e1e1e1;
+    background-color: #f6f6f6;
+}
+.accounts-list {
+    float: left;
+    margin: 20px 0 20px 15px;
+    width: 167px;
+    height: 630px;
+    overflow: auto;
+}
+.accounts-list h3 {
+    margin: 0 0 20px;
+}
+.accounts-list .account {
+    width: 152px;
+    border: 2px solid #dedede;
+    background-color: #fff;
+    margin-bottom: 13px;
+    padding: 6px;
+    color: #838383;
+    word-break: break-all;
+    overflow: hidden;
+}
+.accounts-list .account h4 {
+    margin: 0 0 10px;
+}
+.accounts-list .account p {
+    font-size: 12px;
+    margin: 0 0 10px;
+}
+.accounts-list .account p + p {
+    font-size: 13px;
+    color: #7cbc3d;
+    font-weight: 700;
+    margin: 0;
+}
+.accounts-list .account:hover {
+    border: 2px solid #a0cd74;
+}
+.transactions-table {
+    float: left;
+    width: calc(100% - 182px);
+}
+.input-group-addon.search {
+    background: url('images/search.png');
+    width: 32px;
+    height: 32px;
+    border: 0;
+}
+.input-group .transactions-filter-input {
+    border: none;
+    background-color: transparent;
+    width: 200px;
+    font-size: 13px;
+    display: table-cell;
+    height: 34px;
+    padding: 6px;
+    transition: none;
+    font-style: italic;
+    box-shadow: none;
+}
+.input-group .transactions-filter-input:focus {
+    border: 1px solid #e6e6e6;
+    box-shadow: none;
+    background-color: #f8f8f8;
+    color: #a7a7a7;
+    font-style: normal;
+}
+.accounts-list h3 {
+    color: #939393;
+    font-size: 18px;
+    font-weight: 600;
+}
+.transactions-table-header {
+    padding: 6px 15px;
+}
+.transactions-table-inner {
+    padding-left: 15px;
+    background-color: #fff;
+    height: 622px;
+    overflow: auto;
+}
+.transactions-filter, .transactions-date, .transactions-category {
+    float: left;
+    line-height: 34px;
+}
+.transactions-filter {
+    padding-right: 15px;
+}
+.transactions-date {
+    padding: 0 15px;
+    font-size: 13px;
+    color: #333;
+}
+.transactions-date a {
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+}
+.transactions-category {
+    padding-left: 15px;
+    font-size: 13px;
+    color: #333;
+}
+.transactions-category select {
+    font-size: 12px;
+    color: #b9b9b9;
+    display: inline-block;
+    width: 148px;
+    padding: 5px;
+    height: 30px;
+}
+.transactions-date a.active {
+    color: #499301;
+}
+.add-transactions {
+    background-color: #f6f6f6;
+    border: 1px solid #e2e2e2;
+    border-radius: 0;
+    height: 157px;
+}
+.add-transactions .panel-body {
+    padding: 15px 89px 9px 19px;
+}
+.add-transactions .form-group {
+    margin-bottom: 10px;
+}
+.add-transactions .transaction-col {
+    height: 122px;
+    position: relative;
+}
+.add-transactions .transaction-col .buttons {
+    position: absolute;
+    bottom: 0;
+    right: 15px;
+}
+.transaction-col {
+    padding-left: 0;
+    padding-right: 40px;
+}
+.transaction-col:last-child {
+    padding-right: 0;
+}
+.transaction-col .control-label {
+    margin: 7px 0;
+    padding: 0;
+    font-weight: 400;
+}
+.help-block {
+    display: none;
+}
+.has-error .help-block {
+    display: block;
+    background: #d9544f;
+    border-radius: 3px;
+    color: #fff;
+    padding: 2px 10px 2px 7px;
+    z-index: 999;
+    position: absolute;
+    right: 15px;
+    font-size: 12px;
+}
+.help-block::before {
+    content: "";
+    color: #d9544f;
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    border: 5px solid transparent;
+    border-bottom: 5px solid #d9544f;
+}
+.transactions-table-inner table {
+    color: #333;
+    font-size: 12px;
+}
+.transactions-table-inner table span {
+    color: #999;
+}
+.transactions-table-inner table td.income {
+    font-size: 13px;
+    color: #5dbb00;
+}
+.transactions-table-inner table td.expense, .transactions-table-inner table td.transfer {
+    font-size: 13px;
+    color: #ba3b3b;
+}
+.transactions-table-inner table strong {
+    color: #333;
+    font-weight: 600;
+    font-size: 13px;
+}
+.transactions-table-inner table tr {
+    border-bottom: 1px solid #e8e8e8;
+}
+.transactions-table-inner table tr:last-child {
+    border-bottom: 0;
+}
+.transactions-table-inner table th {
+    color: #a0a0a0;
+    font-size: 13px;
+    font-weight: 400;
+}
+.transactions-table-inner table th:first-child {
+    padding: 10px;
+}
+.transactions-table-inner table td:first-child {
+    padding-right: 0;
+}
+.transactions-table-inner table th, .transactions-table-inner table td {
+    padding: 10px 15px 10px 0;
+}
+.transactions-table-inner table td:nth-child(1) {
+    width: 40px;
+}
+.transactions-table-inner table td:nth-child(2) {
+    width: 320px;
+}
+.transactions-table-inner table td:nth-child(3) {
+    width: 160px;
+}
+.transactions-table-inner table td:nth-child(4) {
+    width: 120px;
+}
+span.transfer, span.expense, span.income {
+    display: block;
+    width: 21px;
+    height: 21px;
+    margin: 0 0 0 7px;
+}
+span.transfer {
+    background: url("images/transfer.png");
+}
+span.expense {
+    background: url("images/expense.png");
+}
+span.income {
+    background: url("images/income.png");
+}
+.period {
+    width: 640px;
+    margin: 20px 0;
+    display: none;
+}
+.from-to-period {
+    text-align: right;
+    color: #a0a0a0;
+    font-size: 11px;
+}
+.from-to-period span {
+    color: #333;
+}
+
+/*  Ion.RangeSlider, Modern Skin  */
+.irs-line-mid,
+.irs-line-left,
+.irs-line-right,
+.irs-bar,
+.irs-bar-edge,
+.irs-slider {
+    background: url("images/sprite-skin-modern.png") repeat-x;
+}
+.irs {
+    height: 50px;
+}
+.irs-with-grid {
+    height: 70px;
+}
+.irs-line {
+    height: 6px; top: 25px;
+}
+.irs-line-left {
+    height: 6px;
+    background-position: 0 -30px;
+}
+.irs-line-mid {
+    height: 6px;
+    background-position: 0 0;
+}
+.irs-line-right {
+    height: 6px;
+    background-position: 100% -30px;
+}
+.irs-bar {
+    height: 6px; top: 25px;
+    background-position: 0 -60px;
+}
+.irs-bar-edge {
+    top: 25px;
+    height: 6px; width: 6px;
+    background-position: 0 -90px;
+}
+.irs-shadow {
+    height: 5px; top: 25px;
+    background: #000;
+    opacity: 0.25;
+}
+.lt-ie9 .irs-shadow {
+    filter: alpha(opacity=25);
+}
+.irs-slider {
+    width: 11px; height: 18px;
+    top: 31px;
+    background-position: 0 -120px;
+}
+.irs-slider.state_hover, .irs-slider:hover {
+    background-position: 0 -150px;
+}
+.irs-min, .irs-max {
+    color: #999;
+    font-size: 10px; line-height: 1.333;
+    text-shadow: none;
+    top: 0; padding: 1px 3px;
+    background: #e1e4e9;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.irs-from, .irs-to, .irs-single {
+    color: #fff;
+    font-size: 10px; line-height: 1.333;
+    text-shadow: none;
+    padding: 1px 5px;
+    background: #20b426;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.irs-from:after, .irs-to:after, .irs-single:after {
+    position: absolute; display: block; content: "";
+    bottom: -6px; left: 50%;
+    width: 0; height: 0;
+    margin-left: -3px;
+    overflow: hidden;
+    border: 3px solid transparent;
+    border-top-color: #20b426;
+}
+.irs-grid {
+    height: 34px;
+}
+.irs-grid-pol {
+    background: #c0c0c0;
+}
+.irs-grid-text {
+    bottom: 12px;
+    color: #c0c0c0;
+}
+.irs-disable-mask {
+
+}
+.irs-disabled {
+
+}
+.lt-ie9 .irs-disabled {
+
+}
+/*  Ion.RangeSlider, Modern Skin End */

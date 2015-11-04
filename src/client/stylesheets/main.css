@@ -1,15 +1,3 @@
-body {
-    margin: 80px 0 0 0;
-}
-
-span.logo-left {
-    color: lightgray;
-}
-
-span.logo-right {
-    color: yellowgreen;
-}
-
 .hidden {
     display: none
 }
@@ -38,15 +26,6 @@ span.label > a {
 
 .account-currency {
     color: gray;
-}
-
-.transactions-filter {
-    width: 50%;
-}
-
-.input-group-addon {
-    padding: 0;
-    width: 40px;
 }
 .dropdown-menu {
     margin-top: 80px;
@@ -120,17 +99,6 @@ ul.jqtree_common ul.jqtree_common ul.jqtree_common .jqtree-toggler{
     vertical-align: super;
     margin-left: 20px;
 }
-.transactions-info {
-    background-color: lightblue;
-    border-radius: 8px;
-    padding: 10px;
-}
-.accounts-list {
-    margin-top: 20px;
-    background-color: lightcyan;
-    border-radius: 8px;
-    padding: 10px
-}
 
 .typeahead.dropdown-menu {
     margin-top: 5px;
@@ -140,4 +108,24 @@ ul.jqtree_common ul.jqtree_common ul.jqtree_common .jqtree-toggler{
     font-size: 12px;
     background: #F0F0F0;
     margin-bottom: 10px;
+}
+.margin-left-right-7 {
+    margin: 0 7px;
+}
+textarea.notes {
+    height: 78px;
+}
+.bootstrap-tagsinput {
+    height: 34px;
+}
+.bootstrap-tagsinput .tag {
+    color: #636363;
+    padding: .3em .6em;
+    border: 1px solid #cccccc;
+}
+.bootstrap-tagsinput .label-info {
+    background-color: #f1f1f1;
+}
+.bootstrap-tagsinput .tag [data-role="remove"]:after {
+    color: #999;
 }
