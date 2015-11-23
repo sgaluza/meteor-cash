@@ -3,17 +3,17 @@
         <div class="input-group transactions-filter">
             <span class="input-group-addon search">
             </span>
-            <input class="form-control transactions-filter-input" placeholder="Click to search by name and etc" type="text">
+            {{> searchBox }}
         </div>
         <div class="transactions-date">
             Date: <a name="latest" class="active">Latest</a> | <a name="period">Period</a>
         </div>
         <div class="transactions-category">
             <span>Category:</span>
-            <select class="form-control">
+            <select class="form-control" id="select-filter">
                 <option>Select a category</option>
             {{#each selectCategories}}
-                <option value="_id">{{title}}</option>
+                <option value="{{_id}}">{{title}}</option>
             {{/each}}
             </select>
         </div>
@@ -25,35 +25,43 @@
             </div>
             <input type="rangeslide"/>
         </div>
-        <table>
+        {{> searchResult }}
+    </div>
+</template>
+
+<template name="searchBox">
+    <input class="form-control transactions-filter-input" id="search-box" placeholder="Click to search by name and etc" type="text">
+</template>
+
+<template name="searchResult">
+    <table>
+        <tr>
+            <th colspan="2">Information</th>
+            <th>Account name</th>
+            <th>Balance</th>
+        </tr>
+        {{#each getTransactions}}
             <tr>
-                <th colspan="2">Information</th>
-                <th>Account name</th>
-                <th>Balance</th>
-            </tr>
-            {{#each transactions}}
-                <tr>
-                    <td><span class="{{type}}"></span></td>
-                    <td class="inform-td">{{#if accountTo}}<strong>
-                        Transfer {{currencyId}} → {{currencyIdTo}}
-                    </strong><br>
+                <td><span class="{{type}}"></span></td>
+                <td class="inform-td">{{#if accountTo}}<strong>
+                    Transfer {{currencyId}} → {{currencyIdTo}}
+                </strong><br>
                     <span>{{rate}} transfer, {{notes}}</span>{{else}}
-                        {{#if categories}}<strong>
+                    {{#if categories}}<strong>
                         {{categories}}
                     </strong><br>{{/if}}
-                        <span>
+                    <span>
                             {{#if categories}}
                                 {{categories}} -
                             {{/if}}
                         {{#if payer}} {{payer}} {{/if}} {{#if notes}}, {{notes}} {{/if}} {{#if tags}}, Tags: {{tags}} {{/if}}</span>{{/if}}</td>
-                    <td>{{#if accountTo}}
-                        {{account}} → {{accountTo}}
-                    {{else}}
-                        {{account}}
-                    {{/if}}</td>
-                    <td class="{{type}}">{{amount}} {{currency}}</td>
-                </tr>
-            {{/each}}
-        </table>
-    </div>
+                <td>{{#if accountTo}}
+                    {{account}} → {{accountTo}}
+                {{else}}
+                    {{account}}
+                {{/if}}</td>
+                <td class="{{type}}">{{amount}} {{currency}}</td>
+            </tr>
+        {{/each}}
+    </table>
 </template>

@@ -5,13 +5,45 @@ function getTags(tags){
     return tags;
 }
 
-Template.transactionsTable.helpers({
-    transactions: function () {
-        var transactions = Transactions.find().fetch(),
-            accounts = Accounts.find().fetch(),
-            categories = Categories.find().fetch();
+var options = {
+    keepHistory: 1000 * 60 * 5,
+    localSearch: true
+};
+var fields = ['search'];
 
-        return _.forEach(transactions, function(transaction) {
+TransactionsSearch = new SearchSource('transactions', fields, options);
+
+Template.searchResult.helpers({
+    getTransactions: function() {
+        var transactions = TransactionsSearch.getData({}),
+            accounts = Accounts.find().fetch(),
+            categories = Categories.find().fetch(),
+            category = Session.get('selectCategory'),
+            daterangeStart = Session.get('daterangeStart'),
+            daterangeEnd = Session.get('daterangeEnd'),
+            transactionsWithCategorySort = [],
+            transactionsWithDataSort = [];
+
+        if (category) {
+            _.forEach(transactions, function(transaction) {
+                if (transaction.categories === category) {
+                    transactionsWithCategorySort.push(transaction);
+                }
+            });
+            _.forEach(transactionsWithCategorySort, function(transaction) {
+                if (moment(transaction.date).format('X') > daterangeStart && moment(transaction.date).format('X') < daterangeEnd) {
+                    transactionsWithDataSort.push(transaction);
+                }
+            });
+        } else {
+            _.forEach(transactions, function(transaction) {
+                if (moment(transaction.date).format('X') > daterangeStart && moment(transaction.date).format('X') < daterangeEnd) {
+                    transactionsWithDataSort.push(transaction);
+                }
+            });
+        }
+
+        return _.forEach(transactionsWithDataSort, function(transaction) {
             var currencyId = _.result(_.find(accounts, {'_id' : transaction.account}), 'currencyId');
             transaction.currencyId = currencyId;
             transaction.currency = _.result(_.find(currencies, {'code' : currencyId}), 'symbol');
@@ -20,7 +52,7 @@ Template.transactionsTable.helpers({
             if (transaction.accountTo) {
                 transaction.currencyIdTo = _.result(_.find(accounts, {'_id' : transaction.accountTo}), 'currencyId');
                 transaction.accountTo = _.result(_.find(accounts, {'_id' : transaction.accountTo}), 'name');
-                if (Template.instance().rates.get()) {
+                if (Template.instance().rates) {
                     var exRates = Template.instance().rates.get(),
                         account = Accounts.findOne(transaction.account, {fields: {currencyId: 1}}),
                         accountTo = _.result(_.findWhere(Accounts.find().fetch(), {'name' : transaction.accountTo}), 'currencyId'),
@@ -62,19 +94,36 @@ Template.transactionsTable.helpers({
             }
             transaction.account = _.result(_.find(accounts, {'_id' : transaction.account}), 'name');
         });
-    },
+    }
+});
+
+Template.searchResult.rendered = function() {
+    TransactionsSearch.search('');
+};
+
+Template.searchBox.events({
+    "keyup #search-box": _.throttle(function(e) {
+        var text = $(e.target).val().trim();
+        TransactionsSearch.search(text);
+    }, 200)
+});
+
+Template.transactionsTable.helpers({
     selectCategories: function () {
         return Categories.find().fetch();
     }
 });
 Template.transactionsTable.events({
     'click .transactions-date a[name="latest"]' : function () {
-        $('.period').fadeOut(300);
+        $('.period').fadeOut();
         $('a[name="period"]').removeClass('active');
         $('a[name="latest"]').addClass('active');
+        Session.set('daterangeStart', moment().subtract(3, "months").format("X"));
+        Session.set('daterangeEnd', moment().format("X"));
+        $('input[type="rangeslide"]').data("ionRangeSlider").reset();
     },
     'click .transactions-date a[name="period"]' : function () {
-        $('.period').fadeIn(300);
+        $('.period').fadeIn();
         $('a[name="period"]').addClass('active');
         $('a[name="latest"]').removeClass('active');
     },
@@ -84,33 +133,20 @@ Template.transactionsTable.events({
     'blur .transactions-filter-input' : function () {
         $('.transactions-filter-input').attr('placeholder', 'Click to search by name and etc');
     },
-    'click .reactive-table tbody tr' : function (event) {
-        var selectedRowId = $(event.currentTarget).find('.hidden').text();
-        var transaction = Transactions.findOne(selectedRowId);
-        Session.set('transactions_accountId', transaction.account);
-        if (transaction.accountTo) Session.set('transactions_accountToId', transaction.accountTo);
-
-        Router.go('transactions.update', {
-            type: TransactionsTypes[transaction.type],
-            id  : transaction._id
-        });
-    },
-    'keyup .transactions-filter, input .transactions-filter-input': function (event, template) {
-        var input = $(event.target).val();
-
-        if (input) {
-            var compared = _.map(Transactions.find({search: {$regex: input, $options: 'i'}}).fetch(), function (item) {
-                return item._id;
-            });
-
-            template.filter.set({$in: compared});
+    'change #select-filter': function() {
+        if ($('#select-filter option:selected').text() == 'Select a category') {
+            Session.set('selectCategory', '');
         } else {
-            template.filter.set('');
+            var selectCategory = $('#select-filter option:selected').val();
+            Session.set('selectCategory', selectCategory);
         }
     }
 });
 
 Template.transactionsTable.rendered = function() {
+    Session.setDefault('selectCategory', '');
+    Session.setDefault('daterangeStart', moment().subtract(3, "months").format("X"));
+    Session.setDefault('daterangeEnd', moment().format("X"));
     $('input[type="rangeslide"]').ionRangeSlider({
         type: "double",
         min: +moment().subtract(1, "years").format("X"),
@@ -127,6 +163,8 @@ Template.transactionsTable.rendered = function() {
             return m.format("LL");
         },
         onChange: function (data) {
+            Session.set('daterangeStart', data.from);
+            Session.set('daterangeEnd', data.to);
             $('.from-to-period span').html(moment(data.from, "X").format("LL") + ' &mdash; ' + moment(data.to, "X").format("LL"));
         }
     });
@@ -141,3 +179,8 @@ Template.transactionsTable.created = function (){
         self.rates.set(result.data);
     });
 };
+Template.transactionsTable.onDestroyed(function () {
+    Session.set('selectCategory', '');
+    Session.set('daterangeStart', moment().subtract(3, "months").format("X"));
+    Session.set('daterangeEnd', moment().format("X"));
+});
