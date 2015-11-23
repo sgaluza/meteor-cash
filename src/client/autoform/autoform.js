@@ -81,10 +81,17 @@ AutoForm.hooks({
                     doc.tags[key] = Tags.findOne({title: t})._id;
                 })
             }
+            if (doc.accountTo) {
+                doc.search.push(_.result(Accounts.findOne(doc.accountTo), 'name'));
+            }
             if (doc.payer && doc.payer.length > 0){
                 _.forEach(doc.payer, function(r, key) {
+                    doc.search.push(doc.payer[key]);
                     doc.payer[key] = Tags.findOne({title: r})._id;
                 })
+            }
+            if (doc.type === 3) {
+                doc.search.push('transfer');
             }
             if (!doc.amount) {
                 doc.amount = 0;
@@ -132,6 +139,9 @@ AutoForm.hooks({
             doc.$set.search = [];
             doc.$set.search.push(_.result(Categories.findOne(doc.$set.categories), 'title'));
             doc.$set.search.push(_.result(Accounts.findOne(doc.$set.account), 'name'));
+            if (doc.$set.accountTo) {
+                doc.$set.search.push(_.result(Accounts.findOne(doc.$set.accountTo), 'name'));
+            }
             if (doc.$set.notes) {
                 doc.$set.search.push(doc.$set.notes);
             }
@@ -141,8 +151,12 @@ AutoForm.hooks({
                     doc.$set.tags[key] = Tags.findOne({title: t})._id;
                 })
             }
+            if (doc.type === 3) {
+                doc.search.push('transfer');
+            }
             if (doc.$set.payer && doc.$set.payer.length > 0){
                 _.forEach(doc.$set.payer, function(r, key) {
+                    doc.$set.search.push(doc.$set.payer[key]);
                     doc.$set.payer[key] = Tags.findOne({title: r})._id;
                 })
             }
