@@ -1,12 +1,21 @@
 <template name="categories">
     <div class="create-account-category-header-btn">
         <h1>Categories</h1>
-        <a href="#" class="btn btn-primary" id="createCategory">Create Category</a>
     </div>
     <div class="row">
-        <div class="col-md-6">
+    {{#if categoriesTrue}}
+        <div class="col-md-8 categories">
+            <span>Category Name</span>
             <div id="categoriesTree"></div>
+            <a href="#" class="btn btn-meteor-cash" id="createCategory">Create Category</a>
         </div>
+    {{else}}
+        <div class="col-md-12 empty-categories">
+            <img src="images/document.png" alt="document"/>
+            <p>Your list of categories is empty. Create a new category in one click.</p>
+            <a href="#" class="btn btn-meteor-cash" id="createCategory">Create Category</a>
+        </div>
+    {{/if}}
     </div>
     {{> categoriesModalCreate}}
     {{> categoriesModalUpdate}}

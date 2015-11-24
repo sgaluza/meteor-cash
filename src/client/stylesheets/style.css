@@ -47,7 +47,69 @@ footer .footer-menu li a {
     font-size: 13px;
     text-decoration: none;
 }
-
+footer .footer-menu li a:hover {
+    color: #fd681f;
+}
+.btn-meteor-cash-default {
+    color: #898989;
+    background-color: #fff;
+    border: 1px solid #898989;
+}
+.btn-meteor-cash-default:hover {
+    color: #fd681f;
+    border: 1px solid #fd681f;
+}
+.btn-meteor-cash {
+    color: #fff;
+    background-color: #fd681f;
+    font-size: 13px;
+    padding: 8px 16px;
+}
+.btn-meteor-cash:hover {
+    color: #fff;
+    opacity: .9;
+}
+/* MODAL DIALOG */
+.modal-dialog {
+    margin-top: 10%;
+    width: 460px;
+}
+.modal-dialog .modal-content {
+    border-radius: 5px;
+}
+.modal-dialog .modal-header {
+    padding: 13px 20px;
+}
+.modal-dialog .modal-header h4 {
+    font-size: 19px;
+}
+.modal-dialog .modal-header button.close {
+    margin-top: 0;
+    font-family: 'Times New Roman';
+    font-size: 30px;
+    font-weight: 400;
+    opacity: 1;
+    color: #333;
+}
+.modal-dialog .modal-body {
+    padding: 25px 15px 10px;
+}
+#deleteCategory .modal-body {
+    padding: 25px 30px 10px;
+}
+.modal-dialog .modal-body label {
+    margin: 7px 0;
+    font-weight: 400;
+}
+.modal-dialog .modal-footer {
+    border-top: 0;
+    padding-top: 0;
+    padding-right: 30px;
+}
+.modal-dialog .modal-footer .btn {
+    font-size: 13px;
+    padding: 8px 20px;
+}
 /* HEADER STYLE */
 
 .navbar.navbar-inverse {
@@ -590,3 +652,49 @@ span.income {
 
 }
 /*  Ion.RangeSlider, Modern Skin End */
+
+
+/* CATEGORIES */
+.categories {
+    font-size: 13px;
+    margin-top: 20px;
+}
+.categories > span {
+    color: #a0a0a0;
+    padding-left: 9px;
+}
+.empty-categories {
+    text-align: center;
+    margin-top: 15%;
+}
+.empty-categories p {
+    color: #ddd;
+    font-size: 17px;
+    margin: 30px 0 20px;
+}
+.category-delete, .category-edit {
+    margin-top: 5px;
+}
+.category-delete {
+    background: url('/images/remove.png') no-repeat 0 0;
+    width: 12px;
+    height: 12px;
+    margin-left: 25px;
+}
+.category-delete:hover {
+    background-position: 0 -12px;
+}
+.category-edit {
+    background: url('/images/edit.png') no-repeat;
+    width: 10px;
+    height: 10px;
+}
+.expand-category, .collapse-category {
+    background: url('/images/expand-collapse.png') no-repeat 0 0;
+    width: 19px;
+    height: 19px;
+    display: block;
+}
+.collapse-category {
+    background-position: 0 -19px;
+}

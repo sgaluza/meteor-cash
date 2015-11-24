@@ -3,6 +3,9 @@ Categories = utils.schemaCollection('Categories', {
         type: String,
         label: 'Category',
         max: 200,
+        autoform: {
+            placeholder: "Name your account"
+        },
         index: true,
         unique: true
     },
@@ -11,7 +14,7 @@ Categories = utils.schemaCollection('Categories', {
         label: "Parent Category",
         optional: true,
         autoform: {
-            firstOption: "(Select Parent Category)",
+            firstOption: "Select Parent Category",
             selectOnBlur: true,
             type: "select",
             options: function() {
