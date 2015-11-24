@@ -14,20 +14,28 @@ var sortTree = function(collection) {
             sortTree(element.children);
         }
     })
-}
+};
 
+Template.categories.helpers({
+    categoriesTrue: function() {
+        return Categories.find().fetch();
+    }
+});
 Template.categories.onRendered(function () {
     $('#categoriesTree').tree({
         data: Template.categories.getTree(),
-        closedIcon: '<span class="glyphicon glyphicon-plus">',
-        openedIcon: '<span class="glyphicon glyphicon-minus">',
+        closedIcon: '<span class="expand-category">',
+        openedIcon: '<span class="collapse-category">',
         autoOpen: true,
         selectable: false,
         useContextMenu: false,
         dragAndDrop: true,
         onCreateLi: function(node, $li) {
-            $li.find('.jqtree-element').append('<a href="/categories/#'+ node._id +'" class="category-delete pull-right margin-left-5" hidden="true">Delete</a><a href="/categories/#'+ node._id +'" class="category-edit pull-right" hidden="true">Edit</a>');
+            $li.find('.jqtree-element').append('<a href="/categories/#'+ node._id +'" class="category-delete pull-right" data-toggle="tooltip" title="Delete"></a><a href="/categories/#'+ node._id +'" class="category-edit pull-right" data-toggle="tooltip" title="Edit"></a>');
         }
+    });
+    $(document).ready(function() {
+        $("body").tooltip({ selector: '[data-toggle=tooltip]' });
     });
 
     $('#categoriesTree').bind(
@@ -93,13 +101,5 @@ Template.categories.events({
     'click a.category-delete': function () {
         AutoForm.resetForm('deleteCategory');
         $('#categoriesModalDelete').modal();
-    },
-    'mouseenter div.jqtree-element': function (event) {
-        $(event.currentTarget).find('a.category-edit').show();
-        $(event.currentTarget).find('a.category-delete').show();
-    },
-    'mouseleave div.jqtree-element': function (event) {
-        $(event.currentTarget).find('a.category-edit').hide();
-        $(event.currentTarget).find('a.category-delete').hide();
     }
 });

@@ -3,17 +3,23 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&#215;</button>
                     <h4 class="modal-title">Create Category</h4>
                 </div>
                 {{#autoForm collection="Categories" id="insertCategory" type="insert" validation="submit"}}
-                    <div class="modal-body">
-                        {{> afQuickField name="title"}}
-                        {{> afQuickField name="parentId"}}
+                    <div class="modal-body clearfix">
+                        <label for="title" class="col-sm-4 control-label">Category</label>
+                        <div class="col-sm-8">
+                            {{> afQuickField name="title" id="title" label=false}}
+                        </div>
+                        <label for="parentId" class="col-sm-4 control-label">Parent Category</label>
+                        <div class="col-sm-8">
+                            {{> afQuickField name="parentId" id="parentId" label=false}}
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Create Category</button>
+                        <button type="button" class="btn btn-meteor-cash-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-meteor-cash">Create</button>
                     </div>
                 {{/autoForm}}
             </div>
