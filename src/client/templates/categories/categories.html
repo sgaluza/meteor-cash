@@ -3,7 +3,7 @@
         <h1>Categories</h1>
     </div>
     <div class="row">
-    {{#if categoriesTrue}}
+    {{#if categoriesExists}}
         <div class="col-md-8 categories">
             <span>Category Name</span>
             <div id="categoriesTree"></div>
@@ -11,7 +11,7 @@
         </div>
     {{else}}
         <div class="col-md-12 empty-categories">
-            <img src="images/document.png" alt="document"/>
+            <img src="images/document-category.png" alt="document"/>
             <p>Your list of categories is empty. Create a new category in one click.</p>
             <a href="#" class="btn btn-meteor-cash" id="createCategory">Create Category</a>
         </div>

@@ -17,7 +17,7 @@ var sortTree = function(collection) {
 };
 
 Template.categories.helpers({
-    categoriesTrue: function() {
+    categoriesExists: function() {
         return Categories.find().fetch();
     }
 });
@@ -31,7 +31,7 @@ Template.categories.onRendered(function () {
         useContextMenu: false,
         dragAndDrop: true,
         onCreateLi: function(node, $li) {
-            $li.find('.jqtree-element').append('<a href="/categories/#'+ node._id +'" class="category-delete pull-right" data-toggle="tooltip" title="Delete"></a><a href="/categories/#'+ node._id +'" class="category-edit pull-right" data-toggle="tooltip" title="Edit"></a>');
+            $li.find('.jqtree-element').append('<a href="/categories/#'+ node._id +'" class="category-delete pull-right" data-toggle="tooltip" title="Delete" hidden="true"></a><a href="/categories/#'+ node._id +'" class="category-edit pull-right" data-toggle="tooltip" title="Edit" hidden="true"></a>');
         }
     });
     $(document).ready(function() {
@@ -101,5 +101,13 @@ Template.categories.events({
     'click a.category-delete': function () {
         AutoForm.resetForm('deleteCategory');
         $('#categoriesModalDelete').modal();
+    },
+    'mouseenter div.jqtree-element': function (event) {
+        $(event.currentTarget).find('a.category-edit').show();
+        $(event.currentTarget).find('a.category-delete').show();
+    },
+    'mouseleave div.jqtree-element': function (event) {
+        $(event.currentTarget).find('a.category-edit').hide();
+        $(event.currentTarget).find('a.category-delete').hide();
     }
 });

@@ -21,6 +21,11 @@ Template.sortableItems.helpers({
     }
 });
 
+Template.accounts.helpers({
+    accountsExists: function() {
+        return Accounts.find().fetch();
+    }
+});
 Template.accounts.events({
     'click #createAccount': function () {
         AutoForm.resetForm('insertAccount');
@@ -60,9 +65,9 @@ Template.accountTree.events({
         $('#accountsModalDelete').modal();
     },
     'mouseenter li.account-item': function (event) {
-        $(event.currentTarget).find('div.pull-right').show();
+        $(event.currentTarget).find('.edit-delete-account').show();
     },
     'mouseleave li.account-item': function (event) {
-        $(event.currentTarget).find('div.pull-right').hide();
+        $(event.currentTarget).find('.edit-delete-account').hide();
     }
 });

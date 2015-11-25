@@ -7,6 +7,9 @@ body {
     background-color: #f8f8f8;
     height: calc(100% - 80px);
 }
+h1 {
+    font-size: 26px;
+}
 .wrap {
     max-width: 1200px;
     margin: 0 auto;
@@ -65,6 +68,9 @@ footer .footer-menu li a:hover {
     font-size: 13px;
     padding: 8px 16px;
 }
+.btn-meteor-cash:focus {
+    color: #fff;
+}
 .btn-meteor-cash:hover {
     color: #fff;
     opacity: .9;
@@ -94,7 +100,7 @@ footer .footer-menu li a:hover {
 .modal-dialog .modal-body {
     padding: 25px 15px 10px;
 }
-#deleteCategory .modal-body {
+#deleteCategory .modal-body, #deleteAccount .modal-body {
     padding: 25px 30px 10px;
 }
 .modal-dialog .modal-body label {
@@ -109,6 +115,9 @@ footer .footer-menu li a:hover {
 .modal-dialog .modal-footer .btn {
     font-size: 13px;
     padding: 8px 20px;
+}
+#accountsModalDelete .modal-dialog {
+    width: 560px;
 }
 /* HEADER STYLE */
 
@@ -697,4 +706,90 @@ span.income {
 }
 .collapse-category {
     background-position: 0 -19px;
+}
+.ui-tooltip-content {
+    background-color: #333;
+    font-size: 11px;
+    color: #fff;
+    border: 0;
+    padding: 5px 9px;
+    margin: 0;
+}
+.ui-tooltip {
+    padding: 0;
+    -webkit-box-shadow: 0;
+    box-shadow: 0;
+    border: 0;
+}
+.ui-tooltip:before {
+    content: '';
+    border: 7px solid transparent;
+    border-bottom: 7px solid #333;
+    position: absolute;
+    left: 6px;
+    top: -13px;
+}
+
+/* ACCOUNTS */
+
+.empty-accounts {
+    text-align: center;
+    margin-top: 15%;
+}
+.empty-accounts p {
+    color: #ddd;
+    font-size: 17px;
+    margin: 30px 0 20px;
+}
+.list-group-item:first-child {
+    border-radius: 0;
+}
+.list-group-item {
+    border-left: 0;
+    border-right: 0;
+    background: transparent;
+}
+.list-group-item.account-item {
+    border-top: 1px solid #e8e8e8;
+    padding: 10px 15px 10px 9px;
+}
+.list-group-item.account-item:hover {
+    background-color: #f6ffed;
+    border-left: 2px solid #a1df64;
+    padding-left: 7px;
+}
+.account-delete, .account-edit {
+    margin-top: 5px;
+}
+.account-delete {
+    background: url('/images/remove.png') no-repeat 0 0;
+    width: 12px;
+    height: 12px;
+}
+.account-delete:hover {
+    background-position: 0 -12px;
+}
+.account-edit {
+    background: url('/images/edit.png') no-repeat;
+    width: 10px;
+    height: 10px;
+}
+.account-cell, .account-cell-last {
+    float: left;
+    width: 31%;
+}
+.account-table {
+    width: 93%
+}
+.edit-delete-account, .account-cell-last {
+    width: 7%;
+}
+.account-table-header {
+    width: 93%;
+    padding: 10px 15px 10px 9px;
+    font-size: 13px;
+    color: #a0a0a0;
+}
+.account-table-header + ul {
+    font-size: 13px;
 }

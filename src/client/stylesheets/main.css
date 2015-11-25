@@ -24,9 +24,6 @@ span.label > a {
     /*display: none;*/
 }
 
-.account-currency {
-    color: gray;
-}
 .dropdown-menu {
     margin-top: 80px;
 }
@@ -147,4 +144,7 @@ textarea.notes {
 }
 .bootstrap-tagsinput .tag [data-role="remove"]:after {
     color: #999;
+}
+.has-error .control-label {
+    color: inherit;
 }

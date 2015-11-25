@@ -6,7 +6,7 @@ Accounts = utils.schemaCollection("Accounts", {
         index : true,
         unique: true,
         autoform: {
-            placeholder: "Name your account"
+            placeholder: "Enter your account name"
         }
     },
     names     : {
@@ -14,7 +14,7 @@ Accounts = utils.schemaCollection("Accounts", {
         label : "Please, choose account to re-assign transactions of the removed account to:",
         optional : true,
         autoform: {
-            firstOption: "Select Account",
+            firstOption: "Select one",
             selectOnBlur: true,
             type: "select",
             options: function () {
