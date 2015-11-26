@@ -1,39 +1,81 @@
 <template name="transactionsPanelExpense">
     {{#autoForm collection="Transactions" id="insertTransaction" type="insert"}}
-        <div class="form-group">
+        <div class="col-sm-4 transaction-col">
             {{> afQuickField name="type" type="hidden" value="2"}}
-            {{> afQuickField name="date" data-date-autoclose="true" type="bootstrap-datepicker" label=false value=currentDate}}
-            {{> afQuickField name="amount" label=false template="mcExpense"}}
-            {{> afQuickField name="categories" label=false}}
-            {{> afQuickField name="account" label=false}}
-            <p>You can also add a <a href="#" id="addTags">tags</a> or <a href="#" id="addNotes">notes</a></p>
-            {{> afQuickField name="tags" placeholder="Tags name" label=false}}
-            {{> afQuickField name="notes" class="hidden" placeholder="Text of notes" label=false rows=2}}
+            <label for="insertDate" class="col-sm-2 control-label">Date</label>
+            <div class="col-sm-10">
+                {{> afQuickField name="date" id="=insertDate" data-date-autoclose="true" type="bootstrap-datepicker" label=false value=currentDate}}
+            </div>
+            <label for="insertAmount" class="col-sm-2 control-label">Amount</label>
+            <div class="col-sm-10">
+                {{> afQuickField name="amount" id="insertAmount" label=false value="0"}}
+            </div>
+            <label for="insertCategory" class="col-sm-2 control-label">Category</label>
+            <div class="col-sm-10">
+                {{> afQuickField name="categories" id="insertCategory" label=false}}
+            </div>
         </div>
-        {{> transactionsPanelFooter}}
+        <div class="col-sm-4 transaction-col">
+            <label for="insertAccount" class="col-sm-2 control-label">Account</label>
+            <div class="col-sm-10">
+                {{> afQuickField name="account" id="insertAccount" label=false}}
+            </div>
+            <label for="insertNotes" class="col-sm-2 control-label">Notes</label>
+            <div class="col-sm-10">
+                {{> afQuickField name="notes" id="insertNotes" class="notes" placeholder="Text of notes" label=false}}
+            </div>
+        </div>
+        <div class="col-sm-4 transaction-col">
+            <label for="insertTags" class="col-sm-2 control-label">Tags</label>
+            <div class="col-sm-10">
+                {{> afQuickField name="tags" id="insertTags" placeholder="Tags name" label=false}}
+            </div>
+            {{> transactionsPanelFooter}}
+        </div>
     {{/autoForm}}
 </template>
 
 <template name="transactionsPanelExpenseUpdate">
     {{#autoForm collection="Transactions" id="updateTransaction" type="update" doc=transactionsGetSelectedRowId}}
-        <div class="form-group">
+        <div class="col-sm-4 transaction-col">
             {{> afQuickField name="type" type="hidden" value="2"}}
-            {{> afQuickField name="date" data-date-autoclose="true" type="bootstrap-datepicker" label=false}}
-            {{> afQuickField name="amount" label=false template="mcExpense"}}
-            {{> afQuickField name="categories" label=false}}
-            {{> afQuickField name="account" label=false}}
-            <p>You can also add a <a href="#" id="addTags">tags</a> or <a href="#" id="addNotes">notes</a></p>
-            {{#if tagsOn}}
-                {{> afQuickField name="tags" placeholder="Tags name" label=false}}
-            {{else}}
-                {{> afQuickField name="tags" placeholder="Tags name" label=false}}
-            {{/if}}
-            {{#if notesOn}}
-                {{> afQuickField name="notes" placeholder="Text of notes" label=false rows=2}}
-            {{else}}
-                {{> afQuickField name="notes" class="hidden" placeholder="Text of notes" label=false rows=2}}
-            {{/if}}
+            <label for="updateDate" class="col-sm-2 control-label">Date</label>
+            <div class="col-sm-10">
+                {{> afQuickField name="date" id="updateDate" data-date-autoclose="true" type="bootstrap-datepicker" label=false}}
+            </div>
+            <label for="updateAmount" class="col-sm-2 control-label">Amount</label>
+            <div class="col-sm-10">
+                {{> afQuickField name="amount" id="updateAmount" label=false}}
+            </div>
+            <label for="updateCategory" class="col-sm-2 control-label">Category</label>
+            <div class="col-sm-10">
+                {{> afQuickField name="categories" id="updateCategory" label=false}}
+            </div>
+            </div>
+        <div class="col-sm-4 transaction-col">
+            <label for="updateAccount" class="col-sm-2 control-label">Account</label>
+            <div class="col-sm-10">
+                {{> afQuickField name="account" id="updateAccount" label=false}}
+            </div>
+            <label for="updateNotes" class="col-sm-2 control-label">Notes</label>
+            <div class="col-sm-10">
+                {{#if notesOn}}
+                    {{> afQuickField name="notes" id="updateNotes" class="notes" placeholder="Text of notes" label=false rows=2}}
+                {{else}}
+                    {{> afQuickField name="notes" id="updateNotes" class="notes" placeholder="Text of notes" label=false rows=2}}
+                {{/if}}
+            </div>
         </div>
-        {{> transactionsPanelFooter}}
+        <div class="col-sm-4 transaction-col">
+            <label for="updateTags" class="col-sm-2 control-label">Tags</label>
+            <div class="col-sm-10">
+                {{#if tagsOn}}
+                    {{> afQuickField name="tags" id="updateTags" placeholder="Tags name" label=false}}
+                {{else}}
+                    {{> afQuickField name="tags" id="updateTags" placeholder="Tags name" label=false}}
+                {{/if}}
+            </div>
+            {{> transactionsPanelFooter}}
+        </div>
     {{/autoForm}}
 </template>

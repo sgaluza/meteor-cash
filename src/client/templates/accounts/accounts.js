@@ -21,10 +21,37 @@ Template.sortableItems.helpers({
     }
 });
 
+Template.accounts.helpers({
+    accountsExists: function() {
+        return Accounts.find().fetch();
+    }
+});
 Template.accounts.events({
     'click #createAccount': function () {
         AutoForm.resetForm('insertAccount');
         $('#accountsModalCreate').modal();
+    }
+});
+
+var emptyBalance = function(doc) {
+    if (!doc.balance) {
+        doc.balance = 0;
+    }
+    return doc;
+};
+
+AutoForm.hooks({
+    insertAccount: {
+        formToDoc: function (doc) {
+            return emptyBalance(doc);
+        }
+    },
+    updateAccount: {
+        formToModifier: function (modifier) {
+            delete modifier['$unset'].balance;
+            _.assign(modifier['$set'], emptyBalance(modifier['$set']));
+            return modifier;
+        }
     }
 });
 
@@ -38,9 +65,9 @@ Template.accountTree.events({
         $('#accountsModalDelete').modal();
     },
     'mouseenter li.account-item': function (event) {
-        $(event.currentTarget).find('div.pull-right').show();
+        $(event.currentTarget).find('.edit-delete-account').show();
     },
     'mouseleave li.account-item': function (event) {
-        $(event.currentTarget).find('div.pull-right').hide();
+        $(event.currentTarget).find('.edit-delete-account').hide();
     }
 });

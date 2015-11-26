@@ -1,18 +1,24 @@
 <template name="transactionsInfo">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="transactions-info">
-                <h3>{{allMoney}}&nbsp;{{currency}}</h3>
-
-                {{#each accountsList}}
-                    <div><h4><a href="#">{{title}}</a></h4>{{balance}}&nbsp;({{currencyId}})</div>
-                {{/each}}
+    <div class="transactions-info">
+        <div class="transactions-info-header clearfix">
+            <div class="currency">
+                Your Current balance
             </div>
-            <div class="accounts-list">
-                <h3>List of accounts:</h3>
-                
-                {{#each accounts}}
-                    <div><h4>{{name}}</h4> balance: {{balance}}&nbsp;({{currencyId}})</div>
+            <div class="amount">
+                {{allMoney}}&nbsp;{{currency}}
+            </div>
+        </div>
+        <div class="transactions-info-body">
+            <div>
+                {{#each accountsList}}
+                    <div class="transaction clearfix">
+                        <div class="currency">
+                            {{title}}
+                        </div>
+                        <div class="amount">
+                            {{balance}}&nbsp;({{currencyId}})
+                        </div>
+                    </div>
                 {{/each}}
             </div>
         </div>

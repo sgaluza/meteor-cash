@@ -3,19 +3,28 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&#215;</button>
                     <h4 class="modal-title">Create Account</h4>
                 </div>
                 {{#autoForm collection="Accounts" id="insertAccount" type="insert" validation="submit"}}
-                    <div class="modal-body">
-                        {{> afQuickField name="name"}}
-                        {{> afQuickField name="balance" defaultValue=0}}
-                        {{> afQuickField name="currencyId"}}
+                    <div class="modal-body clearfix">
+                        <label for="name" class="col-sm-4 control-label">Account Name</label>
+                        <div class="col-sm-8">
+                            {{> afQuickField name="name" id="name" label=false}}
+                        </div>
+                        <label for="balance" class="col-sm-4 control-label">Balance</label>
+                        <div class="col-sm-8">
+                            {{> afQuickField name="balance" id="balance" label=false value="0"}}
+                        </div>
+                        <label for="currencyId" class="col-sm-4 control-label">Currency</label>
+                        <div class="col-sm-8">
+                            {{> afQuickField name="currencyId" id="currencyId" label=false}}
+                        </div>
                         {{> afQuickField name="order" type="hidden" value=order}}
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Create Account</button>
+                        <button type="button" class="btn btn-meteor-cash-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-meteor-cash">Create</button>
                     </div>
                 {{/autoForm}}
             </div>

@@ -1,14 +1,28 @@
 <template name="accounts">
     <div class="create-account-category-header-btn">
         <h1>Accounts</h1>
-        <a href="#" class="btn btn-primary" id="createAccount">Create Account</a>
     </div>
     <div class="row">
-        <div class="col-md-6">
+    {{#if accountsExists}}
+        <div class="col-md-8 accounts">
+            <div class="account-table-header clearfix">
+                <div class="account-cell">Account Name</div>
+                <div class="account-cell">Balance</div>
+                <div class="account-cell">Currency</div>
+                <div class="account-cell-last">&nbsp;</div>
+            </div>
             <ul class="list-group">
                 {{> sortableItems}}
             </ul>
+            <a href="#" class="btn btn-meteor-cash" id="createAccount">Create Account</a>
         </div>
+    {{else}}
+        <div class="col-md-12 empty-accounts">
+            <img src="images/document-account.png" alt="document"/>
+            <p>Your account list is empty. Create an account now in one click</p>
+            <a href="#" class="btn btn-meteor-cash" id="createAccount">Create Account</a>
+        </div>
+    {{/if}}
     </div>
     {{> accountsModalCreate}}
     {{> accountsModalUpdate}}
@@ -17,7 +31,7 @@
 
 <template name="accountCurrency">
     {{#if symbol}}
-        <span class="account-currency">&nbsp;&rarr;&nbsp;<i>{{name}}, {{code}}</i></span>
+        {{name}}, {{code}}
     {{/if}}
 </template>
 
@@ -29,13 +43,14 @@
 
 <template name="accountTree">
     <li class="list-group-item account-item clearfix" id="{{_id}}">
-        <div class="pull-left">
-            <span>{{name}}</span>
-            <span>{{> accountCurrency currency currencyId}}</span>
+        <div class="pull-left account-table clearfix">
+            <div class="account-cell">{{name}}</div>
+            <div class="account-cell">{{balance}}</div>
+            <div class="account-cell">{{> accountCurrency currency currencyId}}</div>
         </div>
-        <div class="pull-right clearfix" hidden='true'>
-            <a href="{{pathFor route='accounts' hash=_id}}" class="account-edit pull-left">Edit</a>
-            <a href="{{pathFor route='accounts' hash=_id}}" class="account-delete pull-right margin-left-5">Delete</a>
+        <div class="pull-right edit-delete-account clearfix" hidden='true'>
+            <a href="{{pathFor route='accounts' hash=_id}}" class="account-edit pull-left" data-toggle="tooltip" title="Edit"></a>
+            <a href="{{pathFor route='accounts' hash=_id}}" class="account-delete pull-right" data-toggle="tooltip" title="Delete"></a>
         </div>
     </li>
 </template>

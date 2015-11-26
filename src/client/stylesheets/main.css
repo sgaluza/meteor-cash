@@ -1,15 +1,3 @@
-body {
-    margin: 80px 0 0 0;
-}
-
-span.logo-left {
-    color: lightgray;
-}
-
-span.logo-right {
-    color: yellowgreen;
-}
-
 .hidden {
     display: none
 }
@@ -36,18 +24,6 @@ span.label > a {
     /*display: none;*/
 }
 
-.account-currency {
-    color: gray;
-}
-
-.transactions-filter {
-    width: 50%;
-}
-
-.input-group-addon {
-    padding: 0;
-    width: 40px;
-}
 .dropdown-menu {
     margin-top: 80px;
 }
@@ -63,10 +39,10 @@ span.label > a {
 
 #categoriesTree {
     margin-bottom: 20px;
+    margin-top: 10px;
 }
 
 ul.jqtree-tree {
-    border: 1px solid #ddd;
     border-radius: 4px;
     margin-left: 0;
 }
@@ -76,22 +52,41 @@ ul.jqtree-tree ul.jqtree_common {
 }
 
 div.jqtree-element {
-    border-top: 1px solid #ddd;
-    padding: 10px 15px;
+    border-top: 1px solid #e8e8e8;
+    padding: 10px 15px 10px 2px;
+}
+div.jqtree-element:hover {
+    background-color: #f6ffed;
+    border-left: 2px solid #a1df64;
+    padding-left: 0;
 }
 
-ul.jqtree-tree > li:nth-child(1) > div {
-    border-top: none;
+li.jqtree_common:last-child div.jqtree-element {
+    border-bottom: 1px solid #e8e8e8;
+}
+
+li.jqtree_common li.jqtree_common div.jqtree-element {
+    border-bottom: 0;
 }
 
 ul.jqtree-tree .jqtree-toggler{
-    margin-left: 30px;
-    font-size: 14px;
-    top: 32%;
+    top: 2px;
+    position: relative;
+    left: 10px;
+    display: inline-block;
+}
+ul.jqtree-tree .jqtree-title {
+    color: #333;
+}
+ul.jqtree-tree .jqtree-toggler + span.jqtree_common.jqtree-title {
+    float: left;
+}
+.jqtree-folder > div {
+    height: 42px;
 }
 
 div.jqtree-element span.jqtree_common.jqtree-title {
-    margin-left: 15px;
+    margin-left: 7px;
 }
 
 ul.jqtree_common ul.jqtree_common span.jqtree_common {
@@ -120,17 +115,6 @@ ul.jqtree_common ul.jqtree_common ul.jqtree_common .jqtree-toggler{
     vertical-align: super;
     margin-left: 20px;
 }
-.transactions-info {
-    background-color: lightblue;
-    border-radius: 8px;
-    padding: 10px;
-}
-.accounts-list {
-    margin-top: 20px;
-    background-color: lightcyan;
-    border-radius: 8px;
-    padding: 10px
-}
 
 .typeahead.dropdown-menu {
     margin-top: 5px;
@@ -140,4 +124,27 @@ ul.jqtree_common ul.jqtree_common ul.jqtree_common .jqtree-toggler{
     font-size: 12px;
     background: #F0F0F0;
     margin-bottom: 10px;
+}
+.margin-left-right-7 {
+    margin: 0 7px;
+}
+textarea.notes {
+    height: 78px;
+}
+.bootstrap-tagsinput {
+    height: 34px;
+}
+.bootstrap-tagsinput .tag {
+    color: #636363;
+    padding: .3em .6em;
+    border: 1px solid #cccccc;
+}
+.bootstrap-tagsinput .label-info {
+    background-color: #f1f1f1;
+}
+.bootstrap-tagsinput .tag [data-role="remove"]:after {
+    color: #999;
+}
+.has-error .control-label {
+    color: inherit;
 }

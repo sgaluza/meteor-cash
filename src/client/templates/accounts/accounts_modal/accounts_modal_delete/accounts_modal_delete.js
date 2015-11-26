@@ -14,6 +14,14 @@ Template.accountsModalDelete.events({
 
         if (accountToReAssigned && userTransactions) {
             _.forEach(userTransactions, function(transaction){
+                if (transaction.type == 2) {
+                    Accounts.update({_id: accountToReAssigned}, {$inc: {balance: -transaction.amount}});
+                } else if (transaction.type == 1) {
+                    Accounts.update({_id: accountToReAssigned}, {$inc: {balance: transaction.amount}});
+                } else if (transaction.type == 3) {
+                    Accounts.update({_id: accountToReAssigned}, {$inc: {balance: -transaction.amount}});
+                    Accounts.update({_id: accountToReAssigned}, {$inc: {balance: transaction.amountTo}});
+                }
                 Transactions.update(transaction._id, {$set: {'account' : accountToReAssigned}});
             });
         } else {

@@ -28,6 +28,9 @@ Template.afInputNumber_mcTransfer.helpers({
 
 AutoForm.hooks({
     insertAccount: {
+        formToDoc: function(doc) {
+            return doc;
+        },
         onSuccess: function() {
             $('#accountsModalCreate').modal('hide');
             var currencyId = this.insertDoc.currencyId,
@@ -36,6 +39,9 @@ AutoForm.hooks({
         }
     },
     updateAccount: {
+        formToModifier: function(doc) {
+            return doc;
+        },
         onSuccess: function() {
             $('#accountsModalUpdate').modal('hide');
             var currencyId = this.updateDoc.$set.currencyId,
@@ -75,10 +81,23 @@ AutoForm.hooks({
                     doc.tags[key] = Tags.findOne({title: t})._id;
                 })
             }
+            if (doc.accountTo) {
+                doc.search.push(_.result(Accounts.findOne(doc.accountTo), 'name'));
+            }
             if (doc.payer && doc.payer.length > 0){
                 _.forEach(doc.payer, function(r, key) {
+                    doc.search.push(doc.payer[key]);
                     doc.payer[key] = Tags.findOne({title: r})._id;
                 })
+            }
+            if (doc.type === 3) {
+                doc.search.push('transfer');
+            }
+            if (!doc.amount) {
+                doc.amount = 0;
+            }
+            if (!doc.amountTo) {
+                doc.amountTo = 0;
             }
             return doc;
         },
@@ -105,14 +124,24 @@ AutoForm.hooks({
             alertify.log('<strong>' + type + '</strong> Transaction (<strong>' + this.insertDoc.amount + ' ' + currency + '</strong>) was added for account <strong>' + user + '</strong>' + category);
             $('input[data-schema-key=tags]').tagsinput('removeAll');
             $('input[data-schema-key=payer]').tagsinput('removeAll');
-            $(".bootstrap-tagsinput").addClass('hidden');
         }
     },
     updateTransaction: {
         formToModifier: function(doc) {
+            if (!doc.$set.amount) {
+                doc.$set.amount = 0;
+            }
+            if (doc.$set.type === 3) {
+                if (!doc.$set.amountTo) {
+                    doc.$set.amountTo = 0;
+                }
+            }
             doc.$set.search = [];
             doc.$set.search.push(_.result(Categories.findOne(doc.$set.categories), 'title'));
             doc.$set.search.push(_.result(Accounts.findOne(doc.$set.account), 'name'));
+            if (doc.$set.accountTo) {
+                doc.$set.search.push(_.result(Accounts.findOne(doc.$set.accountTo), 'name'));
+            }
             if (doc.$set.notes) {
                 doc.$set.search.push(doc.$set.notes);
             }
@@ -122,8 +151,12 @@ AutoForm.hooks({
                     doc.$set.tags[key] = Tags.findOne({title: t})._id;
                 })
             }
+            if (doc.type === 3) {
+                doc.search.push('transfer');
+            }
             if (doc.$set.payer && doc.$set.payer.length > 0){
                 _.forEach(doc.$set.payer, function(r, key) {
+                    doc.$set.search.push(doc.$set.payer[key]);
                     doc.$set.payer[key] = Tags.findOne({title: r})._id;
                 })
             }
@@ -150,14 +183,14 @@ AutoForm.hooks({
                 type = '';
             if (this.updateDoc.$set.type == 2) {
                 type = 'Expense';
-                Accounts.update({_id: this.updateDoc.$set.account}, {$inc: {balance: -this.updateDoc.$set.amount}});
+                Accounts.update({_id: this.updateDoc.$set.account}, {$inc: {balance: this.currentDoc.amount-this.updateDoc.$set.amount}});
             } else if (this.updateDoc.$set.type == 1) {
                 type = 'Income';
-                Accounts.update({_id: this.updateDoc.$set.account}, {$inc: {balance: this.updateDoc.$set.amount}});
+                Accounts.update({_id: this.updateDoc.$set.account}, {$inc: {balance: this.updateDoc.$set.amount-this.currentDoc.amount}});
             } else if (this.updateDoc.$set.type == 3) {
                 type = 'Transfer';
-                Accounts.update({_id: this.updateDoc.$set.account}, {$inc: {balance: -this.updateDoc.$set.amount}});
-                Accounts.update({_id: this.updateDoc.$set.accountTo}, {$inc: {balance: this.updateDoc.$set.amountTo}});
+                Accounts.update({_id: this.updateDoc.$set.account}, {$inc: {balance: this.currentDoc.amount-this.updateDoc.$set.amount}});
+                Accounts.update({_id: this.updateDoc.$set.accountTo}, {$inc: {balance: this.updateDoc.$set.amountTo-this.currentDoc.amount}});
             }
             if (this.updateDoc.$set.categories) {
                 var category = ' (category: <strong>' + _.result(Categories.findOne(this.updateDoc.$set.categories), 'title') + '</strong>)';

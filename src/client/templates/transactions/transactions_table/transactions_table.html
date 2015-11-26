@@ -1,50 +1,67 @@
 <template name="transactionsTable">
-    <div class="input-group transactions-filter">
-      <span class="input-group-addon">
-        <span class="glyphicon glyphicon-search"></span>
-      </span>
-        <input class="form-control transactions-filter-input" type="text"/>
+    <div class="transactions-table-header clearfix">
+        <div class="input-group transactions-filter">
+            <span class="input-group-addon search">
+            </span>
+            {{> searchBox }}
+        </div>
+        <div class="transactions-date">
+            Date: <a name="latest" class="active">Latest</a> | <a name="period">Period</a>
+        </div>
+        <div class="transactions-category">
+            <span>Category:</span>
+            <select class="form-control" id="select-filter">
+                <option>Select a category</option>
+            {{#each selectCategories}}
+                <option value="{{_id}}">{{title}}</option>
+            {{/each}}
+            </select>
+        </div>
     </div>
-    {{> reactiveTable collection=transactionRows settings=transactionRowsSettings}}
+    <div class="transactions-table-inner">
+        <div class="period">
+            <div class="from-to-period">
+                Period: <span>December 1, 2015 &mdash; January 20, 2015</span>
+            </div>
+            <input type="rangeslide"/>
+        </div>
+        {{> searchResult }}
+    </div>
 </template>
 
-<template name="transactionsTableDate">
-    {{> transactionsTableHumanDate date}}
+<template name="searchBox">
+    <input class="form-control transactions-filter-input" id="search-box" placeholder="Click to search by name and etc" type="text">
 </template>
 
-<template name="transactionsTableHumanDate">
-    <div class="date-month-day">{{humanDate.dayOfMonth}}</div>
-    <div class="date-day-of-week">{{humanDate.dayOfWeek}}</div>
-</template>
-
-<template name="transactionsTableCategory">
-    <div class="categories-list">
-        {{#if category.name}}
-            <span>{{category.name}}</span>
-        {{else}}
-            {{#if account.to}}
-                <span>{{account.name}}</span>
-                <span>{{account.to}}</span>
-                <span>{{rate.rate}}</span>
+<template name="searchResult">
+    <table>
+        <tr>
+            <th colspan="2">Information</th>
+            <th>Account name</th>
+            <th>Balance</th>
+        </tr>
+        {{#each getTransactions}}
+            <tr>
+                <td><span class="{{type}}"></span></td>
+                <td class="inform-td">{{#if accountTo}}<strong>
+                    Transfer {{currencyId}} → {{currencyIdTo}}
+                </strong><br>
+                    <span>{{rate}} transfer, {{notes}}</span>{{else}}
+                    {{#if categories}}<strong>
+                        {{categories}}
+                    </strong><br>{{/if}}
+                    <span>
+                            {{#if categories}}
+                                {{categories}} -
+                            {{/if}}
+                        {{#if payer}} {{payer}} {{/if}} {{#if notes}}, {{notes}} {{/if}} {{#if tags}}, Tags: {{tags}} {{/if}}</span>{{/if}}</td>
+                <td>{{#if accountTo}}
+                    {{account}} → {{accountTo}}
                 {{else}}
-                <br>
-            {{/if}}
-        {{/if}}
-        <span class="categories-tags">{{category.tags}}{{category.payer}}</span>
-    </div>
-    <div class="categories-notes">
-        {{category.notes}}
-    </div>
-</template>
-
-<template name="transactionsTableTransaction">
-    <div>
-        <span>{{transaction.amount}}&nbsp;<sup>{{transaction.currency}}</sup></span>
-        <span>{{transaction.amountTo}}&nbsp;<sup>{{transaction.currencyTo}}</sup></span>
-    </div>
-</template>
-
-<template name="transactionsTableAccount">
-    <span>{{account.name}}</span>
-    <span>{{account.to}}</span>
+                    {{account}}
+                {{/if}}</td>
+                <td class="{{type}}">{{amount}} {{currency}}</td>
+            </tr>
+        {{/each}}
+    </table>
 </template>

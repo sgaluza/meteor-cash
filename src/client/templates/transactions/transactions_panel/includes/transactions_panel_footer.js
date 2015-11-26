@@ -40,7 +40,6 @@ Template.transactionsPanelFooter.events({
                 .removeAttr('selected');
             $('input[data-schema-key=tags]').tagsinput('removeAll');
             $('input[data-schema-key=payer]').tagsinput('removeAll');
-            $(".bootstrap-tagsinput").addClass('hidden');
         }
     },
     'click #removeTransactionButton': function () {
