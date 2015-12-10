@@ -6,7 +6,7 @@ function getTags(tags){
 }
 
 var options = {
-    keepHistory: 1000 * 60 * 5,
+    keepHistory: 0,
     localSearch: true
 };
 var fields = ['search'];
@@ -23,7 +23,9 @@ Template.searchResult.helpers({
             daterangeEnd = Session.get('daterangeEnd'),
             transactionsWithCategorySort = [],
             transactionsWithDataSort = [];
-
+        if (!TransactionsSearch.getCurrentQuery() || TransactionsSearch.getCurrentQuery() === '') {
+            transactions = Transactions.find().fetch();
+        }
         if (category) {
             _.forEach(transactions, function(transaction) {
                 if (transaction.categories === category) {
@@ -119,7 +121,7 @@ Template.transactionsTable.events({
         $('a[name="period"]').removeClass('active');
         $('a[name="latest"]').addClass('active');
         Session.set('daterangeStart', moment().subtract(3, "months").format("X"));
-        Session.set('daterangeEnd', moment().format("X"));
+        Session.set('daterangeEnd', moment().add(1, "days").format("X"));
         $('input[type="rangeslide"]').data("ionRangeSlider").reset();
     },
     'click .transactions-date a[name="period"]' : function () {
@@ -140,13 +142,27 @@ Template.transactionsTable.events({
             var selectCategory = $('#select-filter option:selected').val();
             Session.set('selectCategory', selectCategory);
         }
+    },
+    'click .transactions-table-inner tr.transaction' : function (event) {
+        var selectedRowId = event.currentTarget.classList[1];
+        var transaction = Transactions.findOne(selectedRowId);
+        Session.set('transactions_accountId', transaction.account);
+        if (transaction.accountTo) Session.set('transactions_accountToId', transaction.accountTo);
+
+        Router.go('transactions.update', {
+            type: TransactionsTypes[transaction.type],
+            id  : transaction._id
+        });
     }
 });
 
 Template.transactionsTable.rendered = function() {
+    $('.transactions-table-inner').mCustomScrollbar({
+        theme: 'minimal-dark'
+    });
     Session.setDefault('selectCategory', '');
     Session.setDefault('daterangeStart', moment().subtract(3, "months").format("X"));
-    Session.setDefault('daterangeEnd', moment().format("X"));
+    Session.setDefault('daterangeEnd', moment().add(1, "days").format("X"));
     $('input[type="rangeslide"]').ionRangeSlider({
         type: "double",
         min: +moment().subtract(1, "years").format("X"),
@@ -182,5 +198,5 @@ Template.transactionsTable.created = function (){
 Template.transactionsTable.onDestroyed(function () {
     Session.set('selectCategory', '');
     Session.set('daterangeStart', moment().subtract(3, "months").format("X"));
-    Session.set('daterangeEnd', moment().format("X"));
+    Session.set('daterangeEnd', moment().add(1, "days").format("X"));
 });

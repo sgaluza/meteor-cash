@@ -1,6 +1,5 @@
 SearchSource.defineSource('transactions', function(searchText, option) {
     var options = {sort: {isoScore: -1}, limit: 20};
-    console.log(option);
     if(searchText) {
         var regExp = buildRegExp(searchText);
         var selector = {$or: [
