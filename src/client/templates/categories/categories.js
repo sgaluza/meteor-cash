@@ -1,6 +1,6 @@
 var iterateTree = function(collection){
     _.forEach(collection, function(element, index){
-        Categories.update({"_id" : element._id},{$set : {"order": index}})
+        Categories.update({"_id" : element._id},{$set : {"order": index}});
         if(element.children && element.children.length > 0){
             iterateTree(element.children);
         }

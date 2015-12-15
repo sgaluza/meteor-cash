@@ -108,6 +108,55 @@ ul.jqtree_common ul.jqtree_common .jqtree-toggler{
 ul.jqtree_common ul.jqtree_common ul.jqtree_common .jqtree-toggler{
     margin-left: 60px;
 }
+
+
+
+
+ul.jqtree-tree .jqtree-ghost, ul.jqtree-tree .jqtree-moving {
+    opacity: 0.6;
+}
+ul.jqtree-tree .jqtree-moving > .jqtree-element .jqtree-title {
+    outline: 0;
+}
+span.jqtree-dragging {
+    color: #333;
+    opacity: 1;
+    cursor: pointer;
+    border-top: 1px solid #e8e8e8;
+    padding: 10px 15px 10px 7px;
+    background-color: #f6ffed;
+    border-left: 2px solid #a1df64;
+    display: block;
+    width: calc(100% - 30px);
+    z-index: 10;
+}
+
+ul.jqtree-tree li.jqtree-ghost span.jqtree-circle {
+    background-image: none;
+}
+
+ul.jqtree-tree li.jqtree-ghost span.jqtree-line {
+    border-top: 1px solid #e8e8e8;
+    background-color: transparent;
+    position: static;
+    width: 100%;
+    height: 41px;
+}
+
+ul.jqtree-tree span.jqtree-border {
+    position: static;
+    padding: 0;
+    height: 15px;
+    border: 1px dotted #e8e8e8;
+    margin-top: 5px;
+    border-radius: 0;
+    margin-left: 10px;
+}
+
+
+
+
+
 .create-account-category-header-btn h1, a {
     display: inline-block;
 }
