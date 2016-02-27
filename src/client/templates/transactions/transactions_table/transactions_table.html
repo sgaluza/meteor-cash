@@ -41,7 +41,7 @@
             <th>Balance</th>
         </tr>
         {{#each getTransactions}}
-            <tr>
+            <tr class="transaction {{_id}}">
                 <td><span class="{{type}}"></span></td>
                 <td class="inform-td">{{#if accountTo}}<strong>
                     Transfer {{currencyId}} → {{currencyIdTo}}

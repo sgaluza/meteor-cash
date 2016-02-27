@@ -107,17 +107,6 @@ AutoForm.hooks({
                 currency = _.result(_.find(currencies, function(c){return c.code == currencyId}), 'symbol'),
                 category = '',
                 type;
-            if (this.insertDoc.type == 2) {
-                type = 'Expense';
-                Accounts.update({_id: this.insertDoc.account}, {$inc: {balance: -this.insertDoc.amount}});
-            } else if (this.insertDoc.type == 1) {
-                type = 'Income';
-                Accounts.update({_id: this.insertDoc.account}, {$inc: {balance: this.insertDoc.amount}});
-            } else if (this.insertDoc.type == 3) {
-                type = 'Transfer';
-                Accounts.update({_id: this.insertDoc.account}, {$inc: {balance: -this.insertDoc.amount}});
-                Accounts.update({_id: this.insertDoc.accountTo}, {$inc: {balance: this.insertDoc.amountTo}});
-            }
             if (this.insertDoc.categories) {
                 var category = ' (category: <strong>' + _.result(Categories.findOne(this.insertDoc.categories), 'title') + '</strong>)';
             }
@@ -181,17 +170,6 @@ AutoForm.hooks({
                 currency = _.result(_.find(currencies, function(c){return c.code == currencyId}), 'symbol'),
                 category = '',
                 type = '';
-            if (this.updateDoc.$set.type == 2) {
-                type = 'Expense';
-                Accounts.update({_id: this.updateDoc.$set.account}, {$inc: {balance: this.currentDoc.amount-this.updateDoc.$set.amount}});
-            } else if (this.updateDoc.$set.type == 1) {
-                type = 'Income';
-                Accounts.update({_id: this.updateDoc.$set.account}, {$inc: {balance: this.updateDoc.$set.amount-this.currentDoc.amount}});
-            } else if (this.updateDoc.$set.type == 3) {
-                type = 'Transfer';
-                Accounts.update({_id: this.updateDoc.$set.account}, {$inc: {balance: this.currentDoc.amount-this.updateDoc.$set.amount}});
-                Accounts.update({_id: this.updateDoc.$set.accountTo}, {$inc: {balance: this.updateDoc.$set.amountTo-this.currentDoc.amount}});
-            }
             if (this.updateDoc.$set.categories) {
                 var category = ' (category: <strong>' + _.result(Categories.findOne(this.updateDoc.$set.categories), 'title') + '</strong>)';
             }

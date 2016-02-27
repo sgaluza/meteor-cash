@@ -119,6 +119,10 @@ footer .footer-menu li a:hover {
 #accountsModalDelete .modal-dialog {
     width: 560px;
 }
+body.modal-open {
+    overflow: inherit;
+    padding-right: 0 !important;
+}
 /* HEADER STYLE */
 
 .navbar.navbar-inverse {
