@@ -57,7 +57,7 @@ Template.searchResult.helpers({
                 if (Template.instance().rates) {
                     var exRates = Template.instance().rates.get(),
                         account = Accounts.findOne(transaction.account, {fields: {currencyId: 1}}),
-                        accountTo = _.result(_.findWhere(Accounts.find().fetch(), {'name' : transaction.accountTo}), 'currencyId'),
+                        accountTo = _.result(_.find(Accounts.find().fetch(), {'name' : transaction.accountTo}), 'currencyId'),
                         currencyName = _.result(_.find(currencies, {'code' : transaction.currencyIdTo}), 'name'),
                         rate,
                         currency,
@@ -186,15 +186,11 @@ Template.transactionsTable.rendered = function() {
     });
 };
 
-Template.transactionsTable.created = function (){
+Template.transactionsTable.created = function(){
     var self = this;
-    self.rates = new ReactiveVar();
-
-    HTTP.post('http://localhost:8888', {data: {date: moment().format('YYYY-MM-DD')}}, function(error, result){
-
-        self.rates.set(result.data);
-    });
+    self.rates = this.view.parentView.templateInstance().rates;
 };
+
 Template.transactionsTable.onDestroyed(function () {
     Session.set('selectCategory', '');
     Session.set('daterangeStart', moment().subtract(3, "months").format("X"));

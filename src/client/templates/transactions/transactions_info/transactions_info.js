@@ -2,7 +2,7 @@ Template.transactionsInfo.helpers({
     allMoney: function () {
         var exRates = Template.instance().rates.get(),
             transactions = Transactions.find().fetch(),
-            rateUSD = _.result(_.findWhere(exRates, {'abbreviation' : 'USD'}), 'rate'),
+            rateUSD = _.result(_.find(exRates, {'abbreviation' : 'USD'}), 'rate'),
             result = {},
             summ = 0,
             temp;
@@ -57,7 +57,7 @@ Template.transactionsInfo.helpers({
                         summ -= temp;
                     }
                 } else {
-                    var rate = _.result(_.findWhere(exRates, {'abbreviation' : t.currencyId}), 'rate');
+                    var rate = _.result(_.find(exRates, {'abbreviation' : t.currencyId}), 'rate');
                     if (t.type === 3) {
                         if(t.toAccount) {
                             temp = (t.amount * rate) / rateUSD;
@@ -121,25 +121,21 @@ Template.transactionsInfo.helpers({
 
             });
             _.forEach(result, function(sum, cur){
-                var currency = _.findWhere(currencies, {'code' : cur});
+                var currency = _.find(currencies, {'code' : cur});
                 summ.push({currencyId: currency.symbol, balance: accounting.formatNumber(sum, 2), title: currency.name + ', ' + currency.code});
             });
         }
         return summ;
     }
 });
+
 Template.transactionsInfo.rendered = function() {
     $('.transactions-info-body').mCustomScrollbar({
         theme: 'minimal-dark'
     });
 };
 
-Template.transactionsInfo.created = function (){
+Template.transactionsInfo.created = function(){
     var self = this;
-    self.rates = new ReactiveVar();
-
-    HTTP.post('http://localhost:8888', {data: {date: moment().format('YYYY-MM-DD')}}, function(error, result){
-
-        self.rates.set(result.data);
-    });
+    self.rates = this.view.parentView.templateInstance().rates;
 };

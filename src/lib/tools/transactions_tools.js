@@ -14,8 +14,6 @@ if (Meteor.isClient) {
     };
 
     TransactionsTools.prototype.getPanelTemplate = function () {
-        console.log();
-
         Session.get(this._cfg.session_panelTemplate);
     };
 

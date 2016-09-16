@@ -79,7 +79,5 @@ var getChart = function () {
         });
     }
 
-    console.log(res);
-
     return res;
 };

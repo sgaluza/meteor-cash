@@ -35,8 +35,7 @@ Transactions = utils.schemaCollection('Transactions', {
                             .sortBy('title')
                             .each(function(c){
                                 addItem(c, level+1)
-                            })
-                            .value();
+                            });
                     }
                 };
 
@@ -47,7 +46,7 @@ Transactions = utils.schemaCollection('Transactions', {
                     .sortBy('title')
                     .each(function(v){
                         addItem(v, 0);
-                    }).value();
+                    });
                 return items;
             }
         }

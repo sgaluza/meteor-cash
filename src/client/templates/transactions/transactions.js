@@ -38,3 +38,13 @@ Template.registerHelper('transactionsGetSelectedRowId', function () {
 Template.registerHelper('currentDate', function () {
     return new Date;
 });
+
+Template.transactions.created = function(){
+    var self = this;
+    self.rates = new ReactiveVar();
+
+    HTTP.post('http://localhost:8888', {data: {date: moment().format('YYYY-MM-DD')}}, function(error, result){
+
+        self.rates.set(result.data);
+    });
+}
