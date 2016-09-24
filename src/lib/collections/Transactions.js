@@ -61,6 +61,7 @@ Transactions = utils.schemaCollection('Transactions', {
     },
     account: {
         type: Meteor.ObjectId,
+        optional: true,
         autoform: {
             type: 'select',
             firstOption: 'Select an account',

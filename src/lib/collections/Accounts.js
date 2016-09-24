@@ -59,7 +59,7 @@ Accounts = utils.schemaCollection("Accounts", {
             options: function () {
                 return _.map(currencies, function (item) {
                     return {
-                        label: item.name + " (" + item.symbol + ")",
+                        label: item.name + " (" + item.code + ")",
                         value: item.code
                     }
                 });

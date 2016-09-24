@@ -9,12 +9,12 @@ Template.transactionsInfo.helpers({
 
         if (Accounts.find().fetch().length > 0 && exRates) {
             _.forEach(transactions, function(t) {
-                var currencyId = Accounts.find({_id: t.account}).fetch()[0].currencyId;
-                t['currencyId'] = currencyId;
+                var account = Accounts.findOne({_id: t.account});
+                t['currencyId'] = (account) ? account.currencyId : "";
                 if (t.type === 3) {
-                    var currencyIdTo = Accounts.find({_id: t.accountTo}).fetch()[0].currencyId,
+                    var accountTo = Accounts.findOne({_id: t.accountTo}),
                         transactionsTo = {
-                            'currencyId' : currencyIdTo,
+                            'currencyId' : (accountTo) ? accountTo.currencyId : "",
                             'amount'     : t.amountTo,
                             'toAccount'  : true,
                             'type'       : 3
@@ -89,12 +89,12 @@ Template.transactionsInfo.helpers({
             summ = [];
         if (Accounts.find().fetch().length > 0) {
             _.forEach(transactions, function (t) {
-                var currencyId = Accounts.find({_id: t.account}).fetch()[0].currencyId;
-                t['currencyId'] = currencyId;
+                var account = Accounts.findOne({_id: t.account});
+                t['currencyId'] = (account) ? account.currencyId : "";
                 if (t.type === 3) {
-                    var currencyIdTo = Accounts.find({_id: t.accountTo}).fetch()[0].currencyId,
+                    var accountTo = Accounts.findOne({_id: t.accountTo}),
                         transactionsTo = {
-                            'currencyId': currencyIdTo,
+                            'currencyId': (accountTo) ? accountTo.currencyId : "",
                             'amount': t.amountTo,
                             'toAccount': true,
                             'type': 3

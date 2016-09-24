@@ -4,13 +4,20 @@ Template.importExport.events({
     },
     'click #importTransactions': function (event, template) {
         if (template.find('#csv-file').files[0] && template.find('#csv-file').files[0].name.indexOf('.csv') !== -1) {
-            Papa.parse(template.find('#csv-file').files[0], {
-                header: true,
-                complete: function (results) {
-                    addDateToMongo(results.data);
-                },
-                skipEmptyLines: true
-            });
+            var reader = new FileReader();
+            reader.readAsText(template.find('#csv-file').files[0]);
+            reader.onload = function (e) {
+                var file = e.target.result.replace(/"(\d+),(\d+)"/g, "$1.$2").replace(/["']/g, "");
+                try
+                {
+                    var data = Papa.parse(file, {header: true});
+                    addDateToMongoFromZenmoney(data.data);
+                }
+                catch(e)
+                {
+                    alertify.log('invalid csv');
+                }
+            };
         } else {
             alertify.log('Please, choose *.csv file');
         }
@@ -87,9 +94,54 @@ function addDateToMongo(date) {
     if (date.length == 0) {
         msg = 'No transactions in this file.';
     } else if (date.length == 1) {
-        msg = date.length + ' Transaction was imported successful';
+        msg = ' Transaction was imported successful';
     } else {
         msg = date.length + ' Transactions were imported successful';
     }
     alertify.log(msg);
+}
+
+function addDateToMongoFromZenmoney(transactions){
+    var msg, count = 0;
+    var accountNames = transactions.map(function(t){return t.incomeAccountName;})
+    Array.prototype.push.apply(accountNames, transactions.map(function(t){return t.outcomeAccountName;}));
+    accountNames = _.uniq(accountNames).filter(function(n){return n;});
+    var accounts = Accounts.find({name: {$in: accountNames}}).fetch();
+    if (accountNames.length > 0 && accounts.length > 0 && accountNames.length == accounts.length){
+        transactions.forEach(function(t){
+            if (Object.keys(t).length == 12){
+                var transaction = {};
+                transaction.type = (t.outcome && t.income) ? 3 : (t.outcome) ? 2 : 1;
+                transaction.date = moment(t.date).toDate();
+                transaction.amount = parseFloat(t.outcome) || "";
+                transaction.account = _.result(_.find(accounts, {name : t.outcomeAccountName}), '_id') || "";
+                transaction.accountTo = _.result(_.find(accounts, {name : t.incomeAccountName}), '_id') || "";
+                transaction.amountTo = parseFloat(t.income) || "";
+                transaction.notes = t.comment;
+                var category = Categories.findOne({title: t.categoryName});
+                transaction.categories = (category) ? category._id : (t.categoryName) ? Categories.insert({title: t.categoryName}) : "";
+                transaction.search = new Array(t.outcomeAccountName, t.incomeAccountName, t.comment, t.categoryName);
+                transaction.search = _.uniq(transaction.search.filter(function(s){return s;}));
+                Transactions.insert(transaction, function(err){if (err) console.log(err);});
+                count++;
+            }
+        });
+        if (count == 0) {
+            msg = 'No transactions in this file.';
+        } else if (count == 1) {
+            msg = 'Transaction was imported successful';
+        } else {
+            msg = count + ' Transactions were imported successful';
+        }
+        alertify.log(msg);
+    }
+    else{
+        accountNames = _.remove(accountNames, function(a){return accounts.map(function(a){return a.name;}).indexOf(a) == -1;});
+        if(accountNames.length>0){
+            alertify.log("Please create "+ accountNames.join(", ") + " account(s)");
+        }
+        else{
+            alertify.log('invalid csv');
+        }
+    }
 }
