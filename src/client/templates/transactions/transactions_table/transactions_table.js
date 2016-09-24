@@ -96,6 +96,9 @@ Template.searchResult.helpers({
             }
             transaction.account = _.result(_.find(accounts, {'_id' : transaction.account}), 'name');
         });
+    },
+    isEqual: function(a, b){
+        return a == b;
     }
 });
 

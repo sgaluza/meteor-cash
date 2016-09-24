@@ -53,11 +53,13 @@ Transactions = utils.schemaCollection('Transactions', {
     },
     amount: {
         type: Number,
-        optional: true
+        optional: true,
+        decimal: true
     },
     amountTo: {
         type: Number,
-        optional: true
+        optional: true,
+        decimal: true
     },
     account: {
         type: Meteor.ObjectId,

@@ -43,7 +43,7 @@
         {{#each getTransactions}}
             <tr class="transaction {{_id}}">
                 <td><span class="{{type}}"></span></td>
-                <td class="inform-td">{{#if accountTo}}<strong>
+                <td class="inform-td">{{#if isEqual type 3}}<strong>
                     Transfer {{currencyId}} → {{currencyIdTo}}
                 </strong><br>
                     <span>{{rate}} transfer, {{notes}}</span>{{else}}
@@ -55,7 +55,7 @@
                                 {{categories}} -
                             {{/if}}
                         {{#if payer}} {{payer}} {{/if}} {{#if notes}}, {{notes}} {{/if}} {{#if tags}}, Tags: {{tags}} {{/if}}</span>{{/if}}</td>
-                <td>{{#if accountTo}}
+                <td>{{#if isEqual type 3}}
                     {{account}} → {{accountTo}}
                 {{else}}
                     {{account}}

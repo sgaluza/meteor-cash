@@ -122,7 +122,12 @@ function addDateToMongoFromZenmoney(transactions){
                 transaction.categories = (category) ? category._id : (t.categoryName) ? Categories.insert({title: t.categoryName}) : "";
                 transaction.search = new Array(t.outcomeAccountName, t.incomeAccountName, t.comment, t.categoryName);
                 transaction.search = _.uniq(transaction.search.filter(function(s){return s;}));
-                Transactions.insert(transaction, function(err){if (err) console.log(err);});
+                Transactions.insert(transaction, function(err){
+                    if (err) {
+                        count--;
+                        console.log(err);
+                    }
+                });
                 count++;
             }
         });
