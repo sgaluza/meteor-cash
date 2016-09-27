@@ -43,24 +43,45 @@
         {{#each getTransactions}}
             <tr class="transaction {{_id}}">
                 <td><span class="{{type}}"></span></td>
-                <td class="inform-td">{{#if isEqual type 3}}<strong>
-                    Transfer {{currencyId}} → {{currencyIdTo}}
-                </strong><br>
-                    <span>{{rate}} transfer, {{notes}}</span>{{else}}
-                    {{#if categories}}<strong>
-                        {{categories}}
-                    </strong><br>{{/if}}
-                    <span>
-                            {{#if categories}}
-                                {{categories}} -
-                            {{/if}}
-                        {{#if payer}} {{payer}} {{/if}} {{#if notes}}, {{notes}} {{/if}} {{#if tags}}, Tags: {{tags}} {{/if}}</span>{{/if}}</td>
-                <td>{{#if isEqual type 3}}
+                <td class="inform-td">
+                    {{#if isEqual type 'transfer'}}
+                        <strong>Transfer {{currencyId}} → {{currencyIdTo}}</strong>
+                        <br>
+                        <span>{{notes}}</span>
+                    {{else}}
+                        {{#if categories}}
+                            <strong>{{categories}}</strong>
+                            <br>
+                        {{/if}}
+                        <span>
+                                {{#if categories}}
+                                    {{categories}}
+                                {{/if}}
+                            {{#if payer}}, {{payer}} {{/if}} {{#if notes}}, {{notes}} {{/if}} {{#if tags}}, Tags: {{tags}} {{/if}}</span>
+                    {{/if}}
+                </td>
+                <td>
+                {{#if isEqual type 'transfer'}}
                     {{account}} → {{accountTo}}
                 {{else}}
+                    {{#if isEqual type 'income'}}
+                    {{accountTo}}
+                    {{else}}
                     {{account}}
-                {{/if}}</td>
-                <td class="{{type}}">{{amount}} {{currency}}</td>
+                    {{/if}}
+                {{/if}}
+                </td>
+                <td class="{{type}}">
+                {{#if isEqual type 'transfer'}}
+                    {{amount}} {{currency}} → {{amountTo}} {{currencyTo}}
+                {{else}}
+                    {{#if isEqual type 'income'}}
+                    {{amountTo}} {{currencyTo}}
+                    {{else}}
+                    {{amount}} {{currency}}
+                    {{/if}}
+                {{/if}}
+                </td>
             </tr>
         {{/each}}
     </table>

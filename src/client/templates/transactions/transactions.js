@@ -24,7 +24,9 @@ AutoForm.hooks({
     },
     updateTransaction: {
         formToModifier: function (modifier) {
-            delete modifier['$unset'].amount;
+            if (modifier['$unset'] && modifier['$unset'].amount){
+                delete modifier['$unset'].amount;
+            }
             _.assign(modifier['$set'], getSearchArray(modifier['$set']));
             return modifier;
         }

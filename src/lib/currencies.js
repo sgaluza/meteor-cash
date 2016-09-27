@@ -28,3 +28,5 @@ currencies = [
   {"code":"USD","symbol":"US$","name":"United States dollar"},
   {"code":"XDR","symbol":"SDR","name":"Special Drawing Rights"}
 ];
+
+defaultCurrency = "USD";

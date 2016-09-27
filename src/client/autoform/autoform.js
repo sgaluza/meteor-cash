@@ -1,31 +1,3 @@
-Template.afInputNumber_mcExpense.helpers({
-    'currencyForAmount': function () {
-        var accountId = Session.get('transactions_accountId');
-        var currencyCode = _.result(Accounts.findOne(accountId), 'currencyId');
-
-        return _.result(_.find(currencies, function(c){return c.code == currencyCode}), 'symbol');
-    }
-});
-
-Template.afInputNumber_mcIncome.helpers({
-    'currencyForAmount': function () {
-        var accountId = Session.get('transactions_accountToId');
-        var currencyCode = _.result(Accounts.findOne(accountId), 'currencyId');
-
-        return _.result(_.find(currencies, function(c){return c.code == currencyCode}), 'symbol');
-    }
-});
-
-Template.afInputNumber_mcTransfer.helpers({
-    'currencyForAmountTo': function () {
-        var accountToId = Session.get('transactions_accountToId');
-        var currencyCode = _.result(Accounts.findOne(accountToId), 'currencyId');
-
-        return _.result(_.find(currencies, function(c){return c.code == currencyCode}), 'symbol');
-    }
-});
-
-
 AutoForm.hooks({
     insertAccount: {
         formToDoc: function(doc) {
@@ -93,24 +65,34 @@ AutoForm.hooks({
             if (doc.type === 3) {
                 doc.search.push('transfer');
             }
-            if (!doc.amount) {
-                doc.amount = 0;
-            }
-            if (!doc.amountTo) {
-                doc.amountTo = 0;
-            }
             return doc;
         },
         onSuccess: function(){
-            var user = _.result(Accounts.findOne(this.insertDoc.account), 'name'),
+            var account = _.result(Accounts.findOne(this.insertDoc.account), 'name'),
                 currencyId = _.result(Accounts.findOne(this.insertDoc.account), 'currencyId'),
                 currency = _.result(_.find(currencies, function(c){return c.code == currencyId}), 'symbol'),
+                accountTo = _.result(Accounts.findOne(this.insertDoc.accountTo), 'name'),
+                currencyIdTo = _.result(Accounts.findOne(this.insertDoc.accountTo), 'currencyId'),
+                currencyTo = _.result(_.find(currencies, function(c){return c.code == currencyIdTo}), 'symbol'),
                 category = '',
-                type;
+                type = this.insertDoc.type;
             if (this.insertDoc.categories) {
                 var category = ' (category: <strong>' + _.result(Categories.findOne(this.insertDoc.categories), 'title') + '</strong>)';
             }
-            alertify.log('<strong>' + type + '</strong> Transaction (<strong>' + this.insertDoc.amount + ' ' + currency + '</strong>) was added for account <strong>' + user + '</strong>' + category);
+            switch(type){
+                case 1:
+                    alertify.log('<strong>Income</strong> Transaction (<strong>' + this.insertDoc.amountTo + ' ' + currencyTo + '</strong>) was added for account <strong>' + accountTo + '</strong>' + category);
+                    break;
+                case 2:
+                    alertify.log('<strong>Expense</strong> Transaction (<strong>' + this.insertDoc.amount + ' ' + currency + '</strong>) was added for account <strong>' + account + '</strong>' + category);
+                    break;
+                case 3:
+                    alertify.log('<strong>Transfer</strong> Transaction (<strong>' + this.insertDoc.amount + ' ' + currency + '</strong>) from account <strong>' + account + '</strong> to account  <strong>' + accountTo + ' (' + this.insertDoc.amountTo + ' ' + currencyTo + '</strong>) was added');
+                    break;
+            }
+            $('input[data-schema-key=date]').datepicker('setDate', new Date());
+            $('input[data-schema-key=amount]').val(0);
+            $('input[data-schema-key=amountTo]').val(0);
             $('input[data-schema-key=tags]').tagsinput('removeAll');
             $('input[data-schema-key=payer]').tagsinput('removeAll');
         }
@@ -165,15 +147,28 @@ AutoForm.hooks({
             return doc;
         },
         onSuccess: function(){
-            var user = _.result(Accounts.findOne(this.updateDoc.$set.account), 'name'),
+            var account = _.result(Accounts.findOne(this.updateDoc.$set.account), 'name'),
                 currencyId = _.result(Accounts.findOne(this.updateDoc.$set.account), 'currencyId'),
                 currency = _.result(_.find(currencies, function(c){return c.code == currencyId}), 'symbol'),
+                accountTo = _.result(Accounts.findOne(this.updateDoc.$set.accountTo), 'name'),
+                currencyIdTo = _.result(Accounts.findOne(this.updateDoc.$set.accountTo), 'currencyId'),
+                currencyTo = _.result(_.find(currencies, function(c){return c.code == currencyIdTo}), 'symbol'),
                 category = '',
-                type = '';
+                type = this.updateDoc.$set.type;
             if (this.updateDoc.$set.categories) {
                 var category = ' (category: <strong>' + _.result(Categories.findOne(this.updateDoc.$set.categories), 'title') + '</strong>)';
             }
-            alertify.log('<strong>' + type + '</strong> Transaction (<strong>' + this.updateDoc.$set.amount + ' ' + currency + '</strong>) was updated for account <strong>' + user + '</strong>' + category);
+            switch(type){
+                case 1:
+                    alertify.log('<strong>Income</strong> Transaction (<strong>' + this.updateDoc.$set.amountTo + ' ' + currencyTo + '</strong>) was updated for account <strong>' + accountTo + '</strong>' + category);
+                    break;
+                case 2:
+                    alertify.log('<strong>Expense</strong> Transaction (<strong>' + this.updateDoc.$set.amount + ' ' + currency + '</strong>) was updated for account <strong>' + account + '</strong>' + category);
+                    break;
+                case 3:
+                    alertify.log('<strong>Transfer</strong> Transaction (<strong>' + this.updateDoc.$set.amount + ' ' + currency + '</strong>) from account <strong>' + account + '</strong> to account  <strong>' + accountTo + ' (' + this.updateDoc.$set.amountTo + ' ' + currencyTo + '</strong>) was updated');
+                    break;
+            }
         }
     }
 });
