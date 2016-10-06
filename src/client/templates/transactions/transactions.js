@@ -24,7 +24,9 @@ AutoForm.hooks({
     },
     updateTransaction: {
         formToModifier: function (modifier) {
-            delete modifier['$unset'].amount;
+            if (modifier['$unset'] && modifier['$unset'].amount){
+                delete modifier['$unset'].amount;
+            }
             _.assign(modifier['$set'], getSearchArray(modifier['$set']));
             return modifier;
         }
@@ -38,3 +40,13 @@ Template.registerHelper('transactionsGetSelectedRowId', function () {
 Template.registerHelper('currentDate', function () {
     return new Date;
 });
+
+Template.transactions.created = function(){
+    var self = this;
+    self.rates = new ReactiveVar();
+
+    HTTP.post('http://localhost:8888', {data: {date: moment().format('YYYY-MM-DD')}}, function(error, result){
+
+        self.rates.set(result.data);
+    });
+}

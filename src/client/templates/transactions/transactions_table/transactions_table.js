@@ -15,7 +15,7 @@ TransactionsSearch = new SearchSource('transactions', fields, options);
 
 Template.searchResult.helpers({
     getTransactions: function() {
-        var transactions = TransactionsSearch.getData({}),
+        var transactions = TransactionsSearch.getData(),
             accounts = Accounts.find().fetch(),
             categories = Categories.find().fetch(),
             category = Session.get('selectCategory'),
@@ -24,7 +24,7 @@ Template.searchResult.helpers({
             transactionsWithCategorySort = [],
             transactionsWithDataSort = [];
         if (!TransactionsSearch.getCurrentQuery() || TransactionsSearch.getCurrentQuery() === '') {
-            transactions = Transactions.find().fetch();
+            transactions = Transactions.find({}, {sort: {date: -1}}).fetch();
         }
         if (category) {
             _.forEach(transactions, function(transaction) {
@@ -46,38 +46,15 @@ Template.searchResult.helpers({
         }
 
         return _.forEach(transactionsWithDataSort, function(transaction) {
-            var currencyId = _.result(_.find(accounts, {'_id' : transaction.account}), 'currencyId');
+            var currencyId = _.result(_.find(accounts, {'_id' : transaction.account}), 'currencyId'),
+                currencyIdTo = _.result(_.find(accounts, {'_id' : transaction.accountTo}), 'currencyId')
             transaction.currencyId = currencyId;
             transaction.currency = _.result(_.find(currencies, {'code' : currencyId}), 'symbol');
             transaction.amount = accounting.formatNumber(transaction.amount, 2);
+            transaction.currencyIdTo = currencyIdTo;
+            transaction.currencyTo = _.result(_.find(currencies, {'code' : currencyIdTo}), 'symbol');
+            transaction.amountTo = accounting.formatNumber(transaction.amountTo, 2);
             transaction.rate = '';
-            if (transaction.accountTo) {
-                transaction.currencyIdTo = _.result(_.find(accounts, {'_id' : transaction.accountTo}), 'currencyId');
-                transaction.accountTo = _.result(_.find(accounts, {'_id' : transaction.accountTo}), 'name');
-                if (Template.instance().rates) {
-                    var exRates = Template.instance().rates.get(),
-                        account = Accounts.findOne(transaction.account, {fields: {currencyId: 1}}),
-                        accountTo = _.result(_.findWhere(Accounts.find().fetch(), {'name' : transaction.accountTo}), 'currencyId'),
-                        currencyName = _.result(_.find(currencies, {'code' : transaction.currencyIdTo}), 'name'),
-                        rate,
-                        currency,
-                        currencyTo;
-                    if (account.currencyId === 'BYR' || accountTo === 'BYR') {
-                        if (account.currencyId === 'BYR' && accountTo === 'BYR') {
-                            rate = 1;
-                        } else if (account.currencyId === 'BYR') {
-                            rate = _.result(_.find(exRates, function(c) {return c.abbreviation == accountTo}), 'rate');
-                        } else {
-                            rate = _.result(_.find(exRates, function(c) {return c.abbreviation == account.currencyId}), 'rate');
-                        }
-                    } else {
-                        currency = _.find(exRates, function(c) {return c.abbreviation == account.currencyId});
-                        currencyTo = _.find(exRates, function(c) {return c.abbreviation == accountTo});
-                        rate = (currency.rate / currencyTo.rate);
-                    }
-                    transaction.rate = 'Rate ' + accounting.formatNumber(rate) + ' - ' + currencyName + ',';
-                }
-            }
             if (transaction.tags) {
                 transaction.tags = getTags(transaction.tags);
             }
@@ -95,7 +72,11 @@ Template.searchResult.helpers({
                 transaction.type = 'transfer'
             }
             transaction.account = _.result(_.find(accounts, {'_id' : transaction.account}), 'name');
+            transaction.accountTo = _.result(_.find(accounts, {'_id' : transaction.accountTo}), 'name');
         });
+    },
+    isEqual: function(a, b){
+        return a == b;
     }
 });
 
@@ -186,15 +167,11 @@ Template.transactionsTable.rendered = function() {
     });
 };
 
-Template.transactionsTable.created = function (){
+Template.transactionsTable.created = function(){
     var self = this;
-    self.rates = new ReactiveVar();
-
-    HTTP.post('http://localhost:8888', {data: {date: moment().format('YYYY-MM-DD')}}, function(error, result){
-
-        self.rates.set(result.data);
-    });
+    self.rates = this.view.parentView.templateInstance().rates;
 };
+
 Template.transactionsTable.onDestroyed(function () {
     Session.set('selectCategory', '');
     Session.set('daterangeStart', moment().subtract(3, "months").format("X"));

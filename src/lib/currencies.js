@@ -2,6 +2,7 @@ currencies = [
   {"code":"AUD","symbol":"$","name":"Australian dollar"},
   {"code":"BGN","symbol":"BGN","name":"Bulgarian lev"},
   {"code":"BYR","symbol":"Br","name":"Belarusian ruble"},
+  {"code":"BYN","symbol":"Br","name":"Belarusian ruble"},
   {"code":"CAD","symbol":"$","name":"Canadian dollar"},
   {"code":"CHF","symbol":"Fr.","name":"Swiss franc"},
   {"code":"CNY","symbol":"\u00a5","name":"Chinese/Yuan renminbi"},
@@ -27,3 +28,5 @@ currencies = [
   {"code":"USD","symbol":"US$","name":"United States dollar"},
   {"code":"XDR","symbol":"SDR","name":"Special Drawing Rights"}
 ];
+
+defaultCurrency = "USD";

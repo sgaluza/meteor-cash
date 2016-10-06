@@ -48,7 +48,9 @@ AutoForm.hooks({
     },
     updateAccount: {
         formToModifier: function (modifier) {
-            delete modifier['$unset'].balance;
+            if (modifier['$unset'] && modifier['$unset'].balance){
+                delete modifier['$unset'].balance;
+            }
             _.assign(modifier['$set'], emptyBalance(modifier['$set']));
             return modifier;
         }

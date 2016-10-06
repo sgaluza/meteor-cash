@@ -40,8 +40,7 @@ Categories = utils.schemaCollection('Categories', {
                             .sortBy('title')
                             .each(function(c){
                                 addItem(c, level+1)
-                            })
-                            .value();
+                            });
                     }
                 };
 
@@ -52,7 +51,7 @@ Categories = utils.schemaCollection('Categories', {
                     .sortBy('title')
                     .each(function(v){
                         addItem(v, 0);
-                    }).value();
+                    });
                 return items;
             }
         }

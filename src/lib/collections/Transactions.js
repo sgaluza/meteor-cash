@@ -35,8 +35,7 @@ Transactions = utils.schemaCollection('Transactions', {
                             .sortBy('title')
                             .each(function(c){
                                 addItem(c, level+1)
-                            })
-                            .value();
+                            });
                     }
                 };
 
@@ -47,21 +46,24 @@ Transactions = utils.schemaCollection('Transactions', {
                     .sortBy('title')
                     .each(function(v){
                         addItem(v, 0);
-                    }).value();
+                    });
                 return items;
             }
         }
     },
     amount: {
         type: Number,
-        optional: true
+        optional: true,
+        decimal: true
     },
     amountTo: {
         type: Number,
-        optional: true
+        optional: true,
+        decimal: true
     },
     account: {
         type: Meteor.ObjectId,
+        optional: true,
         autoform: {
             type: 'select',
             firstOption: 'Select an account',

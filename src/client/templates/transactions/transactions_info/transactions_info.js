@@ -1,145 +1,74 @@
+var getAccountsWithAmounts = function(){
+    var transactions = Transactions.find().fetch(),
+        accounts = Accounts.find().fetch(),
+        result = {};
+    if (accounts.length > 0) {
+        var result = _.chain(accounts).groupBy('currencyId').value(),
+            accounts = _.chain(accounts).keyBy('_id').mapValues('currencyId').value();
+        _.forEach(result, function(value, key){
+            var summ = 0;
+            value.forEach(function(account){
+                summ += account.balance;
+            });
+            result[key] = summ;
+        });
+        _.forEach(transactions, function (t) {
+            if (t.amount) {
+                result[accounts[t.account]] -= t.amount;
+            }
+            if (t.amountTo) {
+                result[accounts[t.accountTo]] += t.amountTo;
+            }
+        })
+    }
+    return result;
+};
+
 Template.transactionsInfo.helpers({
     allMoney: function () {
-        var exRates = Template.instance().rates.get(),
-            transactions = Transactions.find().fetch(),
-            rateUSD = _.result(_.findWhere(exRates, {'abbreviation' : 'USD'}), 'rate'),
-            result = {},
-            summ = 0,
-            temp;
-
-        if (Accounts.find().fetch().length > 0 && exRates) {
-            _.forEach(transactions, function(t) {
-                var currencyId = Accounts.find({_id: t.account}).fetch()[0].currencyId;
-                t['currencyId'] = currencyId;
-                if (t.type === 3) {
-                    var currencyIdTo = Accounts.find({_id: t.accountTo}).fetch()[0].currencyId,
-                        transactionsTo = {
-                            'currencyId' : currencyIdTo,
-                            'amount'     : t.amountTo,
-                            'toAccount'  : true,
-                            'type'       : 3
-                        };
-                    transactions.push(transactionsTo);
+        var result = getAccountsWithAmounts(),
+            exRates = Template.instance().rates.get(),
+            summ = 0;
+        _.forEach(result, function(sum, cur){
+            if (cur == 'BYN'){
+                summ += sum ;
+            }
+            else{
+                var currentRate = _.find(exRates, {'abbreviation' : cur});
+                if (currentRate){
+                    summ += sum*currentRate.rate/currentRate.scale;
                 }
-            });
-
-            transactions.forEach(function(t){
-                if(!result.hasOwnProperty(t.currencyId)) {
-                    result[t.currencyId] = 0;
-                }
-
-                if (t.currencyId === 'USD') {
-                    if (t.type === 3) {
-                        if(t.toAccount) {
-                            summ += t.amount;
-                        } else {
-                            summ -= t.amount;
-                        }
-                    } else if (t.type === 1) {
-                        summ += t.amount;
-                    } else {
-                        summ -= t.amount;
-                    }
-                } else if (t.currencyId === 'BYR') {
-                    if (t.type === 3) {
-                        if(t.toAccount) {
-                            temp = t.amount / rateUSD;
-                            summ += temp;
-                        } else {
-                            temp = t.amount / rateUSD;
-                            summ -= temp;
-                        }
-                    } else if (t.type === 1) {
-                        temp = t.amount / rateUSD;
-                        summ += temp;
-                    } else {
-                        temp = t.amount / rateUSD;
-                        summ -= temp;
-                    }
-                } else {
-                    var rate = _.result(_.findWhere(exRates, {'abbreviation' : t.currencyId}), 'rate');
-                    if (t.type === 3) {
-                        if(t.toAccount) {
-                            temp = (t.amount * rate) / rateUSD;
-                            summ += temp;
-                        } else {
-                            temp = (t.amount * rate) / rateUSD;
-                            summ -= temp;
-                        }
-                    } else if (t.type === 1) {
-                        temp = (t.amount * rate) / rateUSD;
-                        summ += temp;
-                    } else {
-                        temp = (t.amount * rate) / rateUSD;
-                        summ -= temp;
-                    }
-                }
-
-            });
+            }
+        });
+        if (defaultCurrency != 'BYN'){
+            var currentRate = _.find(exRates, {'abbreviation' : defaultCurrency});
+            if (currentRate){
+                summ *= currentRate.scale/currentRate.rate;
+            }
         }
-
         return accounting.formatNumber(summ, 2);
     },
     currency: function () {
-        return '$';
+        return _.result(_.find(currencies, {'code' : defaultCurrency}), 'symbol');
     },
     accountsList: function () {
-        var transactions = Transactions.find().fetch(),
-            result = {},
-            summ = [];
-        if (Accounts.find().fetch().length > 0) {
-            _.forEach(transactions, function (t) {
-                var currencyId = Accounts.find({_id: t.account}).fetch()[0].currencyId;
-                t['currencyId'] = currencyId;
-                if (t.type === 3) {
-                    var currencyIdTo = Accounts.find({_id: t.accountTo}).fetch()[0].currencyId,
-                        transactionsTo = {
-                            'currencyId': currencyIdTo,
-                            'amount': t.amountTo,
-                            'toAccount': true,
-                            'type': 3
-                        };
-                    transactions.push(transactionsTo);
-                }
-            });
-
-            transactions.forEach(function (t) {
-                if (!result.hasOwnProperty(t.currencyId)) {
-                    result[t.currencyId] = 0;
-                }
-                if (t.type === 3) {
-                    if (t.toAccount) {
-                        result[t.currencyId] += t.amount;
-                    } else {
-                        result[t.currencyId] -= t.amount;
-                    }
-                } else if (t.type === 1) {
-                    result[t.currencyId] += t.amount;
-                } else {
-                    result[t.currencyId] -= t.amount;
-                }
-
-            });
+        var summ = [],
+            result = getAccountsWithAmounts();
             _.forEach(result, function(sum, cur){
-                var currency = _.findWhere(currencies, {'code' : cur});
+                var currency = _.find(currencies, {'code' : cur});
                 summ.push({currencyId: currency.symbol, balance: accounting.formatNumber(sum, 2), title: currency.name + ', ' + currency.code});
             });
-        }
         return summ;
     }
 });
+
 Template.transactionsInfo.rendered = function() {
     $('.transactions-info-body').mCustomScrollbar({
         theme: 'minimal-dark'
     });
 };
 
-Template.transactionsInfo.created = function (){
+Template.transactionsInfo.created = function(){
     var self = this;
-    self.rates = new ReactiveVar();
-
-    HTTP.post('http://localhost:8888', {data: {date: moment().format('YYYY-MM-DD')}}, function(error, result){
-
-        self.rates.set(result.data);
-    });
+    self.rates = this.view.parentView.templateInstance().rates;
 };

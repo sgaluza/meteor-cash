@@ -1,6 +1,6 @@
 Template.listAccounts.helpers({
     accounts: function () {
-        var accounts = Accounts.find().fetch();
+        var accounts = Accounts.find({},{sort:{order:1}}).fetch();
 
         return _.forEach(accounts, function(account) {
             var transactions = Transactions.find({
@@ -11,16 +11,14 @@ Template.listAccounts.helpers({
                     ]}).fetch();
 
             _.forEach(transactions, function(t){
-                if(t.type === 1) {
-                    account.balance += t.amount
-                } else if(t.type === 2) {
-                    account.balance -= t.amount
-                } else if(t.type === 3) {
-                    if (t.accountTo === account._id) {
-                        account.balance += t.amount
-                    } else {
-                        account.balance -= t.amount
-                    }
+                if (t.amount && t.amountTo && t.account === account._id && t.accountTo === account._id){
+                    account.balance += (t.amountTo - t.amount);
+                }
+                else if(t.amount && t.account === account._id){
+                    account.balance -= t.amount;
+                }
+                else if(t.amountTo && t.accountTo === account._id){
+                    account.balance += t.amountTo;
                 }
             });
 
